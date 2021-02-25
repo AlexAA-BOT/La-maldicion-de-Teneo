@@ -1,3 +1,3 @@
 # La-maldicion-de-Teneo
 
-Formado por AlexAA-BOT, AlexAlcaide Arroyes
+Formado por AlexAA-BOT, Alex Alcaide Arroyes
