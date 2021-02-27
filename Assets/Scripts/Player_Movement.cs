@@ -10,6 +10,7 @@ public class Player_Movement : MonoBehaviour
     private bool attackButton = false;
     private bool jmpBtn = false;
     private bool jmpBtnDown = false;
+    private bool rollBtn = false;
 
 
     [Header("Movement")]
@@ -18,7 +19,11 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private float jumpForce = 20;
     [SerializeField] private float jumpVelocity = 15;
     [SerializeField] private float fallVelocity = -10.0f;
-    [SerializeField] private float jumpGravityPercentage = 0.7f; 
+    [SerializeField] private float jumpGravityPercentage = 0.7f;
+    [SerializeField] private float rollSpeed = 10.0f;
+    [SerializeField] private float dashSpeed = 15.0f;
+    [SerializeField] private float dashTime;
+    private float startDashTime = 0.0f;
 
 
     [Header("Transforms")]
@@ -31,6 +36,11 @@ public class Player_Movement : MonoBehaviour
     private Vector2 leftSide = new Vector2(1, 0);
     private Vector2 rightSide = new Vector2(-1, 0);
     private bool doubleJump = false;
+    private Vector2 dashDirection;
+    private bool dashDirectionDecided = false;
+
+    private enum State { NORMAL, DODGEROLL};
+    private State state;
 
     [Header("Layers")]
     [SerializeField] private LayerMask m_WhatIsGround;
@@ -45,6 +55,7 @@ public class Player_Movement : MonoBehaviour
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         totalJumps = maxNumJumps;
+        state = State.NORMAL;
     }
 
     private void Update()
@@ -71,6 +82,7 @@ public class Player_Movement : MonoBehaviour
         Salto();
         Movement();
         ControlGravity();
+        Dash();
 
     }
 
@@ -172,17 +184,71 @@ public class Player_Movement : MonoBehaviour
         horizontalMove = Input.GetAxisRaw("Horizontal");
         interactButtonInput = Input.GetButton("Interact");
         jmpBtn = Input.GetButton("Jump");
+
         //jmpBtnDown = Input.GetButtonDown("Jump");
         if(Input.GetButtonDown("Jump"))
         {
             jmpBtnDown = true;
         }
+
+        if(Input.GetButtonDown("Roll") && m_Grounded)
+        {
+            rollBtn = true;
+        }
+
     }
 
     private void ChangeTotalJumps(int newTotalJumps)
     {
         maxNumJumps = newTotalJumps;
         totalJumps = maxNumJumps;
+    }
+
+    private void DodgeRoll()
+    {
+        if(rollBtn)
+        {
+            m_Rigidbody2D.AddForce(new Vector2(rollSpeed * horizontalMove, m_Rigidbody2D.velocity.y), ForceMode2D.Impulse);
+            m_Rigidbody2D.velocity = new Vector2(horizontalMove * runSpeed * 30, m_Rigidbody2D.velocity.y);
+            rollBtn = false;
+        }
+    }
+
+    private void Dash()
+    {
+        if(rollBtn && m_Grounded && (horizontalMove > 0.0f || horizontalMove < 0.0f))
+        {
+            if(!dashDirectionDecided)
+            {
+                
+                dashDirection = new Vector2(horizontalMove * dashSpeed, m_Rigidbody2D.velocity.y);
+                dashDirectionDecided = true;
+            }
+
+            m_Rigidbody2D.velocity = dashDirection;
+            state = State.DODGEROLL;
+
+            if(startDashTime >= dashTime)
+            {
+                rollBtn = false;
+                state = State.NORMAL;
+                startDashTime = 0.0f;
+                dashDirectionDecided = false;
+            }
+            else
+            {
+                startDashTime += Time.deltaTime;
+            }
+
+        }
+        else if(rollBtn && !m_Grounded)
+        {
+            rollBtn = false;
+            state = State.NORMAL;
+            startDashTime = 0.0f;
+            dashDirectionDecided = false;
+        }
+        
     }
 
     void OnDrawGizmosSelected()
