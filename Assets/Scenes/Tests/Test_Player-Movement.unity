@@ -271,6 +271,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6815657201516656937, guid: f613e976f2a917c4b9ce57b6624adc26,
+        type: 3}
+      propertyPath: m_Name
+      value: Eye
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f613e976f2a917c4b9ce57b6624adc26, type: 3}
 --- !u!1001 &6787332347960952782
@@ -280,6 +285,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5513121586010247666, guid: 1714328eb836eef48aadc92696a6fa5e,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6787332347849251266, guid: 1714328eb836eef48aadc92696a6fa5e,
         type: 3}
       propertyPath: m_SortingLayer
@@ -329,6 +339,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 9007943992086360544, guid: 1714328eb836eef48aadc92696a6fa5e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1714328eb836eef48aadc92696a6fa5e, type: 3}
