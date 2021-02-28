@@ -47,7 +47,7 @@ public class Player_Movement : MonoBehaviour
 
     [SerializeField] private float gravityScale = 10.0f;
     [SerializeField] private float k_GroundedRadius = 0.2f;
-    [SerializeField] private bool isFacingRight = true;
+    [SerializeField] private bool isFacingLeft = true;
 
 
     // Start is called before the first frame update
@@ -116,16 +116,16 @@ public class Player_Movement : MonoBehaviour
 
     void Movement()
     {
-        if(horizontalMove > 0 && isFacingRight)
+        if(horizontalMove > 0 && isFacingLeft)
         {
-            isFacingRight = !isFacingRight;
+            isFacingLeft = !isFacingLeft;
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
         }
-        else if(horizontalMove < 0 && !isFacingRight)
+        else if(horizontalMove < 0 && !isFacingLeft)
         {
-            isFacingRight = !isFacingRight;
+            isFacingLeft = !isFacingLeft;
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
