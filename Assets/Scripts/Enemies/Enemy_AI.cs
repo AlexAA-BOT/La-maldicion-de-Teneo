@@ -20,6 +20,7 @@ public class Enemy_AI : MonoBehaviour
     private float walkTimeCoolDown = 0.0f;
     private int walkDirectionRand;
     private Rigidbody2D m_rigidbody2D;
+    private bool isFacingRight = false;
 
     //Attack
     private bool enemyAttackCheck = false;
@@ -62,6 +63,11 @@ public class Enemy_AI : MonoBehaviour
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         enemyAttackColRight = new Vector3(this.gameObject.transform.localScale.x, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
         enemyAttackColLeft = new Vector3(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
+    }
+
+    private void Update()
+    {
+        IsFacingRight();
     }
 
     // Update is called once per frame
@@ -258,6 +264,18 @@ public class Enemy_AI : MonoBehaviour
         }
     }
 
+    private void IsFacingRight()
+    {
+        if(direction == 1)
+        {
+            isFacingRight = true;
+        }
+        else
+        {
+            isFacingRight = false;
+        }
+    }
+
     ////-----AttacK functions
 
     void EnemyAttack()
@@ -265,7 +283,6 @@ public class Enemy_AI : MonoBehaviour
         //Vector2 playerRight = new Vector2(1, 0);   //--- Codigo a eliminar
         //Vector2 playerLeft = new Vector2(-1, 0);   //--- Codigo a eliminar
 
-        LayerMask playerMask = LayerMask.GetMask("Player");
         RaycastHit2D playerHitRight = Physics2D.Raycast(enemyVision, Vector2.right, 1.5f, playerMask);
         RaycastHit2D playerHitLeft = Physics2D.Raycast(enemyVision, Vector2.left, 1.5f, playerMask);
         if ((playerHitRight && playerHitRight.collider.gameObject.tag == "Player" && direction > 0) || enemyAttackCheck)
@@ -333,7 +350,14 @@ public class Enemy_AI : MonoBehaviour
         {
             if (colliders.gameObject.tag == "Player")
             {
-                colliders.GetComponent<Player_Attack>().GetDamage(damageAttack);
+                if(colliders.GetComponent<Player_Attack>().defendState == true && colliders.GetComponent<Player_Movement>().IsFacingLeft() == isFacingRight)
+                {
+                    colliders.GetComponent<Player_Attack>().GetStamina(damageAttack);
+                }
+                else
+                {
+                    colliders.GetComponent<Player_Attack>().GetDamage(damageAttack);
+                }
             }
         }
 

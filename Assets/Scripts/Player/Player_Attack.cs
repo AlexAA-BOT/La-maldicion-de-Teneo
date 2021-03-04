@@ -6,7 +6,9 @@ public class Player_Attack : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField] private int playerHealth = 100;
+    [SerializeField] private int playerEnergy = 100;
     [SerializeField] private float timeWithInvencibility = 4.0f;
+    [SerializeField] private float timeWithInvencibilityStamina = 0.2f;
 
     [Header("Attack")]
     [SerializeField] private Transform attackPoint;
@@ -18,8 +20,11 @@ public class Player_Attack : MonoBehaviour
     
     private bool attackBtn = false;
     private bool defendBtn = false;
+    [HideInInspector] public bool defendState = false;
     private bool invencibility = false;
     private float invencibilityTime = 0.0f;
+    private bool invencibilityStamina = false;
+    private float invencibilityTimeStamina = 0.0f;
 
     [Header("Layers")]
     [SerializeField] private LayerMask enemyLayers;
@@ -38,6 +43,17 @@ public class Player_Attack : MonoBehaviour
         {
             attackBtn = true;
         }
+
+        if(defendBtn && playerEnergy > 0)
+        {
+            defendState = true;
+        }
+        else
+        {
+            defendState = false;
+        }
+
+
     }
 
     // Update is called once per frame
@@ -121,6 +137,32 @@ public class Player_Attack : MonoBehaviour
         {
             Debug.Log("Player is Dead");
         }
+    }
+
+    public void GetStamina(int enemyDamage)
+    {
+        if (invencibilityStamina)
+        {
+            if (invencibilityTimeStamina <= 0.0f)
+            {
+                invencibilityTimeStamina += Time.deltaTime;
+            }
+            else if (invencibilityTimeStamina >= timeWithInvencibilityStamina)
+            {
+                invencibilityStamina = false;
+                invencibilityTimeStamina = 0.0f;
+            }
+            else
+            {
+                invencibilityTimeStamina += Time.deltaTime;
+            }
+        }
+        else if (enemyDamage > 0.0f && gameObject.GetComponent<Player_Movement>().state != Player_Movement.State.DODGEROLL)
+        {
+            invencibilityStamina = true;
+            playerEnergy -= enemyDamage;
+        }
+
     }
 
 }

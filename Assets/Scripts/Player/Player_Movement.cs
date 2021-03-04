@@ -23,6 +23,7 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private float rollSpeed = 10.0f;
     [SerializeField] private float dashSpeed = 15.0f;
     [SerializeField] private float dashTime;
+    [SerializeField] private bool isFacingLeft = true;
     private float startDashTime = 0.0f;
 
 
@@ -46,7 +47,6 @@ public class Player_Movement : MonoBehaviour
 
     [SerializeField] private float gravityScale = 10.0f;
     [SerializeField] private float k_GroundedRadius = 0.2f;
-    [SerializeField] private bool isFacingLeft = true;
 
 
     // Start is called before the first frame update
@@ -257,6 +257,8 @@ public class Player_Movement : MonoBehaviour
         }
         
     }
+
+    public bool IsFacingLeft() { return isFacingLeft; }
 
     void OnDrawGizmosSelected()
     {
