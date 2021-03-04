@@ -211,6 +211,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5518234316124148360, guid: f613e976f2a917c4b9ce57b6624adc26,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5518234316124148404, guid: f613e976f2a917c4b9ce57b6624adc26,
         type: 3}
       propertyPath: m_Name
@@ -219,12 +224,12 @@ PrefabInstance:
     - target: {fileID: 5518234316124148406, guid: f613e976f2a917c4b9ce57b6624adc26,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.91
+      value: 2.51
       objectReference: {fileID: 0}
     - target: {fileID: 5518234316124148406, guid: f613e976f2a917c4b9ce57b6624adc26,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.84
+      value: -3.92
       objectReference: {fileID: 0}
     - target: {fileID: 5518234316124148406, guid: f613e976f2a917c4b9ce57b6624adc26,
         type: 3}
@@ -271,6 +276,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6815657201516656937, guid: f613e976f2a917c4b9ce57b6624adc26,
+        type: 3}
+      propertyPath: m_Name
+      value: Eye
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f613e976f2a917c4b9ce57b6624adc26, type: 3}
 --- !u!1001 &6787332347960952782
@@ -280,6 +290,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5513121586010247666, guid: 1714328eb836eef48aadc92696a6fa5e,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6787332347849251266, guid: 1714328eb836eef48aadc92696a6fa5e,
         type: 3}
       propertyPath: m_SortingLayer
