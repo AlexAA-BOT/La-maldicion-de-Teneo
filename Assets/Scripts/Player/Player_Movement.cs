@@ -79,7 +79,8 @@ public class Player_Movement : MonoBehaviour
         
 
         Salto();
-        Movement();
+        if (state != State.DODGEROLL)
+            Movement();
         ControlGravity();
         Dash();
 
@@ -217,7 +218,8 @@ public class Player_Movement : MonoBehaviour
     {
         if(rollBtn && m_Grounded && (horizontalMove > 0.0f || horizontalMove < 0.0f))
         {
-            if(!dashDirectionDecided)
+            state = State.DODGEROLL;
+            if (!dashDirectionDecided)
             {
                 
                 dashDirection = new Vector2(horizontalMove * dashSpeed, m_Rigidbody2D.velocity.y);
@@ -225,7 +227,6 @@ public class Player_Movement : MonoBehaviour
             }
 
             m_Rigidbody2D.velocity = dashDirection;
-            state = State.DODGEROLL;
 
             if(startDashTime >= dashTime)
             {
@@ -245,6 +246,13 @@ public class Player_Movement : MonoBehaviour
             rollBtn = false;
             state = State.NORMAL;
             startDashTime = 0.0f;
+            dashDirectionDecided = false;
+        }
+        else if(rollBtn)
+        {
+            rollBtn = false;
+            startDashTime = 0.0f;
+            state = State.NORMAL;
             dashDirectionDecided = false;
         }
         

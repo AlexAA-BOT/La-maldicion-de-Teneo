@@ -12,7 +12,7 @@ public class Enemy_AI : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float runSpeed;
     private float speed = 0.0f;
-    private int direction = 1;
+    [HideInInspector] public int direction = 1;
     private bool fall = false;
     private bool actualWalk = true;
     private float walkTime = 0.0f;

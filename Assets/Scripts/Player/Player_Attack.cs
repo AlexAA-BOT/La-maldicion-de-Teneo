@@ -17,6 +17,7 @@ public class Player_Attack : MonoBehaviour
     private float timerAttack = 0.0f;
     
     private bool attackBtn = false;
+    private bool defendBtn = false;
     private bool invencibility = false;
     private float invencibilityTime = 0.0f;
 
@@ -31,6 +32,8 @@ public class Player_Attack : MonoBehaviour
 
     private void Update()
     {
+        defendBtn = Input.GetButton("Defend");
+
         if (Input.GetButtonDown("Attack"))
         {
             attackBtn = true;
