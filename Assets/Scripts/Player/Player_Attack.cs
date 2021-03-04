@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class Player_Attack : MonoBehaviour
 {
+    [Header("Health")]
+    [SerializeField] private int playerHealth = 100;
+    [SerializeField] private float timeWithInvencibility = 4.0f;
 
+    [Header("Attack")]
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackRange = 0.2f;
-    [SerializeField] private LayerMask enemyLayers;
-
-    [SerializeField] private float playerDamage = 20.0f;
-
-    private float timerAttack = 0.0f;
+    [SerializeField] private int playerDamage = 20;
     [SerializeField] private float timeBetweenAttack;
 
+    private float timerAttack = 0.0f;
+    
     private bool attackBtn = false;
+    private bool invencibility = false;
+    private float invencibilityTime = 0.0f;
+
+    [Header("Layers")]
+    [SerializeField] private LayerMask enemyLayers;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +56,9 @@ public class Player_Attack : MonoBehaviour
         {
             timerAttack += Time.deltaTime;
         }
+
+        GetDamage(0);
+
     }
 
     void Attack()//para hacer daño
@@ -59,7 +69,13 @@ public class Player_Attack : MonoBehaviour
         //Damage them
         foreach (Collider2D enemy in hitEnemies)
         {
-            Debug.Log(enemy.tag);
+            switch (enemy.gameObject.tag)
+            {
+                case ("GreenSkeleton"):
+                    enemy.GetComponent<Enemy_AI>().GetDamage(playerDamage);
+                    Debug.Log(enemy.tag);
+                    break;
+            }
         }
 
         attackBtn = false;
@@ -74,5 +90,34 @@ public class Player_Attack : MonoBehaviour
         //Gizmos.DrawWireSphere(this.gameObject.transform.position, 0.1f);
     }
 
+    public void GetDamage(int enemyDamage)
+    {
+        if (invencibility)
+        {
+            if (invencibilityTime <= 0.0f)
+            {
+                invencibilityTime += Time.deltaTime;
+            }
+            else if (invencibilityTime >= timeWithInvencibility)
+            {
+                invencibility = false;
+                invencibilityTime = 0.0f;
+            }
+            else
+            {
+                invencibilityTime += Time.deltaTime;
+            }
+        }
+        else if (enemyDamage > 0.0f && gameObject.GetComponent<Player_Movement>().state != Player_Movement.State.DODGEROLL)
+        {
+            invencibility = true;
+            playerHealth -= enemyDamage;
+        }
+
+        if (playerHealth <= 0)
+        {
+            Debug.Log("Player is Dead");
+        }
+    }
 
 }

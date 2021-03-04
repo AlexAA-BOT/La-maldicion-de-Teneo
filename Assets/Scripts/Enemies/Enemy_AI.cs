@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Enemy_AI : MonoBehaviour
 {
+    [Header("Health")]
+    [SerializeField] private int enemyHealth = 100;
+
+
     //Movement
     [Header("Movement")]
     [SerializeField] private float runSpeed;
@@ -20,6 +24,18 @@ public class Enemy_AI : MonoBehaviour
     //Attack
     private bool enemyAttackCheck = false;
     private bool hurtAnimation = false;
+    [Header("Attack")]
+    [SerializeField] private float distanceToAttack = 1.5f;
+    [SerializeField] private float startAttack;
+    [SerializeField] private float endAttack;
+    [SerializeField] private float endAttackAnimation;
+    [SerializeField] private Transform attack_Point;
+    [SerializeField] private float attackRange = 0.2f;
+    [SerializeField] private int damageAttack = 20;
+    [SerializeField] private float hurtCoolDown = 1.8f;
+    private float timerAttack = 0.0f;
+    private float hurtTime = 0.0f;
+
 
     //Vector2
     private Vector2 enemyVision;
@@ -37,6 +53,7 @@ public class Enemy_AI : MonoBehaviour
 
     [Header("Layers")]
     [SerializeField] private LayerMask platform;
+    [SerializeField] private LayerMask playerMask;
 
 
     // Start is called before the first frame update
@@ -69,6 +86,7 @@ public class Enemy_AI : MonoBehaviour
         }
 
         SeePlayer();
+        EnemyAttack();
 
     }
 
@@ -106,12 +124,12 @@ public class Enemy_AI : MonoBehaviour
         }
 
         //Codigo para para cuando el jugador este muy cerca
-        Vector2 playerRight = new Vector2(1, 0);
-        Vector2 playerLeft = new Vector2(-1, 0);
+        //Vector2 playerRight = new Vector2(1, 0);   //--- Codigo para eliminar
+        //Vector2 playerLeft = new Vector2(-1, 0);   //--- Codigo para eliminar
 
         LayerMask playerMask = LayerMask.GetMask("Player");
-        RaycastHit2D playerHitRight = Physics2D.Raycast(enemyVision, playerRight, 1.5f, playerMask);
-        RaycastHit2D playerHitLeft = Physics2D.Raycast(enemyVision, playerLeft, 1.5f, playerMask);
+        RaycastHit2D playerHitRight = Physics2D.Raycast(enemyVision, Vector2.right, distanceToAttack, playerMask);
+        RaycastHit2D playerHitLeft = Physics2D.Raycast(enemyVision, Vector2.left, distanceToAttack, playerMask);
 
         if (playerHitRight && playerHitRight.collider.gameObject.tag == "Player" && direction > 0)
         {
@@ -240,5 +258,121 @@ public class Enemy_AI : MonoBehaviour
         }
     }
 
+    ////-----AttacK functions
+
+    void EnemyAttack()
+    {
+        //Vector2 playerRight = new Vector2(1, 0);   //--- Codigo a eliminar
+        //Vector2 playerLeft = new Vector2(-1, 0);   //--- Codigo a eliminar
+
+        LayerMask playerMask = LayerMask.GetMask("Player");
+        RaycastHit2D playerHitRight = Physics2D.Raycast(enemyVision, Vector2.right, 1.5f, playerMask);
+        RaycastHit2D playerHitLeft = Physics2D.Raycast(enemyVision, Vector2.left, 1.5f, playerMask);
+        if ((playerHitRight && playerHitRight.collider.gameObject.tag == "Player" && direction > 0) || enemyAttackCheck)
+        {
+            if (timerAttack <= 0 && !hurtAnimation)  //Se activa la animacion de ataque
+            {
+                //Animator.SetTrigger("Attack");
+                timerAttack += Time.deltaTime;
+                enemyAttackCheck = true;
+            }
+            else if (timerAttack >= startAttack && timerAttack <= endAttack && !hurtAnimation)  //Enemigo esta en el momento en que hace el corte y es ahi cuando el Player puede recivir daño
+            {
+                attack();
+                timerAttack += Time.deltaTime;
+                Debug.Log("Ataca");
+            }
+            else if (timerAttack >= endAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
+            {
+                timerAttack = 0.0f;
+                enemyAttackCheck = false;
+            }
+            else
+            {
+                timerAttack += Time.deltaTime;
+            }
+
+        }
+        else if ((playerHitLeft && playerHitLeft.collider.gameObject.tag == "Player" && direction < 0) || enemyAttackCheck)
+        {
+            if (timerAttack <= 0 && !hurtAnimation)  //Se activa la animacion de ataque
+            {
+                //Animator.SetTrigger("Attack");
+                timerAttack += Time.deltaTime;
+                enemyAttackCheck = true;
+            }
+            else if (timerAttack >= startAttack && timerAttack <= endAttack && !hurtAnimation)  //Enemigo esta en el momento en que hace el corte y es ahi cuando el Player puede recivir daño
+            {
+                attack();
+                timerAttack += Time.deltaTime;
+                Debug.Log("Ataca");
+            }
+            else if (timerAttack >= endAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
+            {
+                timerAttack = 0.0f;
+                enemyAttackCheck = false;
+            }
+            else
+            {
+                timerAttack += Time.deltaTime;
+            }
+        }
+
+        if(hurtAnimation)
+        {
+            timerAttack = 0.0f;
+            enemyAttackCheck = false;
+        }
+
+    }
+
+    void attack()
+    {
+        Collider2D[] objectsInEnemyAttack = Physics2D.OverlapCircleAll(attack_Point.position, attackRange, playerMask);
+        foreach (Collider2D colliders in objectsInEnemyAttack)
+        {
+            if (colliders.gameObject.tag == "Player")
+            {
+                colliders.GetComponent<Player_Attack>().GetDamage(damageAttack);
+            }
+        }
+
+    }
+
+    //Recibe daño del jugador (Player)
+    public void GetDamage(int playerDamage)
+    {
+        if(!hurtAnimation) enemyHealth -= playerDamage;
+
+        if (enemyHealth <= 0)
+        {
+            Debug.Log("Enemigo muerto");
+        }
+        else
+        {
+            if (playerDamage > 0 || hurtAnimation)
+            {
+                if (hurtTime <= 0)
+                {
+                    //Animator.SetTrigger("Hurt");
+                    hurtAnimation = true;
+                    hurtCoolDown = hurtTime;
+                }
+                else if (hurtTime >= hurtCoolDown)
+                {
+                    hurtAnimation = false;
+                    hurtCoolDown = 0.0f;
+                }
+            }
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (attack_Point == null)
+            return;
+        Gizmos.DrawWireSphere(attack_Point.position, attackRange);
+        //Gizmos.DrawWireSphere(this.gameObject.transform.position, 0.1f);
+    }
 
 }

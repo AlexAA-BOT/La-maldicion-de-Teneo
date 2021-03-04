@@ -30,8 +30,7 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private Transform m_GroundCheck;
 
     private Rigidbody2D m_Rigidbody2D;
-    public bool m_Grounded = true;  //Cambiar a private
-    private bool keyReleased = true;
+    private bool m_Grounded = true;  //Cambiar a private
     public int totalJumps;  //Cambiar a private
     private Vector2 leftSide = new Vector2(1, 0);
     private Vector2 rightSide = new Vector2(-1, 0);
@@ -39,8 +38,8 @@ public class Player_Movement : MonoBehaviour
     private Vector2 dashDirection;
     private bool dashDirectionDecided = false;
 
-    private enum State { NORMAL, DODGEROLL};
-    private State state;
+    [HideInInspector] public enum State { NORMAL, DODGEROLL};
+    [HideInInspector] public State state;
 
     [Header("Layers")]
     [SerializeField] private LayerMask m_WhatIsGround;

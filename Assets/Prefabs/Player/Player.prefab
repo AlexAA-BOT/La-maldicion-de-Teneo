@@ -187,8 +187,8 @@ MonoBehaviour:
   dashSpeed: 30
   dashTime: 0.2
   m_GroundCheck: {fileID: 6787332348398596318}
-  m_Grounded: 1
   totalJumps: 0
+  state: 0
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -207,13 +207,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14f72a43a810cb45ae177a5478a44a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHealth: 100
+  timeWithInvencibility: 4
   attackPoint: {fileID: 2666114758522683666}
   attackRange: 0.48
+  playerDamage: 20
+  timeBetweenAttack: 0.58
   enemyLayers:
     serializedVersion: 2
     m_Bits: 1024
-  playerDamage: 20
-  timeBetweenAttack: 0.58
 --- !u!1 &6787332348398596289
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,7 +271,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9147883164697194725}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.5900002, y: 0.26999998, z: -6.9644423}
+  m_LocalPosition: {x: -0.25, y: 0.26999998, z: -6.9644423}
   m_LocalScale: {x: 0.39999998, y: 0.39999998, z: 1}
   m_Children: []
   m_Father: {fileID: 6787332347849251267}
