@@ -6,9 +6,12 @@ public class Player_Attack : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField] private int playerHealth = 100;
-    [SerializeField] private int playerEnergy = 100;
+    [SerializeField] private float playerEnergy = 100;
     [SerializeField] private float timeWithInvencibility = 4.0f;
     [SerializeField] private float timeWithInvencibilityStamina = 0.2f;
+    [SerializeField] private float timeStaminaRecovery = 0.5f;
+    [SerializeField] private float recoveryEnergy = 15.0f;
+    private bool reloadEnergy = false;
 
     [Header("Attack")]
     [SerializeField] private Transform attackPoint;
@@ -25,6 +28,7 @@ public class Player_Attack : MonoBehaviour
     private float invencibilityTime = 0.0f;
     private bool invencibilityStamina = false;
     private float invencibilityTimeStamina = 0.0f;
+    private float timerStaminaReload = 0.0f;
 
     [Header("Layers")]
     [SerializeField] private LayerMask enemyLayers;
@@ -53,7 +57,8 @@ public class Player_Attack : MonoBehaviour
             defendState = false;
         }
 
-
+        ReloadStamina();
+        GetStamina(0);
     }
 
     // Update is called once per frame
@@ -163,6 +168,29 @@ public class Player_Attack : MonoBehaviour
             playerEnergy -= enemyDamage;
         }
 
+    }
+
+    private void ReloadStamina()
+    {
+        if(playerEnergy < 100.0f)
+        {
+            if(timerStaminaReload >= timeStaminaRecovery)
+            {
+                if(!defendBtn)
+                {
+                    playerEnergy += recoveryEnergy * Time.deltaTime;
+                }
+            }
+            else
+            {
+                timerStaminaReload += Time.deltaTime;
+            }
+        }
+        else
+        {
+            timerStaminaReload = 0.0f;
+            playerEnergy = 100.0f;
+        }
     }
 
 }

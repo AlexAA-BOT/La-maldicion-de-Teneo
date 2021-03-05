@@ -36,6 +36,7 @@ public class Enemy_AI : MonoBehaviour
     [SerializeField] private float hurtCoolDown = 1.8f;
     private float timerAttack = 0.0f;
     private float hurtTime = 0.0f;
+    private bool attackOneTime = false;
 
 
     //Vector2
@@ -283,11 +284,11 @@ public class Enemy_AI : MonoBehaviour
         //Vector2 playerRight = new Vector2(1, 0);   //--- Codigo a eliminar
         //Vector2 playerLeft = new Vector2(-1, 0);   //--- Codigo a eliminar
 
-        RaycastHit2D playerHitRight = Physics2D.Raycast(enemyVision, Vector2.right, 1.5f, playerMask);
-        RaycastHit2D playerHitLeft = Physics2D.Raycast(enemyVision, Vector2.left, 1.5f, playerMask);
+        RaycastHit2D playerHitRight = Physics2D.Raycast(enemyVision, Vector2.right, distanceToAttack, playerMask);
+        RaycastHit2D playerHitLeft = Physics2D.Raycast(enemyVision, Vector2.left, distanceToAttack, playerMask);
         if ((playerHitRight && playerHitRight.collider.gameObject.tag == "Player" && direction > 0) || enemyAttackCheck)
         {
-            if (timerAttack <= 0 && !hurtAnimation)  //Se activa la animacion de ataque
+            if (timerAttack <= 0.0f && !hurtAnimation)  //Se activa la animacion de ataque
             {
                 //Animator.SetTrigger("Attack");
                 timerAttack += Time.deltaTime;
@@ -303,6 +304,7 @@ public class Enemy_AI : MonoBehaviour
             {
                 timerAttack = 0.0f;
                 enemyAttackCheck = false;
+                attackOneTime = false;
             }
             else
             {
@@ -312,7 +314,7 @@ public class Enemy_AI : MonoBehaviour
         }
         else if ((playerHitLeft && playerHitLeft.collider.gameObject.tag == "Player" && direction < 0) || enemyAttackCheck)
         {
-            if (timerAttack <= 0 && !hurtAnimation)  //Se activa la animacion de ataque
+            if (timerAttack <= 0.0f && !hurtAnimation)  //Se activa la animacion de ataque
             {
                 //Animator.SetTrigger("Attack");
                 timerAttack += Time.deltaTime;
@@ -328,6 +330,7 @@ public class Enemy_AI : MonoBehaviour
             {
                 timerAttack = 0.0f;
                 enemyAttackCheck = false;
+                attackOneTime = false;
             }
             else
             {
@@ -348,11 +351,12 @@ public class Enemy_AI : MonoBehaviour
         Collider2D[] objectsInEnemyAttack = Physics2D.OverlapCircleAll(attack_Point.position, attackRange, playerMask);
         foreach (Collider2D colliders in objectsInEnemyAttack)
         {
-            if (colliders.gameObject.tag == "Player")
+            if (colliders.gameObject.tag == "Player" && !attackOneTime)
             {
                 if(colliders.GetComponent<Player_Attack>().defendState == true && colliders.GetComponent<Player_Movement>().IsFacingLeft() == isFacingRight)
                 {
                     colliders.GetComponent<Player_Attack>().GetStamina(damageAttack);
+                    attackOneTime = true;
                 }
                 else
                 {
@@ -360,7 +364,6 @@ public class Enemy_AI : MonoBehaviour
                 }
             }
         }
-
     }
 
     //Recibe daño del jugador (Player)
