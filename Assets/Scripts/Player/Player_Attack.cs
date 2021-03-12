@@ -11,13 +11,14 @@ public class Player_Attack : MonoBehaviour
     [SerializeField] private float timeWithInvencibilityStamina = 0.2f;
     [SerializeField] private float timeStaminaRecovery = 0.5f;
     [SerializeField] private float recoveryEnergy = 15.0f;
-    private bool reloadEnergy = false;
+    [SerializeField] private float invencibilityTransparency = 0.5f;
+    private bool reloadEnergy = false;  //// Mirar si se usa
 
     [Header("Attack")]
-    [SerializeField] private Transform attackPoint;
+    [SerializeField] private Transform attackPoint = null;
     [SerializeField] private float attackRange = 0.2f;
     [SerializeField] private int playerDamage = 20;
-    [SerializeField] private float timeBetweenAttack;
+    [SerializeField] private float timeBetweenAttack = 0.0f;
 
     private float timerAttack = 0.0f;
     
@@ -29,14 +30,15 @@ public class Player_Attack : MonoBehaviour
     private bool invencibilityStamina = false;
     private float invencibilityTimeStamina = 0.0f;
     private float timerStaminaReload = 0.0f;
+    private SpriteRenderer mySprite = null;
 
     [Header("Layers")]
-    [SerializeField] private LayerMask enemyLayers;
+    [SerializeField] private LayerMask enemyLayers = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        mySprite = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -121,11 +123,13 @@ public class Player_Attack : MonoBehaviour
             if (invencibilityTime <= 0.0f)
             {
                 invencibilityTime += Time.deltaTime;
+                mySprite.color = new Color(mySprite.color.r, mySprite.color.g, mySprite.color.b, invencibilityTransparency);
             }
             else if (invencibilityTime >= timeWithInvencibility)
             {
                 invencibility = false;
                 invencibilityTime = 0.0f;
+                mySprite.color = new Color(mySprite.color.r, mySprite.color.g, mySprite.color.b, 1.0f);
             }
             else
             {

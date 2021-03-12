@@ -10,16 +10,16 @@ public class Enemy_AI : MonoBehaviour
 
     //Movement
     [Header("Movement")]
-    [SerializeField] private float runSpeed;
+    [SerializeField] private float runSpeed = 1.5f;
     private float speed = 0.0f;
     [HideInInspector] public int direction = 1;
     private bool fall = false;
     private bool actualWalk = true;
     private float walkTime = 0.0f;
-    private int walkType;
+    private int walkType = 0;
     private float walkTimeCoolDown = 0.0f;
-    private int walkDirectionRand;
-    private Rigidbody2D m_rigidbody2D;
+    private int walkDirectionRand = 0;
+    private Rigidbody2D m_rigidbody2D = null;
     private bool isFacingRight = false;
 
     //Attack
@@ -27,10 +27,10 @@ public class Enemy_AI : MonoBehaviour
     private bool hurtAnimation = false;
     [Header("Attack")]
     [SerializeField] private float distanceToAttack = 1.5f;
-    [SerializeField] private float startAttack;
-    [SerializeField] private float endAttack;
-    [SerializeField] private float endAttackAnimation;
-    [SerializeField] private Transform attack_Point;
+    [SerializeField] private float startAttack = 0.0f;
+    [SerializeField] private float endAttack = 2.0f;
+    [SerializeField] private float endAttackAnimation = 3.0f;
+    [SerializeField] private Transform attack_Point = null;
     [SerializeField] private float attackRange = 0.2f;
     [SerializeField] private int damageAttack = 20;
     [SerializeField] private float hurtCoolDown = 1.8f;
@@ -40,22 +40,22 @@ public class Enemy_AI : MonoBehaviour
 
 
     //Vector2
-    private Vector2 enemyVision;
-    private Vector2 enemyCenter;
+    private Vector2 enemyVision = Vector2.zero;
+    private Vector2 enemyCenter = Vector2.zero;
     private Vector2 enemyPlatformLeft = new Vector2(-1, -1);
     private Vector2 enemyPlatformRight = new Vector2(1, -1);
     private Vector2 enemyPlatformDown = Vector2.down;
     private Vector2 enemyDirectionRight = Vector2.right;
     private Vector2 enemyDirectionLeft = Vector2.left;
 
-    private Vector3 enemyAttackColRight;
-    private Vector3 enemyAttackColLeft;
+    private Vector3 enemyAttackColRight = Vector3.zero;
+    private Vector3 enemyAttackColLeft = Vector3.zero;
 
-    [SerializeField] private float height;
+    [SerializeField] private float height = 1.0f;
 
     [Header("Layers")]
-    [SerializeField] private LayerMask platform;
-    [SerializeField] private LayerMask playerMask;
+    [SerializeField] private LayerMask platform = 0;
+    [SerializeField] private LayerMask playerMask = 0;
 
 
     // Start is called before the first frame update
