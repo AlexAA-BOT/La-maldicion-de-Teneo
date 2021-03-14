@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GreenSkeleton
   - Ground
+  - Item_Shop
   layers:
   - Default
   - TransparentFX
