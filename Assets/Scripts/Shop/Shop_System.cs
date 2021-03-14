@@ -1,35 +1,53 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Shop_System : MonoBehaviour
 {
     [Header("GameObjects")]
-    [SerializeField] private GameObject noMoneyWin = null;
+    [SerializeField] private GameObject noMoneyWind = null;
+    [SerializeField] private GameObject noSpaceWind = null;
     [SerializeField] private GameObject player = null;
-    private GameObject[] items = null;
+    //private GameObject[] items = null;
 
     [Header("Text")]
-    [SerializeField] private TextMesh money = null;
+    [SerializeField] private TextMeshProUGUI money = null;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        noMoneyWin.SetActive(false);
+        noMoneyWind.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player");
-        items = GameObject.FindGameObjectsWithTag("Item_Shop");
+        //items = GameObject.FindGameObjectsWithTag("Price");
+        money.text = "Money: " + player.GetComponent<Player_Inventory>().GetMoney();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        money.text = "Money: " + player.GetComponent<Player_Inventory>().GetMoney();
+    }
+
+    public void OpenNoSpaceWind()
+    {
+        noSpaceWind.SetActive(true);
+    }
+
+    public void CloseNoSpaceWind()
+    {
+        noSpaceWind.SetActive(false);
+    }
+
+    public void OpenNoMoneyWind()
+    {
+        noMoneyWind.SetActive(true);
     }
 
     public void CloseNoMoneyWind()
     {
-        noMoneyWin.SetActive(false);
+        noMoneyWind.SetActive(false);
     }
 
 }
