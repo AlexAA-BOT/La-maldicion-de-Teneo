@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player_Attack : MonoBehaviour
 {
     [Header("Health")]
-    [SerializeField] private int playerHealth = 100;
+    [SerializeField] private float playerHealth = 100;
     [SerializeField] private float playerEnergy = 100;
     [SerializeField] private float timeWithInvencibility = 4.0f;
     [SerializeField] private float timeWithInvencibilityStamina = 0.2f;
@@ -196,5 +196,9 @@ public class Player_Attack : MonoBehaviour
             playerEnergy = 100.0f;
         }
     }
+
+    public float GetHealth() { return playerHealth; }
+
+    public float GetStamina() { return playerEnergy; }
 
 }
