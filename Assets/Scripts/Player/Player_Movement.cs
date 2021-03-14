@@ -7,7 +7,7 @@ public class Player_Movement : MonoBehaviour
     //Inputs
     private float horizontalMove = 0f;
     private bool interactButtonInput = false;
-    private bool attackButton = false;
+    private bool attackButton = false;  ////Mirar si se usa
     private bool jmpBtn = false;
     private bool jmpBtnDown = false;
     private bool rollBtn = false;
@@ -22,31 +22,31 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private float jumpGravityPercentage = 0.7f;
     [SerializeField] private float rollSpeed = 10.0f;
     [SerializeField] private float dashSpeed = 15.0f;
-    [SerializeField] private float dashTime;
+    [SerializeField] private float dashTime = 0.3f;
+    [SerializeField] private bool isFacingLeft = true;
     private float startDashTime = 0.0f;
 
 
     [Header("Transforms")]
-    [SerializeField] private Transform m_GroundCheck;
+    [SerializeField] private Transform m_GroundCheck = null;
 
-    private Rigidbody2D m_Rigidbody2D;
+    private Rigidbody2D m_Rigidbody2D = null;
     private bool m_Grounded = true;  //Cambiar a private
     public int totalJumps;  //Cambiar a private
     private Vector2 leftSide = new Vector2(1, 0);
     private Vector2 rightSide = new Vector2(-1, 0);
     private bool doubleJump = false;
-    private Vector2 dashDirection;
+    private Vector2 dashDirection = Vector2.zero;
     private bool dashDirectionDecided = false;
 
     [HideInInspector] public enum State { NORMAL, DODGEROLL};
     [HideInInspector] public State state;
 
     [Header("Layers")]
-    [SerializeField] private LayerMask m_WhatIsGround;
+    [SerializeField] private LayerMask m_WhatIsGround = 0;
 
     [SerializeField] private float gravityScale = 10.0f;
     [SerializeField] private float k_GroundedRadius = 0.2f;
-    [SerializeField] private bool isFacingLeft = true;
 
 
     // Start is called before the first frame update
@@ -79,7 +79,8 @@ public class Player_Movement : MonoBehaviour
         
 
         Salto();
-        Movement();
+        if (state != State.DODGEROLL)
+            Movement();
         ControlGravity();
         Dash();
 
@@ -217,7 +218,8 @@ public class Player_Movement : MonoBehaviour
     {
         if(rollBtn && m_Grounded && (horizontalMove > 0.0f || horizontalMove < 0.0f))
         {
-            if(!dashDirectionDecided)
+            state = State.DODGEROLL;
+            if (!dashDirectionDecided)
             {
                 
                 dashDirection = new Vector2(horizontalMove * dashSpeed, m_Rigidbody2D.velocity.y);
@@ -225,7 +227,6 @@ public class Player_Movement : MonoBehaviour
             }
 
             m_Rigidbody2D.velocity = dashDirection;
-            state = State.DODGEROLL;
 
             if(startDashTime >= dashTime)
             {
@@ -247,8 +248,17 @@ public class Player_Movement : MonoBehaviour
             startDashTime = 0.0f;
             dashDirectionDecided = false;
         }
+        else if(rollBtn)
+        {
+            rollBtn = false;
+            startDashTime = 0.0f;
+            state = State.NORMAL;
+            dashDirectionDecided = false;
+        }
         
     }
+
+    public bool IsFacingLeft() { return isFacingLeft; }
 
     void OnDrawGizmosSelected()
     {

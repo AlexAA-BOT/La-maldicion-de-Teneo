@@ -147,6 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHealth: 100
   runSpeed: 5
+  direction: 1
   distanceToAttack: 0.8
   startAttack: 0.5
   endAttack: 1
@@ -155,7 +156,7 @@ MonoBehaviour:
   attackRange: 0.48
   damageAttack: 20
   hurtCoolDown: 1.8
-  height: 0.5
+  height: 0.1
   platform:
     serializedVersion: 2
     m_Bits: 256

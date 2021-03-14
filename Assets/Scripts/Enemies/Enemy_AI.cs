@@ -10,50 +10,52 @@ public class Enemy_AI : MonoBehaviour
 
     //Movement
     [Header("Movement")]
-    [SerializeField] private float runSpeed;
+    [SerializeField] private float runSpeed = 1.5f;
     private float speed = 0.0f;
-    private int direction = 1;
+    [HideInInspector] public int direction = 1;
     private bool fall = false;
     private bool actualWalk = true;
     private float walkTime = 0.0f;
-    private int walkType;
+    private int walkType = 0;
     private float walkTimeCoolDown = 0.0f;
-    private int walkDirectionRand;
-    private Rigidbody2D m_rigidbody2D;
+    private int walkDirectionRand = 0;
+    private Rigidbody2D m_rigidbody2D = null;
+    private bool isFacingRight = false;
 
     //Attack
     private bool enemyAttackCheck = false;
     private bool hurtAnimation = false;
     [Header("Attack")]
     [SerializeField] private float distanceToAttack = 1.5f;
-    [SerializeField] private float startAttack;
-    [SerializeField] private float endAttack;
-    [SerializeField] private float endAttackAnimation;
-    [SerializeField] private Transform attack_Point;
+    [SerializeField] private float startAttack = 0.0f;
+    [SerializeField] private float endAttack = 2.0f;
+    [SerializeField] private float endAttackAnimation = 3.0f;
+    [SerializeField] private Transform attack_Point = null;
     [SerializeField] private float attackRange = 0.2f;
     [SerializeField] private int damageAttack = 20;
     [SerializeField] private float hurtCoolDown = 1.8f;
     private float timerAttack = 0.0f;
     private float hurtTime = 0.0f;
+    private bool attackOneTime = false;
 
 
     //Vector2
-    private Vector2 enemyVision;
-    private Vector2 enemyCenter;
+    private Vector2 enemyVision = Vector2.zero;
+    private Vector2 enemyCenter = Vector2.zero;
     private Vector2 enemyPlatformLeft = new Vector2(-1, -1);
     private Vector2 enemyPlatformRight = new Vector2(1, -1);
     private Vector2 enemyPlatformDown = Vector2.down;
     private Vector2 enemyDirectionRight = Vector2.right;
     private Vector2 enemyDirectionLeft = Vector2.left;
 
-    private Vector3 enemyAttackColRight;
-    private Vector3 enemyAttackColLeft;
+    private Vector3 enemyAttackColRight = Vector3.zero;
+    private Vector3 enemyAttackColLeft = Vector3.zero;
 
-    [SerializeField] private float height;
+    [SerializeField] private float height = 1.0f;
 
     [Header("Layers")]
-    [SerializeField] private LayerMask platform;
-    [SerializeField] private LayerMask playerMask;
+    [SerializeField] private LayerMask platform = 0;
+    [SerializeField] private LayerMask playerMask = 0;
 
 
     // Start is called before the first frame update
@@ -62,6 +64,11 @@ public class Enemy_AI : MonoBehaviour
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         enemyAttackColRight = new Vector3(this.gameObject.transform.localScale.x, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
         enemyAttackColLeft = new Vector3(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
+    }
+
+    private void Update()
+    {
+        IsFacingRight();
     }
 
     // Update is called once per frame
@@ -258,6 +265,18 @@ public class Enemy_AI : MonoBehaviour
         }
     }
 
+    private void IsFacingRight()
+    {
+        if(direction == 1)
+        {
+            isFacingRight = true;
+        }
+        else
+        {
+            isFacingRight = false;
+        }
+    }
+
     ////-----AttacK functions
 
     void EnemyAttack()
@@ -265,12 +284,11 @@ public class Enemy_AI : MonoBehaviour
         //Vector2 playerRight = new Vector2(1, 0);   //--- Codigo a eliminar
         //Vector2 playerLeft = new Vector2(-1, 0);   //--- Codigo a eliminar
 
-        LayerMask playerMask = LayerMask.GetMask("Player");
-        RaycastHit2D playerHitRight = Physics2D.Raycast(enemyVision, Vector2.right, 1.5f, playerMask);
-        RaycastHit2D playerHitLeft = Physics2D.Raycast(enemyVision, Vector2.left, 1.5f, playerMask);
+        RaycastHit2D playerHitRight = Physics2D.Raycast(enemyVision, Vector2.right, distanceToAttack, playerMask);
+        RaycastHit2D playerHitLeft = Physics2D.Raycast(enemyVision, Vector2.left, distanceToAttack, playerMask);
         if ((playerHitRight && playerHitRight.collider.gameObject.tag == "Player" && direction > 0) || enemyAttackCheck)
         {
-            if (timerAttack <= 0 && !hurtAnimation)  //Se activa la animacion de ataque
+            if (timerAttack <= 0.0f && !hurtAnimation)  //Se activa la animacion de ataque
             {
                 //Animator.SetTrigger("Attack");
                 timerAttack += Time.deltaTime;
@@ -286,6 +304,7 @@ public class Enemy_AI : MonoBehaviour
             {
                 timerAttack = 0.0f;
                 enemyAttackCheck = false;
+                attackOneTime = false;
             }
             else
             {
@@ -295,7 +314,7 @@ public class Enemy_AI : MonoBehaviour
         }
         else if ((playerHitLeft && playerHitLeft.collider.gameObject.tag == "Player" && direction < 0) || enemyAttackCheck)
         {
-            if (timerAttack <= 0 && !hurtAnimation)  //Se activa la animacion de ataque
+            if (timerAttack <= 0.0f && !hurtAnimation)  //Se activa la animacion de ataque
             {
                 //Animator.SetTrigger("Attack");
                 timerAttack += Time.deltaTime;
@@ -311,6 +330,7 @@ public class Enemy_AI : MonoBehaviour
             {
                 timerAttack = 0.0f;
                 enemyAttackCheck = false;
+                attackOneTime = false;
             }
             else
             {
@@ -331,12 +351,19 @@ public class Enemy_AI : MonoBehaviour
         Collider2D[] objectsInEnemyAttack = Physics2D.OverlapCircleAll(attack_Point.position, attackRange, playerMask);
         foreach (Collider2D colliders in objectsInEnemyAttack)
         {
-            if (colliders.gameObject.tag == "Player")
+            if (colliders.gameObject.tag == "Player" && !attackOneTime)
             {
-                colliders.GetComponent<Player_Attack>().GetDamage(damageAttack);
+                if(colliders.GetComponent<Player_Attack>().defendState == true && colliders.GetComponent<Player_Movement>().IsFacingLeft() == isFacingRight)
+                {
+                    colliders.GetComponent<Player_Attack>().GetStamina(damageAttack);
+                    attackOneTime = true;
+                }
+                else
+                {
+                    colliders.GetComponent<Player_Attack>().GetDamage(damageAttack);
+                }
             }
         }
-
     }
 
     //Recibe daño del jugador (Player)

@@ -6,35 +6,61 @@ public class Player_Attack : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField] private int playerHealth = 100;
+    [SerializeField] private float playerEnergy = 100;
     [SerializeField] private float timeWithInvencibility = 4.0f;
+    [SerializeField] private float timeWithInvencibilityStamina = 0.2f;
+    [SerializeField] private float timeStaminaRecovery = 0.5f;
+    [SerializeField] private float recoveryEnergy = 15.0f;
+    [SerializeField] private float invencibilityTransparency = 0.5f;
+    private bool reloadEnergy = false;  //// Mirar si se usa
 
     [Header("Attack")]
-    [SerializeField] private Transform attackPoint;
+    [SerializeField] private Transform attackPoint = null;
     [SerializeField] private float attackRange = 0.2f;
     [SerializeField] private int playerDamage = 20;
-    [SerializeField] private float timeBetweenAttack;
+    [SerializeField] private float timeBetweenAttack = 0.0f;
 
     private float timerAttack = 0.0f;
     
     private bool attackBtn = false;
+    private bool defendBtn = false;
+    [HideInInspector] public bool defendState = false;
     private bool invencibility = false;
     private float invencibilityTime = 0.0f;
+    private bool invencibilityStamina = false;
+    private float invencibilityTimeStamina = 0.0f;
+    private float timerStaminaReload = 0.0f;
+    private SpriteRenderer mySprite = null;
 
     [Header("Layers")]
-    [SerializeField] private LayerMask enemyLayers;
+    [SerializeField] private LayerMask enemyLayers = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        mySprite = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {
+        defendBtn = Input.GetButton("Defend");
+
         if (Input.GetButtonDown("Attack"))
         {
             attackBtn = true;
         }
+
+        if(defendBtn && playerEnergy > 0)
+        {
+            defendState = true;
+        }
+        else
+        {
+            defendState = false;
+        }
+
+        ReloadStamina();
+        GetStamina(0);
     }
 
     // Update is called once per frame
@@ -97,11 +123,13 @@ public class Player_Attack : MonoBehaviour
             if (invencibilityTime <= 0.0f)
             {
                 invencibilityTime += Time.deltaTime;
+                mySprite.color = new Color(mySprite.color.r, mySprite.color.g, mySprite.color.b, invencibilityTransparency);
             }
             else if (invencibilityTime >= timeWithInvencibility)
             {
                 invencibility = false;
                 invencibilityTime = 0.0f;
+                mySprite.color = new Color(mySprite.color.r, mySprite.color.g, mySprite.color.b, 1.0f);
             }
             else
             {
@@ -117,6 +145,55 @@ public class Player_Attack : MonoBehaviour
         if (playerHealth <= 0)
         {
             Debug.Log("Player is Dead");
+        }
+    }
+
+    public void GetStamina(int enemyDamage)
+    {
+        if (invencibilityStamina)
+        {
+            if (invencibilityTimeStamina <= 0.0f)
+            {
+                invencibilityTimeStamina += Time.deltaTime;
+            }
+            else if (invencibilityTimeStamina >= timeWithInvencibilityStamina)
+            {
+                invencibilityStamina = false;
+                invencibilityTimeStamina = 0.0f;
+            }
+            else
+            {
+                invencibilityTimeStamina += Time.deltaTime;
+            }
+        }
+        else if (enemyDamage > 0.0f && gameObject.GetComponent<Player_Movement>().state != Player_Movement.State.DODGEROLL)
+        {
+            invencibilityStamina = true;
+            playerEnergy -= enemyDamage;
+        }
+
+    }
+
+    private void ReloadStamina()
+    {
+        if(playerEnergy < 100.0f)
+        {
+            if(timerStaminaReload >= timeStaminaRecovery)
+            {
+                if(!defendBtn)
+                {
+                    playerEnergy += recoveryEnergy * Time.deltaTime;
+                }
+            }
+            else
+            {
+                timerStaminaReload += Time.deltaTime;
+            }
+        }
+        else
+        {
+            timerStaminaReload = 0.0f;
+            playerEnergy = 100.0f;
         }
     }
 
