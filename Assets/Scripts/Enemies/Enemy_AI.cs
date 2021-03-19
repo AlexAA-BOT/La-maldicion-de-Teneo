@@ -34,6 +34,7 @@ public class Enemy_AI : MonoBehaviour
     [SerializeField] private float attackRange = 0.2f;
     [SerializeField] private int damageAttack = 20;
     [SerializeField] private float hurtCoolDown = 1.8f;
+    [Space]
     private float timerAttack = 0.0f;
     private float hurtTime = 0.0f;
     private bool attackOneTime = false;
@@ -52,6 +53,8 @@ public class Enemy_AI : MonoBehaviour
     private Vector3 enemyAttackColLeft = Vector3.zero;
 
     [SerializeField] private float height = 1.0f;
+    [SerializeField] private GameObject gameObjectMoney = null;
+    [SerializeField] private bool dropMoney = true;  //// Eliminar a futuro
 
     [Header("Layers")]
     [SerializeField] private LayerMask platform = 0;
@@ -69,6 +72,7 @@ public class Enemy_AI : MonoBehaviour
     private void Update()
     {
         IsFacingRight();
+        GetDamage(0);
     }
 
     // Update is called once per frame
@@ -113,9 +117,13 @@ public class Enemy_AI : MonoBehaviour
             //Debug.Log("enemigo ve personaje izquierda");
             speed = runSpeed;
         }
-        else if (!enemyAttackCheck)
+        else if (!enemyAttackCheck && !hurtAnimation)
         {
             randomDirection();
+        }
+        else
+        {
+            speed = 0.0f;
         }
 
         //Codigo para poder ver al jugador por detras
@@ -374,6 +382,12 @@ public class Enemy_AI : MonoBehaviour
         if (enemyHealth <= 0)
         {
             Debug.Log("Enemigo muerto");
+            int numRandom = Random.Range(1, 100);
+            if(numRandom <= 50 && dropMoney)
+            {
+                Instantiate(gameObjectMoney, this.transform);
+            }
+            dropMoney = false;
         }
         else
         {
@@ -383,12 +397,16 @@ public class Enemy_AI : MonoBehaviour
                 {
                     //Animator.SetTrigger("Hurt");
                     hurtAnimation = true;
-                    hurtCoolDown = hurtTime;
+                    hurtTime += Time.deltaTime;
                 }
                 else if (hurtTime >= hurtCoolDown)
                 {
                     hurtAnimation = false;
-                    hurtCoolDown = 0.0f;
+                    hurtTime = 0.0f;
+                }
+                else
+                {
+                    hurtTime += Time.deltaTime;
                 }
             }
         }
