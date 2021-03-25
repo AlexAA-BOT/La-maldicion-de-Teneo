@@ -13,6 +13,17 @@ public class Menu_Bestiario : MonoBehaviour
     void Start()
     {
         buttons[0].SetActive(false);
+        foreach (GameObject page in pages)
+        {
+            if (page == pages[numPage])
+            {
+                page.SetActive(true);
+            }
+            else
+            {
+                page.SetActive(false);
+            }
+        }
     }
 
     public void pagesMore()
@@ -44,9 +55,11 @@ public class Menu_Bestiario : MonoBehaviour
         if(numPage == 0)
         {
             buttons[0].SetActive(false);
+            buttons[1].SetActive(true);
         }
-        else if(numPage == pages.Length)
+        else if(numPage == pages.Length - 1)
         {
+            buttons[0].SetActive(true);
             buttons[1].SetActive(false);
         }
         else
