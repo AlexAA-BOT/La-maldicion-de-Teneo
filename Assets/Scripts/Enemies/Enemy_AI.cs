@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Enemy_AI : MonoBehaviour
 {
+
+    //EnemyID
+    [HideInInspector] public enum EnemyID { GREENSKELETON, GOBLIN, OBSERVER };
+    public EnemyID enemyID = EnemyID.GREENSKELETON;
+
     [Header("Health")]
     [SerializeField] private int enemyHealth = 100;
 
@@ -56,7 +61,10 @@ public class Enemy_AI : MonoBehaviour
     [Header("Layers")]
     [SerializeField] private LayerMask platform = 0;
     [SerializeField] private LayerMask playerMask = 0;
+    [Space]
 
+    //GameObjects
+    private GameObject bestiarioCount = null;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +72,7 @@ public class Enemy_AI : MonoBehaviour
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         enemyAttackColRight = new Vector3(this.gameObject.transform.localScale.x, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
         enemyAttackColLeft = new Vector3(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
+        bestiarioCount = GameObject.FindGameObjectWithTag("BestiarioCount");
     }
 
     private void Update()
@@ -374,6 +383,7 @@ public class Enemy_AI : MonoBehaviour
         if (enemyHealth <= 0)
         {
             Debug.Log("Enemigo muerto");
+            bestiarioCount.GetComponent<Bestiario_Count>().AddToDeathCount(enemyID);
         }
         else
         {

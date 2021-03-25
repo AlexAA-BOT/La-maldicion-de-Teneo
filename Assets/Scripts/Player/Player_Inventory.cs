@@ -5,11 +5,12 @@ using UnityEngine;
 public class Player_Inventory : MonoBehaviour
 {
 
-    [HideInInspector] public enum Items { HEALTHPOTION, MONEY };
+    [HideInInspector] public enum Items { HEALTHPOTION, STAMINAPOTION, MONEY };
     [HideInInspector] public Items item;
 
     [SerializeField] private int money = 0;
     [SerializeField] private int numHealthPotions = 0;
+    [SerializeField] private int numStaminaPotions = 0;
     [SerializeField] private int maxItems = 4;
 
     // Start is called before the first frame update
@@ -35,6 +36,9 @@ public class Player_Inventory : MonoBehaviour
             case (Items.HEALTHPOTION):
                 numHealthPotions++;
                 break;
+            case (Items.STAMINAPOTION):
+                numStaminaPotions++;
+                break;
         }
     }
 
@@ -50,6 +54,8 @@ public class Player_Inventory : MonoBehaviour
         {
             case (Items.HEALTHPOTION):
                 return (maxItems > numHealthPotions);
+            case (Items.STAMINAPOTION):
+                return (maxItems > numStaminaPotions);
             default:
                 return false;
         }
@@ -61,9 +67,13 @@ public class Player_Inventory : MonoBehaviour
         {
             case (Items.HEALTHPOTION):
                 return (numHealthPotions);
+            case (Items.STAMINAPOTION):
+                return (numStaminaPotions);
             default:
                 return 0;
         }
     }
+
+    public int GetItemsMaxQuantity() { return maxItems; }
 
 }
