@@ -11,7 +11,9 @@ public class Enemy_AI : MonoBehaviour
 
     [Header("Health")]
     [SerializeField] private int enemyHealth = 100;
-
+    [SerializeField] private bool canRevive = false;
+    [SerializeField] private int numOfRevives = 1;
+    private int maxHealth = 0;
 
     //Movement
     [Header("Movement")]
@@ -72,6 +74,7 @@ public class Enemy_AI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        maxHealth = enemyHealth;
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         enemyAttackColRight = new Vector3(this.gameObject.transform.localScale.x, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
         enemyAttackColLeft = new Vector3(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
@@ -128,7 +131,7 @@ public class Enemy_AI : MonoBehaviour
         }
         else if (!enemyAttackCheck && !hurtAnimation)
         {
-            randomDirection();
+            RandomDirection();
         }
         else
         {
@@ -184,7 +187,7 @@ public class Enemy_AI : MonoBehaviour
         }
     }
 
-    void randomDirection()
+    void RandomDirection()
     {
         walkTime += Time.deltaTime;
         if (actualWalk)
@@ -313,7 +316,7 @@ public class Enemy_AI : MonoBehaviour
             }
             else if (timerAttack >= startAttack && timerAttack <= endAttack && !hurtAnimation)  //Enemigo esta en el momento en que hace el corte y es ahi cuando el Player puede recivir daño
             {
-                attack();
+                Attack();
                 timerAttack += Time.deltaTime;
                 Debug.Log("Ataca");
             }
@@ -339,7 +342,7 @@ public class Enemy_AI : MonoBehaviour
             }
             else if (timerAttack >= startAttack && timerAttack <= endAttack && !hurtAnimation)  //Enemigo esta en el momento en que hace el corte y es ahi cuando el Player puede recivir daño
             {
-                attack();
+                Attack();
                 timerAttack += Time.deltaTime;
                 Debug.Log("Ataca");
             }
@@ -363,7 +366,7 @@ public class Enemy_AI : MonoBehaviour
 
     }
 
-    void attack()
+    void Attack()
     {
         Collider2D[] objectsInEnemyAttack = Physics2D.OverlapCircleAll(attack_Point.position, attackRange, playerMask);
         foreach (Collider2D colliders in objectsInEnemyAttack)
@@ -388,16 +391,25 @@ public class Enemy_AI : MonoBehaviour
     {
         if(!hurtAnimation) enemyHealth -= playerDamage;
 
-        if (enemyHealth <= 0)
+        if (enemyHealth <= 0 && !canRevive)
         {
             Debug.Log("Enemigo muerto");
             int numRandom = Random.Range(1, 100);
             if(numRandom <= 50 && dropMoney)
             {
-                Instantiate(gameObjectMoney, this.transform);
+                Instantiate(gameObjectMoney, this.transform, false);
             }
             dropMoney = false;
             bestiarioCount.GetComponent<Bestiario_Count>().AddToDeathCount(enemyID);
+        }
+        else if(enemyHealth <= 0 && canRevive)
+        {
+            enemyHealth = maxHealth;
+            numOfRevives--;
+            if(numOfRevives <= 0)
+            {
+                canRevive = false;
+            }
         }
         else
         {
