@@ -14,6 +14,9 @@ public class Enemy_AI : MonoBehaviour
     [SerializeField] private bool canRevive = false;
     [SerializeField] private int numOfRevives = 1;
     private int maxHealth = 0;
+    private bool falseDeath =  false;
+    [SerializeField] private float falseDeathCoolDown = 2.0f;
+    private float falseDeathTime = 0.0f;
 
     //Movement
     [Header("Movement")]
@@ -70,6 +73,8 @@ public class Enemy_AI : MonoBehaviour
 
     //GameObjects
     private GameObject bestiarioCount = null;
+    private SpriteRenderer myColor = null;
+    [SerializeField] private GameObject eye = null;  //Temporal
 
     // Start is called before the first frame update
     void Start()
@@ -79,12 +84,31 @@ public class Enemy_AI : MonoBehaviour
         enemyAttackColRight = new Vector3(this.gameObject.transform.localScale.x, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
         enemyAttackColLeft = new Vector3(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
         bestiarioCount = GameObject.FindGameObjectWithTag("BestiarioCount");
+        myColor = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {
-        IsFacingRight();
-        GetDamage(0);
+        if(falseDeath)
+        {
+            if(falseDeathTime >= falseDeathCoolDown)
+            {
+                falseDeathTime = 0.0f;
+                myColor.color = new Color(255, 0, 0);
+                eye.SetActive(true);
+                falseDeath = false;
+            }
+            else
+            {
+                falseDeathTime += Time.deltaTime;
+            }
+        }
+        else
+        {
+            IsFacingRight();
+            GetDamage(0);
+        }
+        
     }
 
     // Update is called once per frame
@@ -96,20 +120,23 @@ public class Enemy_AI : MonoBehaviour
         RaycastHit2D hitPlatformRight = Physics2D.Raycast(enemyCenter, enemyPlatformRight, 3.0f, platform);
         RaycastHit2D hitPlatformLeft = Physics2D.Raycast(enemyCenter, enemyPlatformLeft, 3.0f, platform);
         RaycastHit2D hitPlatformDown = Physics2D.Raycast(this.gameObject.transform.position, enemyPlatformDown, 2.0f, platform);
-
-        if (hitPlatformDown && hitPlatformLeft.collider == false && hitPlatformDown.collider.gameObject.tag == "Ground" && direction < 0)
+        if(!falseDeath)
         {
-            direction = 1;
-            fall = true;
-        }
-        else if (hitPlatformDown && hitPlatformRight.collider == false && hitPlatformDown.collider.gameObject.tag == "Ground" && direction > 0)
-        {
-            direction = -1;
-            fall = true;
-        }
+            if (hitPlatformDown && hitPlatformLeft.collider == false && hitPlatformDown.collider.gameObject.tag == "Ground" && direction < 0)
+            {
+                direction = 1;
+                fall = true;
+            }
+            else if (hitPlatformDown && hitPlatformRight.collider == false && hitPlatformDown.collider.gameObject.tag == "Ground" && direction > 0)
+            {
+                direction = -1;
+                fall = true;
+            }
 
-        SeePlayer();
-        EnemyAttack();
+            SeePlayer();
+            EnemyAttack();
+        }
+        
 
     }
 
@@ -397,7 +424,7 @@ public class Enemy_AI : MonoBehaviour
             int numRandom = Random.Range(1, 100);
             if(numRandom <= 50 && dropMoney)
             {
-                Instantiate(gameObjectMoney, this.transform, false);
+                Instantiate(gameObjectMoney, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
             }
             dropMoney = false;
             bestiarioCount.GetComponent<Bestiario_Count>().AddToDeathCount(enemyID);
@@ -406,6 +433,9 @@ public class Enemy_AI : MonoBehaviour
         {
             enemyHealth = maxHealth;
             numOfRevives--;
+            falseDeath = true;
+            myColor.color = new Color(255, 255, 255);
+            eye.SetActive(false);
             if(numOfRevives <= 0)
             {
                 canRevive = false;

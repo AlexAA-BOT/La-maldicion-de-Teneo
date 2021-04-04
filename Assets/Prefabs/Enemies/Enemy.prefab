@@ -145,7 +145,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470c61be89a29f64cbfb63704f57cee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyID: 0
   enemyHealth: 100
+  canRevive: 0
+  numOfRevives: 1
+  falseDeathCoolDown: 2
   runSpeed: 5
   direction: 1
   distanceToAttack: 0.8
@@ -166,6 +170,7 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 512
+  eye: {fileID: 6815657201516656937}
 --- !u!1 &5852048254074441033
 GameObject:
   m_ObjectHideFlags: 0
