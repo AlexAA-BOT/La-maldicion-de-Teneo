@@ -4,10 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - GreenSkeleton
   - Ground
   - Item_Shop
   - BestiarioCount
+  - FlyingEnemy
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -6,8 +6,7 @@ public class FlyingEnemy_AI : MonoBehaviour
 {
 
     //EnemyID
-    [HideInInspector] public enum EnemyID { GREENSKELETON, GOBLIN, OBSERVER };
-    public EnemyID enemyID = EnemyID.GREENSKELETON;
+    public Enemy_AI.EnemyID enemyID = Enemy_AI.EnemyID.GREENSKELETON;
 
     [Header("Health")]
     [SerializeField] private int enemyHealth = 100;
@@ -89,6 +88,7 @@ public class FlyingEnemy_AI : MonoBehaviour
     private void Update()
     {
         IsFacingRight();
+        GetDamage(0);
     }
 
     private void FixedUpdate()
@@ -97,6 +97,7 @@ public class FlyingEnemy_AI : MonoBehaviour
         EnemyAttack();
     }
 
+    ////Movement
     private void EnemyMovement()
     {
         //Controla la direccion del enemigo
@@ -108,7 +109,7 @@ public class FlyingEnemy_AI : MonoBehaviour
         RaycastHit2D hitPlatformDown = Physics2D.Raycast(this.gameObject.transform.position, enemyPlatformDown, distanceFromGround, ground);
 
         //Movimientos del enemigo
-        if (goBack)
+        if (goBack && !hurtAnimation)
         {
             speed = runSpeed;
             if (hitPlatformDown)
@@ -152,90 +153,9 @@ public class FlyingEnemy_AI : MonoBehaviour
         }
     }
 
-    private void FlyUp()
-    {
-        
-    }
-
     private void StopMovement()
     {
         m_rigidbody2D.velocity = (direction * 0.0f);
-    }
-
-    private void ChangeAttackDirection()
-    {
-        switch (flyDirection)
-        {
-            case 1:
-                this.gameObject.transform.localScale = enemyAttackColRight;
-                break;
-            case -1:
-                this.gameObject.transform.localScale = enemyAttackColLeft;
-                break;
-        }
-    }
-
-    private void ChangeAttackDirection(Vector2 currentDirection)
-    {
-        if(currentDirection.x > 0.0f)
-        {
-            this.gameObject.transform.localScale = enemyAttackColRight;
-        }
-        else
-        {
-            this.gameObject.transform.localScale = enemyAttackColLeft;
-        }
-    }
-
-    private void EnemyAttack()
-    {
-        if (distance <= 2.0f || enemyAttackCheck)
-        {
-            if (timerAttack <= 0.0f && !hurtAnimation)  //Se activa la animacion de ataque
-            {
-                //Animator.SetTrigger("Attack");
-                timerAttack += Time.deltaTime;
-                enemyAttackCheck = true;
-            }
-            else if (timerAttack >= startAttack && timerAttack <= endAttack && !hurtAnimation)  //Enemigo esta en el momento en que hace el corte y es ahi cuando el Player puede recivir daño
-            {
-                Attack();
-                timerAttack += Time.deltaTime;
-                StopMovement();
-                Debug.Log("Ataca");
-            }
-            else if (timerAttack >= endAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
-            {
-                timerAttack = 0.0f;
-                enemyAttackCheck = false;
-                attackOneTime = false;
-                goBack = true;
-            }
-            else
-            {
-                timerAttack += Time.deltaTime;
-            }
-        }
-    }
-
-    void Attack()
-    {
-        Collider2D[] objectsInEnemyAttack = Physics2D.OverlapCircleAll(attack_Point.position, attackRange, playerMask);
-        foreach (Collider2D colliders in objectsInEnemyAttack)
-        {
-            if (colliders.gameObject.tag == "Player" && !attackOneTime)
-            {
-                if (colliders.GetComponent<Player_Attack>().defendState == true && colliders.GetComponent<Player_Movement>().IsFacingLeft() == isFacingRight)
-                {
-                    colliders.GetComponent<Player_Attack>().GetStamina(damageAttack);
-                    attackOneTime = true;
-                }
-                else
-                {
-                    colliders.GetComponent<Player_Attack>().GetDamage(damageAttack);
-                }
-            }
-        }
     }
 
     private void IsFacingRight()
@@ -338,6 +258,121 @@ public class FlyingEnemy_AI : MonoBehaviour
             case 1:
                 flyDirection = -1;
                 break;
+        }
+    }
+
+    ////Attack
+    private void ChangeAttackDirection()
+    {
+        switch (flyDirection)
+        {
+            case 1:
+                this.gameObject.transform.localScale = enemyAttackColRight;
+                break;
+            case -1:
+                this.gameObject.transform.localScale = enemyAttackColLeft;
+                break;
+        }
+    }
+
+    private void ChangeAttackDirection(Vector2 currentDirection)
+    {
+        if(currentDirection.x > 0.0f)
+        {
+            this.gameObject.transform.localScale = enemyAttackColRight;
+        }
+        else
+        {
+            this.gameObject.transform.localScale = enemyAttackColLeft;
+        }
+    }
+
+    private void EnemyAttack()
+    {
+        if (distance <= distanceToAttack || enemyAttackCheck)
+        {
+            if (timerAttack <= 0.0f && !hurtAnimation)  //Se activa la animacion de ataque
+            {
+                //Animator.SetTrigger("Attack");
+                timerAttack += Time.deltaTime;
+                enemyAttackCheck = true;
+            }
+            else if (timerAttack >= startAttack && timerAttack <= endAttack && !hurtAnimation)  //Enemigo esta en el momento en que hace el corte y es ahi cuando el Player puede recivir daño
+            {
+                Attack();
+                timerAttack += Time.deltaTime;
+                StopMovement();
+                Debug.Log("Ataca");
+            }
+            else if (timerAttack >= endAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
+            {
+                timerAttack = 0.0f;
+                enemyAttackCheck = false;
+                attackOneTime = false;
+                goBack = true;
+            }
+            else
+            {
+                timerAttack += Time.deltaTime;
+            }
+        }
+    }
+
+    void Attack()
+    {
+        Collider2D[] objectsInEnemyAttack = Physics2D.OverlapCircleAll(attack_Point.position, attackRange, playerMask);
+        foreach (Collider2D colliders in objectsInEnemyAttack)
+        {
+            if (colliders.gameObject.tag == "Player" && !attackOneTime)
+            {
+                if (colliders.GetComponent<Player_Attack>().defendState == true && colliders.GetComponent<Player_Movement>().IsFacingLeft() == isFacingRight)
+                {
+                    colliders.GetComponent<Player_Attack>().GetStamina(damageAttack);
+                    attackOneTime = true;
+                }
+                else
+                {
+                    colliders.GetComponent<Player_Attack>().GetDamage(damageAttack);
+                }
+            }
+        }
+    }
+
+    public void GetDamage(int playerDamage)
+    {
+        if (!hurtAnimation) enemyHealth -= playerDamage;
+
+        if (enemyHealth <= 0)
+        {
+            Debug.Log("Enemigo muerto");
+            int numRandom = Random.Range(1, 100);
+            if (numRandom <= 50 && dropMoney)
+            {
+                Instantiate(gameObjectMoney, this.transform);
+            }
+            dropMoney = false;
+            bestiarioCount.GetComponent<Bestiario_Count>().AddToDeathCount(enemyID);
+        }
+        else
+        {
+            if (playerDamage > 0 || hurtAnimation)
+            {
+                if (hurtTime <= 0)
+                {
+                    //Animator.SetTrigger("Hurt");
+                    hurtAnimation = true;
+                    hurtTime += Time.deltaTime;
+                }
+                else if (hurtTime >= hurtCoolDown)
+                {
+                    hurtAnimation = false;
+                    hurtTime = 0.0f;
+                }
+                else
+                {
+                    hurtTime += Time.deltaTime;
+                }
+            }
         }
     }
 

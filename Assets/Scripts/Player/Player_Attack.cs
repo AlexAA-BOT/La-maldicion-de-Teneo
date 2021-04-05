@@ -97,10 +97,13 @@ public class Player_Attack : MonoBehaviour
         {
             switch (enemy.gameObject.tag)
             {
-                case ("GreenSkeleton"):
+                case ("Enemy"):
                     enemy.GetComponent<Enemy_AI>().GetDamage(playerDamage);
-                    Debug.Log(enemy.tag);
                     break;
+                case ("FlyingEnemy"):
+                    enemy.GetComponent<FlyingEnemy_AI>().GetDamage(playerDamage);
+                    break;
+
             }
         }
 

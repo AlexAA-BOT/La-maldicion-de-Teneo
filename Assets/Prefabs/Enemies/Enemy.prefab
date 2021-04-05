@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -1434086512410538740}
   m_Layer: 10
   m_Name: Enemy
-  m_TagString: GreenSkeleton
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470c61be89a29f64cbfb63704f57cee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyID: 0
   enemyHealth: 100
   runSpeed: 5
   direction: 1
