@@ -6,6 +6,7 @@ public class Bestiario_Count : MonoBehaviour
 {
     private int greenSkeleton = 0;
     private int goblin = 0;
+    private int observer = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,9 @@ public class Bestiario_Count : MonoBehaviour
             case (Enemy_AI.EnemyID.GOBLIN):
                 goblin++;
                 break;
+            case (Enemy_AI.EnemyID.OBSERVER):
+                observer++;
+                break;
         }
     }
 
@@ -40,6 +44,8 @@ public class Bestiario_Count : MonoBehaviour
                 return greenSkeleton;
             case (Enemy_AI.EnemyID.GOBLIN):
                 return goblin;
+            case (Enemy_AI.EnemyID.OBSERVER):
+                return observer;
             default:
                 return 0;
         }

@@ -31,7 +31,7 @@ public class Enemy_AI : MonoBehaviour
     private bool enemyAttackCheck = false;
     private bool hurtAnimation = false;
     [Header("Attack")]
-    [SerializeField] private float distanceToAttack = 1.5f;
+    [SerializeField] private float distanceToAttack = 1.0f;
     [SerializeField] private float startAttack = 0.0f;
     [SerializeField] private float endAttack = 2.0f;
     [SerializeField] private float endAttackAnimation = 3.0f;
@@ -313,7 +313,7 @@ public class Enemy_AI : MonoBehaviour
             }
             else if (timerAttack >= startAttack && timerAttack <= endAttack && !hurtAnimation)  //Enemigo esta en el momento en que hace el corte y es ahi cuando el Player puede recivir daño
             {
-                attack();
+                Attack();
                 timerAttack += Time.deltaTime;
                 Debug.Log("Ataca");
             }
@@ -339,7 +339,7 @@ public class Enemy_AI : MonoBehaviour
             }
             else if (timerAttack >= startAttack && timerAttack <= endAttack && !hurtAnimation)  //Enemigo esta en el momento en que hace el corte y es ahi cuando el Player puede recivir daño
             {
-                attack();
+                Attack();
                 timerAttack += Time.deltaTime;
                 Debug.Log("Ataca");
             }
@@ -363,7 +363,7 @@ public class Enemy_AI : MonoBehaviour
 
     }
 
-    void attack()
+    void Attack()
     {
         Collider2D[] objectsInEnemyAttack = Physics2D.OverlapCircleAll(attack_Point.position, attackRange, playerMask);
         foreach (Collider2D colliders in objectsInEnemyAttack)
