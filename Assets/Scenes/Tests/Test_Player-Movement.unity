@@ -368,6 +368,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1467127047}
     m_Modifications:
+    - target: {fileID: -1434086512410538740, guid: f613e976f2a917c4b9ce57b6624adc26,
+        type: 3}
+      propertyPath: enemyHealth
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: -1434086512410538740, guid: f613e976f2a917c4b9ce57b6624adc26,
+        type: 3}
+      propertyPath: canRevive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5518234316124148360, guid: f613e976f2a917c4b9ce57b6624adc26,
         type: 3}
       propertyPath: m_Constraints
@@ -1175,6 +1185,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1467127047}
     m_Modifications:
+    - target: {fileID: -1434086512410538740, guid: f613e976f2a917c4b9ce57b6624adc26,
+        type: 3}
+      propertyPath: canRevive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1434086512410538740, guid: f613e976f2a917c4b9ce57b6624adc26,
+        type: 3}
+      propertyPath: enemyHealth
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 5518234316124148360, guid: f613e976f2a917c4b9ce57b6624adc26,
         type: 3}
       propertyPath: m_Constraints
