@@ -87,7 +87,7 @@ public class FlyingEnemy_AI : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        IsFacingRight();
+        IsFacingRight(direction);
         GetDamage(0);
     }
 
@@ -158,9 +158,9 @@ public class FlyingEnemy_AI : MonoBehaviour
         m_rigidbody2D.velocity = (direction * 0.0f);
     }
 
-    private void IsFacingRight()
+    private void IsFacingRight(Vector2 currentDirection)
     {
-        if (flyDirection == 1)
+        if (currentDirection.x > 0.0f)
         {
             isFacingRight = true;
         }

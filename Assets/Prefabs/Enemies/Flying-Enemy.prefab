@@ -141,7 +141,7 @@ MonoBehaviour:
   runSpeed: 1
   distanceFromGround: 2
   goBackCoolDown: 0.8
-  distanceToAttack: 0.8
+  distanceToAttack: 1.5
   startAttack: 0.5
   endAttack: 1
   endAttackAnimation: 1.8
