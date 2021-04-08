@@ -50,4 +50,10 @@ public class Shop_System : MonoBehaviour
         noMoneyWind.SetActive(false);
     }
 
+    public void CloseShop()
+    {
+        Time.timeScale = 1;
+        this.gameObject.SetActive(false);
+    }
+
 }

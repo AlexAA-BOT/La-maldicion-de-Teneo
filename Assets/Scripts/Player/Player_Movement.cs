@@ -44,10 +44,11 @@ public class Player_Movement : MonoBehaviour
 
     [Header("Layers")]
     [SerializeField] private LayerMask m_WhatIsGround = 0;
-
+    [Space]
     [SerializeField] private float gravityScale = 10.0f;
     [SerializeField] private float k_GroundedRadius = 0.2f;
-
+    [SerializeField] private GameObject shop = null;
+    [SerializeField] private GameObject shopEntrance = null;
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +61,7 @@ public class Player_Movement : MonoBehaviour
     private void Update()
     {
         ControlInputs();
+        OpenShop();
     }
 
     // Update is called once per frame
@@ -256,6 +258,15 @@ public class Player_Movement : MonoBehaviour
             dashDirectionDecided = false;
         }
         
+    }
+
+    private void OpenShop()
+    {
+        if(interactButtonInput && shopEntrance.GetComponent<Shop_Entrance>().canEnterShop)
+        {
+            shop.SetActive(true);
+            Time.timeScale = 0;
+        }
     }
 
     public bool IsFacingLeft() { return isFacingLeft; }
