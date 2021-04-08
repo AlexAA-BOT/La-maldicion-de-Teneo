@@ -345,7 +345,6 @@ public class Enemy_AI : MonoBehaviour
             {
                 Attack();
                 timerAttack += Time.deltaTime;
-                Debug.Log("Ataca");
             }
             else if (timerAttack >= endAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
             {
@@ -420,7 +419,6 @@ public class Enemy_AI : MonoBehaviour
 
         if (enemyHealth <= 0 && !canRevive)
         {
-            Debug.Log("Enemigo muerto");
             int numRandom = Random.Range(1, 100);
             if(numRandom <= 50 && dropMoney)
             {
@@ -428,6 +426,7 @@ public class Enemy_AI : MonoBehaviour
             }
             dropMoney = false;
             bestiarioCount.GetComponent<Bestiario_Count>().AddToDeathCount(enemyID);
+            Destroy(this.gameObject);
         }
         else if(enemyHealth <= 0 && canRevive)
         {
