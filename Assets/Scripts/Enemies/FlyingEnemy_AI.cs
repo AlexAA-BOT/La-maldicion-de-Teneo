@@ -179,7 +179,6 @@ public class FlyingEnemy_AI : MonoBehaviour
             flyTimeCoolDown = flyTime;
             flyDirectionRand = Random.Range(0, 2);
             actualFly = false;
-            Debug.Log("Random");
         }
         switch (flyType)
         {
@@ -302,7 +301,6 @@ public class FlyingEnemy_AI : MonoBehaviour
                 Attack();
                 timerAttack += Time.deltaTime;
                 StopMovement();
-                Debug.Log("Ataca");
             }
             else if (timerAttack >= endAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
             {
@@ -338,13 +336,13 @@ public class FlyingEnemy_AI : MonoBehaviour
         }
     }
 
+    //Recibe daño del jugador (Player)
     public void GetDamage(int playerDamage)
     {
         if (!hurtAnimation) enemyHealth -= playerDamage;
 
         if (enemyHealth <= 0)
         {
-            Debug.Log("Enemigo muerto");
             int numRandom = Random.Range(1, 100);
             if (numRandom <= 50 && dropMoney)
             {
@@ -352,6 +350,7 @@ public class FlyingEnemy_AI : MonoBehaviour
             }
             dropMoney = false;
             bestiarioCount.GetComponent<Bestiario_Count>().AddToDeathCount(enemyID);
+            Destroy(this.gameObject);
         }
         else
         {

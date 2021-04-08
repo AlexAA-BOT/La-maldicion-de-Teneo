@@ -5,13 +5,12 @@ using UnityEngine;
 public class Money_Script : MonoBehaviour
 {
     private GameObject player = null;
-    private Transform parent = null;
+    [SerializeField] private Transform parent = null;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        parent = this.transform.parent;
     }
 
     // Update is called once per frame
