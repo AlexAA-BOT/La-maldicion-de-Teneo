@@ -202,5 +202,6 @@ public class Player_Attack : MonoBehaviour
     public float GetStamina() { return playerEnergy; }
 
     public void AddHealth(float _health) { playerHealth += _health; if (playerHealth > 100.0f) playerHealth = 100.0f; }
+    public void AddStamina(float _stamina) { playerEnergy += _stamina; if (playerEnergy > 100.0f) playerEnergy = 100.0f; }
 
 }

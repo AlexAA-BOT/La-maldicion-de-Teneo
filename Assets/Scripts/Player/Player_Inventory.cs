@@ -14,7 +14,9 @@ public class Player_Inventory : MonoBehaviour
     [SerializeField] private int maxItems = 4;
     [Space]
     [SerializeField] private float healthPotionRecover = 25.0f;
+    [SerializeField] private float staminaPotionRecover = 30.0f;
     private bool useHealthPotion = false;
+    private bool useStaminaPotion = false;
 
     // Start is called before the first frame update
     void Start()
@@ -86,6 +88,10 @@ public class Player_Inventory : MonoBehaviour
         {
             useHealthPotion = true;
         }
+        else if(Input.GetButtonDown("Stamina-Pot"))
+        {
+            useStaminaPotion = true;
+        }
     }
 
     private void TakePotion()
@@ -95,6 +101,12 @@ public class Player_Inventory : MonoBehaviour
             gameObject.GetComponent<Player_Attack>().AddHealth(healthPotionRecover);
             numHealthPotions--;
             useHealthPotion = false;
+        }
+        else if(useStaminaPotion && numStaminaPotions > 0)
+        {
+            gameObject.GetComponent<Player_Attack>().AddStamina(staminaPotionRecover);
+            numStaminaPotions--;
+            useStaminaPotion = false;
         }
     }
 
