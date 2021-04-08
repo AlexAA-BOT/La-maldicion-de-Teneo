@@ -15,8 +15,13 @@ public class Player_Inventory : MonoBehaviour
     [Space]
     [SerializeField] private float healthPotionRecover = 25.0f;
     [SerializeField] private float staminaPotionRecover = 30.0f;
+    [Space]
+    [SerializeField] private GameObject bestiario = null;
     private bool useHealthPotion = false;
     private bool useStaminaPotion = false;
+
+    private bool openBestiario = false;
+    private bool isBestiarioOpen = false;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +34,7 @@ public class Player_Inventory : MonoBehaviour
     {
         Inputs();
         TakePotion();
+        BestiarioState();
     }
 
     public void AddItem(Items _item)
@@ -92,6 +98,12 @@ public class Player_Inventory : MonoBehaviour
         {
             useStaminaPotion = true;
         }
+
+        if(Input.GetButtonDown("Bestiario"))
+        {
+            openBestiario = true;
+        }
+
     }
 
     private void TakePotion()
@@ -107,6 +119,25 @@ public class Player_Inventory : MonoBehaviour
             gameObject.GetComponent<Player_Attack>().AddStamina(staminaPotionRecover);
             numStaminaPotions--;
             useStaminaPotion = false;
+        }
+    }
+
+    private void BestiarioState()
+    {
+        if(openBestiario)
+        {
+            if (isBestiarioOpen)
+            {
+                bestiario.SetActive(false);
+                isBestiarioOpen = false;
+                openBestiario = false;
+            }
+            else
+            {
+                bestiario.SetActive(true);
+                isBestiarioOpen = true;
+                openBestiario = false;
+            }
         }
     }
 
