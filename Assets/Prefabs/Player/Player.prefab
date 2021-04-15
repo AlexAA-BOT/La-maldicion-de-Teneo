@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 6787332347849251267}
   - component: {fileID: 6787332347849251266}
   - component: {fileID: 6787332347849251269}
-  - component: {fileID: 6787332347849251268}
+  - component: {fileID: 5540969355622190044}
   - component: {fileID: 6787332347849251271}
   - component: {fileID: 605359229914358943}
   - component: {fileID: 3145431495325243858}
@@ -140,8 +140,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &6787332347849251268
-BoxCollider2D:
+--- !u!70 &5540969355622190044
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -154,18 +154,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Direction: 0
 --- !u!114 &6787332347849251271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,6 +186,8 @@ MonoBehaviour:
     m_Bits: 256
   gravityScale: 20
   k_GroundedRadius: 0.2
+  shop: {fileID: 0}
+  shopEntrance: {fileID: 0}
 --- !u!114 &605359229914358943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,6 +204,9 @@ MonoBehaviour:
   playerEnergy: 100
   timeWithInvencibility: 4
   timeWithInvencibilityStamina: 0.2
+  timeStaminaRecovery: 0.5
+  recoveryEnergy: 15
+  invencibilityTransparency: 0.5
   attackPoint: {fileID: 2666114758522683666}
   attackRange: 0.48
   playerDamage: 20
@@ -235,7 +230,11 @@ MonoBehaviour:
   item: 0
   money: 0
   numHealthPotions: 0
+  numStaminaPotions: 0
   maxItems: 4
+  healthPotionRecover: 25
+  staminaPotionRecover: 30
+  bestiario: {fileID: 0}
 --- !u!1 &6787332348398596289
 GameObject:
   m_ObjectHideFlags: 0
