@@ -1,0 +1,530 @@
+fileFormatVersion: 2
+guid: b96a906b8afb66641ba19bc210fe1f17
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1509690687825009327
+    second: noBKG_KnightIdle_strip_0
+  - first:
+      213: -1041377646201670004
+    second: noBKG_KnightIdle_strip_1
+  - first:
+      213: -7453662367257214878
+    second: noBKG_KnightIdle_strip_2
+  - first:
+      213: -5596862556851936502
+    second: noBKG_KnightIdle_strip_3
+  - first:
+      213: -5436100206935435719
+    second: noBKG_KnightIdle_strip_4
+  - first:
+      213: -739888894572915949
+    second: noBKG_KnightIdle_strip_5
+  - first:
+      213: -4751331788578724310
+    second: noBKG_KnightIdle_strip_6
+  - first:
+      213: 4951209121555206185
+    second: noBKG_KnightIdle_strip_7
+  - first:
+      213: 1591143898244122516
+    second: noBKG_KnightIdle_strip_8
+  - first:
+      213: 1355542653451762569
+    second: noBKG_KnightIdle_strip_9
+  - first:
+      213: -3745036264285597575
+    second: noBKG_KnightIdle_strip_10
+  - first:
+      213: 4143883161139031683
+    second: noBKG_KnightIdle_strip_11
+  - first:
+      213: 8166998348595803618
+    second: noBKG_KnightIdle_strip_12
+  - first:
+      213: 8574912610122105026
+    second: noBKG_KnightIdle_strip_13
+  - first:
+      213: 1079820144599227151
+    second: noBKG_KnightIdle_strip_14
+  - first:
+      213: -2622653073926597989
+    second: noBKG_KnightIdle_strip_0
+  - first:
+      213: -5584308957683244504
+    second: noBKG_KnightIdle_strip_1
+  - first:
+      213: -7383629873722854712
+    second: noBKG_KnightIdle_strip_2
+  - first:
+      213: 602319297067064946
+    second: noBKG_KnightIdle_strip_3
+  - first:
+      213: -7495537447993996700
+    second: noBKG_KnightIdle_strip_4
+  - first:
+      213: 308515284811463862
+    second: noBKG_KnightIdle_strip_5
+  - first:
+      213: 5504899999970809852
+    second: noBKG_KnightIdle_strip_6
+  - first:
+      213: -92632980214427831
+    second: noBKG_KnightIdle_strip_7
+  - first:
+      213: 1266916788154279139
+    second: noBKG_KnightIdle_strip_8
+  - first:
+      213: 5063806101109029210
+    second: noBKG_KnightIdle_strip_9
+  - first:
+      213: -5453908619386651125
+    second: noBKG_KnightIdle_strip_10
+  - first:
+      213: -8074682640833016105
+    second: noBKG_KnightIdle_strip_11
+  - first:
+      213: 5767804995645039403
+    second: noBKG_KnightIdle_strip_12
+  - first:
+      213: 1322788704523547073
+    second: noBKG_KnightIdle_strip_13
+  - first:
+      213: -1108668414523903266
+    second: noBKG_KnightIdle_strip_14
+  - first:
+      213: -7880277430946860966
+    second: noBKG_KnightIdle_strip_15
+  - first:
+      213: -9089619144299729066
+    second: noBKG_KnightIdle_strip_16
+  - first:
+      213: 3054170832316161894
+    second: noBKG_KnightIdle_strip_17
+  - first:
+      213: -6656655663526445974
+    second: noBKG_KnightIdle_strip_18
+  - first:
+      213: -2149514043239394873
+    second: noBKG_KnightIdle_strip_19
+  - first:
+      213: 3555122925336478114
+    second: noBKG_KnightIdle_strip_20
+  - first:
+      213: 8271223612408440567
+    second: noBKG_KnightIdle_strip_21
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: noBKG_KnightIdle_strip_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b92d487bce67a9bd0800000000000000
+      internalID: -2622653073926597989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noBKG_KnightIdle_strip_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8222245079c8082b0800000000000000
+      internalID: -5584308957683244504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noBKG_KnightIdle_strip_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c279cfffb3188990800000000000000
+      internalID: -7383629873722854712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noBKG_KnightIdle_strip_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27e9b0f953edb5800800000000000000
+      internalID: 602319297067064946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noBKG_KnightIdle_strip_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46a0ea377608af790800000000000000
+      internalID: -7495537447993996700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noBKG_KnightIdle_strip_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bc37f65401184400800000000000000
+      internalID: 308515284811463862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noBKG_KnightIdle_strip_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf7de4e3265556c40800000000000000
+      internalID: 5504899999970809852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noBKG_KnightIdle_strip_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94f45d79bc6e6bef0800000000000000
+      internalID: -92632980214427831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noBKG_KnightIdle_strip_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e42aed3b1ef49110800000000000000
+      internalID: 1266916788154279139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noBKG_KnightIdle_strip_9
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a593f0cd1d0464640800000000000000
+      internalID: 5063806101109029210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noBKG_KnightIdle_strip_10
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0e7408b103df44b0800000000000000
+      internalID: -5453908619386651125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noBKG_KnightIdle_strip_11
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7de822f6be6f0ff80800000000000000
+      internalID: -8074682640833016105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noBKG_KnightIdle_strip_12
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b23652b951c5b0050800000000000000
+      internalID: 5767804995645039403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noBKG_KnightIdle_strip_13
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c1760e715d7b5210800000000000000
+      internalID: 1322788704523547073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noBKG_KnightIdle_strip_14
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed27b9273f73d90f0800000000000000
+      internalID: -1108668414523903266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
