@@ -38,6 +38,7 @@ public class Player_Movement : MonoBehaviour
     private bool doubleJump = false;
     private Vector2 dashDirection = Vector2.zero;
     private bool dashDirectionDecided = false;
+    private Animator m_Animator = null;
 
     [HideInInspector] public enum State { NORMAL, DODGEROLL};
     [HideInInspector] public State state;
@@ -54,6 +55,7 @@ public class Player_Movement : MonoBehaviour
     void Start()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
+        m_Animator = GetComponent<Animator>();
         totalJumps = maxNumJumps;
         state = State.NORMAL;
     }
@@ -62,6 +64,7 @@ public class Player_Movement : MonoBehaviour
     {
         ControlInputs();
         OpenShop();
+        m_Animator.SetFloat("Velocity_Falling", m_Rigidbody2D.velocity.y);
     }
 
     // Update is called once per frame
@@ -73,6 +76,7 @@ public class Player_Movement : MonoBehaviour
             if (collidersGround[i].gameObject != gameObject)
             {
                 m_Grounded = true;
+                m_Animator.SetBool("InAir", !m_Grounded);
                 totalJumps = maxNumJumps;
                 doubleJump = false;
             }
@@ -97,8 +101,11 @@ public class Player_Movement : MonoBehaviour
         {
             if(m_Grounded)
             {
+                m_Animator.SetTrigger("Jump");
                 m_Rigidbody2D.AddForce(new Vector2(m_Rigidbody2D.velocity.x, jumpForce), ForceMode2D.Impulse);
+
                 m_Grounded = false;
+                m_Animator.SetBool("InAir", !m_Grounded);
                 doubleJump = true;
                 jmpBtnDown = false;
             }
@@ -135,6 +142,7 @@ public class Player_Movement : MonoBehaviour
 
 
         m_Rigidbody2D.velocity = new Vector2(horizontalMove * runSpeed, m_Rigidbody2D.velocity.y);
+        m_Animator.SetFloat("Velocity", Mathf.Abs(m_Rigidbody2D.velocity.x));
 
         //if (Input.GetKey(KeyCode.D))
         //{
@@ -221,9 +229,10 @@ public class Player_Movement : MonoBehaviour
         if(rollBtn && m_Grounded && (horizontalMove > 0.0f || horizontalMove < 0.0f))
         {
             state = State.DODGEROLL;
+
             if (!dashDirectionDecided)
             {
-                
+                m_Animator.SetTrigger("Roll");
                 dashDirection = new Vector2(horizontalMove * dashSpeed, m_Rigidbody2D.velocity.y);
                 dashDirectionDecided = true;
             }

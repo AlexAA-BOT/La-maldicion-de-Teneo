@@ -31,6 +31,7 @@ public class Player_Attack : MonoBehaviour
     private float invencibilityTimeStamina = 0.0f;
     private float timerStaminaReload = 0.0f;
     private SpriteRenderer mySprite = null;
+    private Animator m_Animator = null;
 
     [Header("Layers")]
     [SerializeField] private LayerMask enemyLayers = 0;
@@ -39,6 +40,7 @@ public class Player_Attack : MonoBehaviour
     void Start()
     {
         mySprite = GetComponent<SpriteRenderer>();
+        m_Animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -70,6 +72,7 @@ public class Player_Attack : MonoBehaviour
         {
             if (attackBtn)
             {
+                m_Animator.SetTrigger("Attack");
                 Attack();
                 timerAttack += Time.deltaTime;
             }

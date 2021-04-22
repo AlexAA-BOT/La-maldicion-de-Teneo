@@ -30,6 +30,7 @@ public class Enemy_AI : MonoBehaviour
     private float walkTimeCoolDown = 0.0f;
     private int walkDirectionRand = 0;
     private Rigidbody2D m_rigidbody2D = null;
+    private Animator m_animator = null;
     private bool isFacingRight = false;
 
     //Attack
@@ -81,6 +82,7 @@ public class Enemy_AI : MonoBehaviour
     {
         maxHealth = enemyHealth;
         m_rigidbody2D = GetComponent<Rigidbody2D>();
+        m_animator = GetComponent<Animator>();
         enemyAttackColRight = new Vector3(this.gameObject.transform.localScale.x, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
         enemyAttackColLeft = new Vector3(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
         bestiarioCount = GameObject.FindGameObjectWithTag("BestiarioCount");
@@ -108,7 +110,9 @@ public class Enemy_AI : MonoBehaviour
             IsFacingRight();
             GetDamage(0);
         }
-        
+
+        m_animator.SetFloat("Speed", Mathf.Abs(m_rigidbody2D.velocity.x));
+
     }
 
     // Update is called once per frame
@@ -337,7 +341,7 @@ public class Enemy_AI : MonoBehaviour
         {
             if (timerAttack <= 0.0f && !hurtAnimation)  //Se activa la animacion de ataque
             {
-                //Animator.SetTrigger("Attack");
+                m_animator.SetTrigger("Attack");
                 timerAttack += Time.deltaTime;
                 enemyAttackCheck = true;
             }
@@ -362,7 +366,7 @@ public class Enemy_AI : MonoBehaviour
         {
             if (timerAttack <= 0.0f && !hurtAnimation)  //Se activa la animacion de ataque
             {
-                //Animator.SetTrigger("Attack");
+                m_animator.SetTrigger("Attack");
                 timerAttack += Time.deltaTime;
                 enemyAttackCheck = true;
             }
@@ -370,7 +374,6 @@ public class Enemy_AI : MonoBehaviour
             {
                 Attack();
                 timerAttack += Time.deltaTime;
-                Debug.Log("Ataca");
             }
             else if (timerAttack >= endAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
             {
@@ -446,7 +449,7 @@ public class Enemy_AI : MonoBehaviour
             {
                 if (hurtTime <= 0)
                 {
-                    //Animator.SetTrigger("Hurt");
+                    m_animator.SetTrigger("Hurt");
                     hurtAnimation = true;
                     hurtTime += Time.deltaTime;
                 }
