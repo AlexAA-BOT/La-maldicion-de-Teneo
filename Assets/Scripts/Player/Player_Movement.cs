@@ -76,7 +76,7 @@ public class Player_Movement : MonoBehaviour
             if (collidersGround[i].gameObject != gameObject)
             {
                 m_Grounded = true;
-                m_Animator.SetBool("InAir", m_Grounded);
+                m_Animator.SetBool("InAir", !m_Grounded);
                 totalJumps = maxNumJumps;
                 doubleJump = false;
             }
@@ -105,7 +105,7 @@ public class Player_Movement : MonoBehaviour
                 m_Rigidbody2D.AddForce(new Vector2(m_Rigidbody2D.velocity.x, jumpForce), ForceMode2D.Impulse);
 
                 m_Grounded = false;
-                m_Animator.SetBool("InAir", m_Grounded);
+                m_Animator.SetBool("InAir", !m_Grounded);
                 doubleJump = true;
                 jmpBtnDown = false;
             }
