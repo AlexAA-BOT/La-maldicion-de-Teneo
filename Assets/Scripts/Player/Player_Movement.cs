@@ -24,6 +24,7 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private float dashSpeed = 15.0f;
     [SerializeField] private float dashTime = 0.3f;
     [SerializeField] private bool isFacingLeft = true;
+    private bool oneWayPlatform = false;
     private float startDashTime = 0.0f;
 
 
@@ -50,6 +51,16 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private float k_GroundedRadius = 0.2f;
     [SerializeField] private GameObject shop = null;
     [SerializeField] private GameObject shopEntrance = null;
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+        GameObject anotherPlayer = GameObject.FindGameObjectWithTag("Player");
+        if(anotherPlayer != null && anotherPlayer != this.gameObject)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -194,9 +205,10 @@ public class Player_Movement : MonoBehaviour
         horizontalMove = Input.GetAxisRaw("Horizontal");
         interactButtonInput = Input.GetButton("Interact");
         jmpBtn = Input.GetButton("Jump");
+        oneWayPlatform = Input.GetButton("Down");
 
         //jmpBtnDown = Input.GetButtonDown("Jump");
-        if(Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
             jmpBtnDown = true;
         }
@@ -205,6 +217,7 @@ public class Player_Movement : MonoBehaviour
         {
             rollBtn = true;
         }
+
 
     }
 
@@ -279,6 +292,10 @@ public class Player_Movement : MonoBehaviour
     }
 
     public bool IsFacingLeft() { return isFacingLeft; }
+
+    public Rigidbody2D GetRigidBody() { return m_Rigidbody2D; }
+
+    public bool GetOneWayPlatformState() { return oneWayPlatform; }
 
     void OnDrawGizmosSelected()
     {
