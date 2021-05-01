@@ -50,7 +50,8 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private float gravityScale = 10.0f;
     [SerializeField] private float k_GroundedRadius = 0.2f;
     [SerializeField] private GameObject shop = null;
-    [SerializeField] private GameObject shopEntrance = null;
+    private bool canEnterShop = false;
+    //[SerializeField] private GameObject shopEntrance = null;
 
     private void Awake()
     {
@@ -76,6 +77,12 @@ public class Player_Movement : MonoBehaviour
         ControlInputs();
         OpenShop();
         m_Animator.SetFloat("Velocity_Falling", m_Rigidbody2D.velocity.y);
+
+        if(shop == null)
+        {
+            shop = GameObject.Find("Canvas").transform.Find("Shop").gameObject;
+        }
+
     }
 
     // Update is called once per frame
@@ -284,7 +291,7 @@ public class Player_Movement : MonoBehaviour
 
     private void OpenShop()
     {
-        if(interactButtonInput && shopEntrance.GetComponent<Shop_Entrance>().canEnterShop)
+        if(interactButtonInput && canEnterShop/*/shopEntrance.GetComponent<Shop_Entrance>().canEnterShop*/)
         {
             shop.SetActive(true);
             Time.timeScale = 0;
@@ -296,6 +303,11 @@ public class Player_Movement : MonoBehaviour
     public Rigidbody2D GetRigidBody() { return m_Rigidbody2D; }
 
     public bool GetOneWayPlatformState() { return oneWayPlatform; }
+
+    public void SetCanEnterShop(bool state)
+    {
+        canEnterShop = state;
+    }
 
     void OnDrawGizmosSelected()
     {

@@ -13,12 +13,12 @@ public class Hud_QuantityPotions : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        item.text = player.GetComponent<Player_Inventory>().GetItemQuantity(itemID).ToString() + '/' + player.GetComponent<Player_Inventory>().GetItemsMaxQuantity();
+        item.text = player.GetComponent<Player_Inventory>().GetItemQuantity(itemID).ToString() + '/' + player.GetComponent<Player_Inventory>().GetMaxQuantity(itemID);
     }
 
     // Update is called once per frame
     void Update()
     {
-        item.text = player.GetComponent<Player_Inventory>().GetItemQuantity(itemID).ToString() + '/' + player.GetComponent<Player_Inventory>().GetItemsMaxQuantity();
+        item.text = player.GetComponent<Player_Inventory>().GetItemQuantity(itemID).ToString() + '/' + player.GetComponent<Player_Inventory>().GetMaxQuantity(itemID);
     }
 }

@@ -26,7 +26,7 @@ public class Item_Price : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        quantity.text = player.GetComponent<Player_Inventory>().GetItemQuantity(itemID) + "/4";
+        quantity.text = player.GetComponent<Player_Inventory>().GetItemQuantity(itemID) + "/" + player.GetComponent<Player_Inventory>().GetMaxQuantity(itemID);
     }
 
     public void BuyItem()
