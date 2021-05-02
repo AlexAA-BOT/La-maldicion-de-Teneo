@@ -20987,11 +20987,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shop-Entrance
       objectReference: {fileID: 0}
-    - target: {fileID: 7499932561517775050, guid: d157e67a2116dcd428abf0fd76d9b669,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7499932561517775051, guid: d157e67a2116dcd428abf0fd76d9b669,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -21000,7 +20995,7 @@ PrefabInstance:
     - target: {fileID: 7499932561517775051, guid: d157e67a2116dcd428abf0fd76d9b669,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.42
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7499932561517775051, guid: d157e67a2116dcd428abf0fd76d9b669,
         type: 3}
@@ -21031,21 +21026,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7499932561517775051, guid: d157e67a2116dcd428abf0fd76d9b669,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7499932561517775051, guid: d157e67a2116dcd428abf0fd76d9b669,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7499932561517775051, guid: d157e67a2116dcd428abf0fd76d9b669,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d157e67a2116dcd428abf0fd76d9b669, type: 3}
