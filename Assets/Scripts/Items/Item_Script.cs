@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Money_Script : MonoBehaviour
+public class Item_Script : MonoBehaviour
 {
     private GameObject player = null;
     [SerializeField] private Transform parent = null;
+    [SerializeField] private Player_Inventory.Items itemID = Player_Inventory.Items.MONEY;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,7 @@ public class Money_Script : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            player.GetComponent<Player_Inventory>().AddItem(Player_Inventory.Items.MONEY);
+            player.GetComponent<Player_Inventory>().AddItem(itemID);
             Destroy(parent.gameObject);
         }
     }
