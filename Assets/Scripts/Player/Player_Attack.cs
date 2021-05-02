@@ -21,7 +21,8 @@ public class Player_Attack : MonoBehaviour
     [SerializeField] private float timeBetweenAttack = 0.0f;
 
     private float timerAttack = 0.0f;
-    
+
+    private bool playerIsDead = false;
     private bool attackBtn = false;
     private bool defendBtn = false;
     [HideInInspector] public bool defendState = false;
@@ -45,12 +46,8 @@ public class Player_Attack : MonoBehaviour
 
     private void Update()
     {
-        defendBtn = Input.GetButton("Defend");
-
-        if (Input.GetButtonDown("Attack"))
-        {
-            attackBtn = true;
-        }
+        if(!playerIsDead)
+            Inputs();
 
         if(defendBtn && playerEnergy > 0)
         {
@@ -60,6 +57,8 @@ public class Player_Attack : MonoBehaviour
         {
             defendState = false;
         }
+
+        m_Animator.SetBool("Defend", defendState);
 
         ReloadStamina();
         GetStamina(0);
@@ -90,7 +89,22 @@ public class Player_Attack : MonoBehaviour
 
     }
 
-    void Attack()//para hacer daño
+    private void Inputs()
+    {
+        defendBtn = Input.GetButton("Defend");
+
+        if(Input.GetButtonDown("Defend"))
+        {
+            m_Animator.SetTrigger("RiseShield");
+        }
+
+        if (Input.GetButtonDown("Attack"))
+        {
+            attackBtn = true;
+        }
+    }
+
+    private void Attack()//para hacer daño
     {
         //Detect enemies in range of attack
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
@@ -142,15 +156,20 @@ public class Player_Attack : MonoBehaviour
                 invencibilityTime += Time.deltaTime;
             }
         }
-        else if (enemyDamage > 0.0f && gameObject.GetComponent<Player_Movement>().state != Player_Movement.State.DODGEROLL)
+        else if (playerHealth > 0.0f && enemyDamage > 0.0f && gameObject.GetComponent<Player_Movement>().state != Player_Movement.State.DODGEROLL)
         {
             invencibility = true;
             playerHealth -= enemyDamage;
         }
 
-        if (playerHealth <= 0)
+        if (playerHealth <= 0 && !playerIsDead)
         {
-            Debug.Log("Player is Dead");
+            invencibility = false;
+            invencibilityTime = 0.0f;
+            mySprite.color = new Color(mySprite.color.r, mySprite.color.g, mySprite.color.b, 1.0f);
+            playerIsDead = true;
+            m_Animator.SetTrigger("Dead");
+            gameObject.tag = "Untagged";
         }
     }
 
@@ -206,6 +225,10 @@ public class Player_Attack : MonoBehaviour
     public float GetHealth() { return playerHealth; }
 
     public float GetStamina() { return playerEnergy; }
+
+    public bool GetDefendState() { return defendBtn; }
+
+    public bool GetPlayerLiveState() { return playerIsDead; }
 
     public void AddHealth(float _health) { playerHealth += _health; if (playerHealth > 100.0f) playerHealth = 100.0f; }
     public void AddStamina(float _stamina) { playerEnergy += _stamina; if (playerEnergy > 100.0f) playerEnergy = 100.0f; }

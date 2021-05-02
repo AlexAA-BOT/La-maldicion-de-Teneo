@@ -73,9 +73,11 @@ public class Enemy_AI : MonoBehaviour
     [Space]
 
     //GameObjects
+    [SerializeField] private GameObject enemyDead = null;
     private GameObject bestiarioCount = null;
     private SpriteRenderer myColor = null;
-    [SerializeField] private GameObject eye = null;  //Temporal
+
+    private Quaternion rotatedObject = new Quaternion();
 
     // Start is called before the first frame update
     void Start()
@@ -87,6 +89,7 @@ public class Enemy_AI : MonoBehaviour
         enemyAttackColLeft = new Vector3(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
         bestiarioCount = GameObject.FindGameObjectWithTag("BestiarioCount");
         myColor = GetComponent<SpriteRenderer>();
+        rotatedObject.Set(0, 180, 0, 1);
     }
 
     private void Update()
@@ -97,7 +100,6 @@ public class Enemy_AI : MonoBehaviour
             {
                 falseDeathTime = 0.0f;
                 myColor.color = new Color(255, 0, 0);
-                eye.SetActive(true);
                 falseDeath = false;
             }
             else
@@ -429,6 +431,14 @@ public class Enemy_AI : MonoBehaviour
             }
             dropMoney = false;
             bestiarioCount.GetComponent<Bestiario_Count>().AddToDeathCount(enemyID);
+            if (direction < 0)
+            {
+                Instantiate(enemyDead, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), rotatedObject);
+            }
+            else
+            {
+                Instantiate(enemyDead, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity);
+            }
             Destroy(this.gameObject);
         }
         else if(enemyHealth <= 0 && canRevive)
@@ -437,7 +447,6 @@ public class Enemy_AI : MonoBehaviour
             numOfRevives--;
             falseDeath = true;
             myColor.color = new Color(255, 255, 255);
-            eye.SetActive(false);
             if(numOfRevives <= 0)
             {
                 canRevive = false;

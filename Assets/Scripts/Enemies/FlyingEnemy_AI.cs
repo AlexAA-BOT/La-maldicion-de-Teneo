@@ -46,6 +46,12 @@ public class FlyingEnemy_AI : MonoBehaviour
     private float hurtTime = 0.0f;
     private bool attackOneTime = false;
 
+    //Animator
+    private Animator m_animator = null;
+
+    //Quaternion
+    private Quaternion rotatedObject = new Quaternion();
+
     //Floats
     private float distance = 0.0f;
 
@@ -61,6 +67,7 @@ public class FlyingEnemy_AI : MonoBehaviour
     [Header("GameObjects")]
     [SerializeField] private GameObject gameObjectMoney = null;
     [SerializeField] private bool dropMoney = true;  //// Eliminar a futuro
+    [SerializeField] private GameObject enemyDead = null;
     private GameObject bestiarioCount = null;
     private GameObject player = null;
 
@@ -82,6 +89,8 @@ public class FlyingEnemy_AI : MonoBehaviour
         enemyAttackColLeft = new Vector3(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
         bestiarioCount = GameObject.FindGameObjectWithTag("BestiarioCount");
         speed = runSpeed;
+        m_animator = GetComponent<Animator>();
+        rotatedObject.Set(0, 180, 0, 1);
     }
 
     // Update is called once per frame
@@ -292,7 +301,7 @@ public class FlyingEnemy_AI : MonoBehaviour
         {
             if (timerAttack <= 0.0f && !hurtAnimation)  //Se activa la animacion de ataque
             {
-                //Animator.SetTrigger("Attack");
+                m_animator.SetTrigger("Attack");
                 timerAttack += Time.deltaTime;
                 enemyAttackCheck = true;
             }
@@ -350,6 +359,14 @@ public class FlyingEnemy_AI : MonoBehaviour
             }
             dropMoney = false;
             bestiarioCount.GetComponent<Bestiario_Count>().AddToDeathCount(enemyID);
+            if (direction.x < 0)
+            {
+                Instantiate(enemyDead, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), rotatedObject);
+            }
+            else
+            {
+                Instantiate(enemyDead, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity);
+            }
             Destroy(this.gameObject);
         }
         else
@@ -358,7 +375,7 @@ public class FlyingEnemy_AI : MonoBehaviour
             {
                 if (hurtTime <= 0)
                 {
-                    //Animator.SetTrigger("Hurt");
+                    m_animator.SetTrigger("Hurt");
                     hurtAnimation = true;
                     hurtTime += Time.deltaTime;
                 }

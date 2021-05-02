@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 702112737610768620}
   - component: {fileID: -1434086512410538740}
   m_Layer: 10
-  m_Name: Enemy
+  m_Name: GreenSkeleton
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,7 +181,8 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 512
-  eye: {fileID: 6815657201516656937}
+  enemyDead: {fileID: 4939513353715337643, guid: d3e41cb63bd270a489c3ec71b613b00d,
+    type: 3}
 --- !u!1 &5852048254074441033
 GameObject:
   m_ObjectHideFlags: 0
