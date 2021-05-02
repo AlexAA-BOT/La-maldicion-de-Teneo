@@ -28,6 +28,7 @@ public class FlyingEnemy_AI : MonoBehaviour
     private bool goBack = false;
     [SerializeField] private float goBackCoolDown = 0.8f;
     private float goBackTime = 0.0f;
+    private bool wall = false; //Se pone a true si va a collisionar con una pared
 
     //Attack
     private bool enemyAttackCheck = false;
@@ -98,6 +99,7 @@ public class FlyingEnemy_AI : MonoBehaviour
     {
         IsFacingRight(direction);
         GetDamage(0);
+        CollisionWithWall();
     }
 
     private void FixedUpdate()
@@ -159,6 +161,26 @@ public class FlyingEnemy_AI : MonoBehaviour
                 RandomDirection();
                 ChangeAttackDirection();
             }
+        }
+    }
+
+    private void CollisionWithWall()
+    {
+        RaycastHit2D hitWall = Physics2D.Raycast(new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), 
+            new Vector3(flyDirection, 0.0f, 0.0f), 1.5f, ground);
+        if (hitWall && hitWall.collider.gameObject.tag == "Ground")
+        {
+            if (flyDirection > 0)
+            {
+                flyDirection = -1;
+                wall = true;
+            }
+            else
+            {
+                flyDirection = 1;
+                wall = true;
+            }
+
         }
     }
 
@@ -255,18 +277,22 @@ public class FlyingEnemy_AI : MonoBehaviour
                 if (flyTime - flyTimeCoolDown >= 3.0f)
                 {
                     actualFly = true;
+                    wall = false;
                 }
                 break;
         }
-        switch (flyDirectionRand)
+        if(!wall)
         {
-            case 0:
-                flyDirection = 1;
-                break;
-            case 1:
-                flyDirection = -1;
-                break;
-        }
+            switch (flyDirectionRand)
+            {
+                case 0:
+                    flyDirection = 1;
+                    break;
+                case 1:
+                    flyDirection = -1;
+                    break;
+            }
+        }    
     }
 
     ////Attack

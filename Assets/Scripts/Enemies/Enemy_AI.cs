@@ -22,7 +22,7 @@ public class Enemy_AI : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float runSpeed = 1.5f;
     private float speed = 0.0f;
-    [HideInInspector] public int direction = 1;
+    /*[HideInInspector]*/ public int direction = 1;
     private bool fall = false;
     private bool actualWalk = true;
     private float walkTime = 0.0f;
@@ -139,6 +139,7 @@ public class Enemy_AI : MonoBehaviour
                 fall = true;
             }
 
+            CollisionWithWall();
             SeePlayer();
             EnemyAttack();
         }
@@ -203,7 +204,25 @@ public class Enemy_AI : MonoBehaviour
         //Controla la direccion del enemigo
         m_rigidbody2D.velocity = new Vector2(direction * speed, 0);
         ChangeAttackDirection(direction);
+    }
 
+    private void CollisionWithWall()
+    {
+        RaycastHit2D hitWall = Physics2D.Raycast(enemyVision, new Vector3(direction, 0.0f, 0.0f), 1.5f, platform);
+        if(hitWall && hitWall.collider.gameObject.tag == "Ground")
+        {
+            if(direction > 0)
+            {
+                direction = -1;
+                fall = true;
+            }
+            else
+            {
+                direction = 1;
+                fall = true;
+            }
+            
+        }
     }
 
     //Cambiara la colisión de la bola de derecha a izquierda segun hacia donde este mirando
