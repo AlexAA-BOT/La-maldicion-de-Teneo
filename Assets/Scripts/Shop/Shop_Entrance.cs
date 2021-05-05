@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class Shop_Entrance : MonoBehaviour
 {
-    [HideInInspector] public bool canEnterShop = false;
+    private GameObject player = null;
+    //[HideInInspector] public bool canEnterShop = false;
+
+    private void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            canEnterShop = true;
+            player.GetComponent<Player_Movement>().SetCanEnterShop(true);
         }
     }
 
@@ -18,7 +24,7 @@ public class Shop_Entrance : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            canEnterShop = false;
+            player.GetComponent<Player_Movement>().SetCanEnterShop(false);
         }
     }
 

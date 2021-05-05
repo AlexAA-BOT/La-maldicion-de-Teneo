@@ -5,11 +5,16 @@ using UnityEngine;
 public class Player_Inventory : MonoBehaviour
 {
 
-    [HideInInspector] public enum Items { HEALTHPOTION, STAMINAPOTION, MONEY, GOLDBAG };
+    [HideInInspector] public enum Items { HEALTHPOTION, STAMINAPOTION, MONEY, GOLDBAG, HEALTHPOTIONAMPLIATION, STAMINAPOTIONAMPLIATION };
     [HideInInspector] public Items item;
 
     [SerializeField] private int money = 0;
     [SerializeField] private int numHealthPotions = 0;
+    private int maxQuantityHealthPotion = 4;
+    private int maxQuantityStaminaPotion = 4;
+    private int healthPotionUpgradesQuantity = 0;
+    private int staminaPotionUpgradesQuantity = 0;
+    private int maxUpgrades = 4;
     [SerializeField] private int numStaminaPotions = 0;
     [SerializeField] private int maxItems = 4;
     [Space]
@@ -23,15 +28,15 @@ public class Player_Inventory : MonoBehaviour
     private bool openBestiario = false;
     private bool isBestiarioOpen = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
+
+        if(bestiario == null)
+        {
+            bestiario = GameObject.Find("Canvas").transform.Find("Bestiario").gameObject;
+        }
+
         Inputs();
         TakePotion();
         BestiarioState();
@@ -51,10 +56,20 @@ public class Player_Inventory : MonoBehaviour
 
             case (Items.STAMINAPOTION):
                 numStaminaPotions++;
-                break;
+                break;        
 
             case (Items.GOLDBAG):
                 money += 10;
+                break;
+
+            case (Items.HEALTHPOTIONAMPLIATION):
+                maxQuantityHealthPotion++;
+                healthPotionUpgradesQuantity++;
+                break;
+
+            case (Items.STAMINAPOTIONAMPLIATION):
+                maxQuantityStaminaPotion++;
+                staminaPotionUpgradesQuantity++;
                 break;
         }
     }
@@ -65,14 +80,35 @@ public class Player_Inventory : MonoBehaviour
         money -= moneyToRest;
     }
 
+    public int GetMaxQuantity(Items _item)
+    {
+        switch (_item)
+        {
+            case (Items.HEALTHPOTION):
+                return maxQuantityHealthPotion;
+            case (Items.STAMINAPOTION):
+                return maxQuantityStaminaPotion;
+            case (Items.HEALTHPOTIONAMPLIATION):
+                return maxUpgrades;
+            case (Items.STAMINAPOTIONAMPLIATION):
+                return maxUpgrades;
+            default:
+                return 0;
+        }
+    }
+
     public bool IsMaxQuantity(Items _item)
     {
         switch (_item)
         {
             case (Items.HEALTHPOTION):
-                return (maxItems > numHealthPotions);
+                return (maxQuantityHealthPotion > numHealthPotions);
             case (Items.STAMINAPOTION):
-                return (maxItems > numStaminaPotions);
+                return (maxQuantityStaminaPotion > numStaminaPotions);
+            case (Items.HEALTHPOTIONAMPLIATION):
+                return (maxUpgrades > healthPotionUpgradesQuantity);
+            case (Items.STAMINAPOTIONAMPLIATION):
+                return (maxUpgrades > staminaPotionUpgradesQuantity);
             default:
                 return false;
         }
@@ -86,6 +122,10 @@ public class Player_Inventory : MonoBehaviour
                 return (numHealthPotions);
             case (Items.STAMINAPOTION):
                 return (numStaminaPotions);
+            case (Items.HEALTHPOTIONAMPLIATION):
+                return (healthPotionUpgradesQuantity);
+            case (Items.STAMINAPOTIONAMPLIATION):
+                return (staminaPotionUpgradesQuantity);
             default:
                 return 0;
         }

@@ -203,7 +203,7 @@ MonoBehaviour:
   state: 0
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 4352
   gravityScale: 20
   k_GroundedRadius: 0.2
   shop: {fileID: 0}
