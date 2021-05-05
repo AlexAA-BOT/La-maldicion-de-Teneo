@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 5141952733409538704}
   - component: {fileID: 5141952733409538705}
   - component: {fileID: 5141952733409538709}
+  - component: {fileID: 754632445270006482}
   m_Layer: 10
-  m_Name: Flying-Enemy
+  m_Name: Observer
   m_TagString: FlyingEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5141952733409538706}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.41, y: -1.47, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5141952734887618462}
@@ -76,8 +77,9 @@ SpriteRenderer:
   m_SortingLayerID: -2058323851
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: be8e5b1a405ef44439788a196eb5c4d6, type: 3}
-  m_Color: {r: 1, g: 0.69457716, b: 0, a: 1}
+  m_Sprite: {fileID: -4795363162621231457, guid: 7e72131aafafdd244938340e9ddf1c49,
+    type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -121,9 +123,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.020385683, y: -0.22424263}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.765014
 --- !u!114 &5141952733409538709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,22 +144,43 @@ MonoBehaviour:
   distanceFromGround: 2
   goBackCoolDown: 0.8
   distanceToAttack: 1.5
-  startAttack: 0.5
-  endAttack: 1
-  endAttackAnimation: 1.8
+  startAttack: 0.43
+  endAttack: 0.5
+  endAttackAnimation: 0.6
   attack_Point: {fileID: 5141952734887618462}
-  attackRange: 0.49
+  attackRange: 0.67
   damageAttack: 15
-  hurtCoolDown: 2.2
+  hurtCoolDown: 0.4
   gameObjectMoney: {fileID: 5592265374850845294, guid: cc4713054659e6b45b974f40d9315a52,
     type: 3}
   dropMoney: 1
+  enemyDead: {fileID: 8343852537965857399, guid: c1c9c6c6df7d0fa44b0741975e8c4e58,
+    type: 3}
   ground:
     serializedVersion: 2
     m_Bits: 256
   playerMask:
     serializedVersion: 2
     m_Bits: 512
+--- !u!95 &754632445270006482
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141952733409538706}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 46aed6e7d57b9204b9e90915fcb0db31, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5141952733801924791
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5141952734951946182
 Transform:
   m_ObjectHideFlags: 0

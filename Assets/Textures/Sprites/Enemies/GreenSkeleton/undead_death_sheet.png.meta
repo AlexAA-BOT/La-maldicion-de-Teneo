@@ -1,7 +1,85 @@
 fileFormatVersion: 2
 guid: 483b5b9d78c9da74785e3668b5515ebf
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 4025307939893637917
+    second: undead_death_sheet_0
+  - first:
+      213: 986000457717703648
+    second: undead_death_sheet_1
+  - first:
+      213: 1148019141912435105
+    second: undead_death_sheet_2
+  - first:
+      213: 2343290586799214850
+    second: undead_death_sheet_3
+  - first:
+      213: 5408111655926876523
+    second: undead_death_sheet_4
+  - first:
+      213: -4045168660722590123
+    second: undead_death_sheet_5
+  - first:
+      213: -1778475928550537061
+    second: undead_death_sheet_6
+  - first:
+      213: -4162145141899519682
+    second: undead_death_sheet_7
+  - first:
+      213: -6869702900089137523
+    second: undead_death_sheet_8
+  - first:
+      213: -3784775537324024490
+    second: undead_death_sheet_9
+  - first:
+      213: 7915253955291457579
+    second: undead_death_sheet_10
+  - first:
+      213: 7404037965686952818
+    second: undead_death_sheet_11
+  - first:
+      213: 5548069965975225959
+    second: undead_death_sheet_12
+  - first:
+      213: -555418423838574282
+    second: undead_death_sheet_0
+  - first:
+      213: -2414884911396173619
+    second: undead_death_sheet_1
+  - first:
+      213: -7393083732075963476
+    second: undead_death_sheet_2
+  - first:
+      213: 1036892992094951010
+    second: undead_death_sheet_3
+  - first:
+      213: -6720274707171872623
+    second: undead_death_sheet_4
+  - first:
+      213: 7610649264405087408
+    second: undead_death_sheet_5
+  - first:
+      213: -5051031231186603843
+    second: undead_death_sheet_6
+  - first:
+      213: 5389561987439860930
+    second: undead_death_sheet_7
+  - first:
+      213: -4917677143629633874
+    second: undead_death_sheet_8
+  - first:
+      213: -3826225910623713397
+    second: undead_death_sheet_9
+  - first:
+      213: 1209520389383396848
+    second: undead_death_sheet_10
+  - first:
+      213: -6197214467547439175
+    second: undead_death_sheet_11
+  - first:
+      213: -8420461968209338567
+    second: undead_death_sheet_12
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -85,7 +163,280 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: undead_death_sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 72
+        height: 32
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 639f461e2e1ca48f0800000000000000
+      internalID: -555418423838574282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: undead_death_sheet_1
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 0
+        width: 72
+        height: 32
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc8c7cab7fa9c7ed0800000000000000
+      internalID: -2414884911396173619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: undead_death_sheet_2
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 72
+        height: 32
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cab94e2148d766990800000000000000
+      internalID: -7393083732075963476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: undead_death_sheet_3
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 0
+        width: 72
+        height: 32
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26659efbea8c36e00800000000000000
+      internalID: 1036892992094951010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: undead_death_sheet_4
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 72
+        height: 32
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1907af562c9ccb2a0800000000000000
+      internalID: -6720274707171872623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: undead_death_sheet_5
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 0
+        width: 72
+        height: 32
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b404fade257e9960800000000000000
+      internalID: 7610649264405087408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: undead_death_sheet_6
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 0
+        width: 72
+        height: 32
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db0f7b35bd127e9b0800000000000000
+      internalID: -5051031231186603843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: undead_death_sheet_7
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 0
+        width: 72
+        height: 32
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cc1d4c82129bca40800000000000000
+      internalID: 5389561987439860930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: undead_death_sheet_8
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 72
+        height: 32
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea6e5ed51b6e0cbb0800000000000000
+      internalID: -4917677143629633874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: undead_death_sheet_9
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 0
+        width: 72
+        height: 32
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b87c0e67ec386eac0800000000000000
+      internalID: -3826225910623713397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: undead_death_sheet_10
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 72
+        height: 32
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fd1ac5c26419c010800000000000000
+      internalID: 1209520389383396848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: undead_death_sheet_11
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 0
+        width: 72
+        height: 32
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bf5ce8a6421ff9a0800000000000000
+      internalID: -6197214467547439175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: undead_death_sheet_12
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 0
+        width: 72
+        height: 32
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93f12341472842b80800000000000000
+      internalID: -8420461968209338567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

@@ -28,6 +28,7 @@ public class FlyingEnemy_AI : MonoBehaviour
     private bool goBack = false;
     [SerializeField] private float goBackCoolDown = 0.8f;
     private float goBackTime = 0.0f;
+    private bool wall = false; //Se pone a true si va a collisionar con una pared
 
     //Attack
     private bool enemyAttackCheck = false;
@@ -46,6 +47,12 @@ public class FlyingEnemy_AI : MonoBehaviour
     private float hurtTime = 0.0f;
     private bool attackOneTime = false;
 
+    //Animator
+    private Animator m_animator = null;
+
+    //Quaternion
+    private Quaternion rotatedObject = new Quaternion();
+
     //Floats
     private float distance = 0.0f;
 
@@ -61,6 +68,7 @@ public class FlyingEnemy_AI : MonoBehaviour
     [Header("GameObjects")]
     [SerializeField] private GameObject gameObjectMoney = null;
     [SerializeField] private bool dropMoney = true;  //// Eliminar a futuro
+    [SerializeField] private GameObject enemyDead = null;
     private GameObject bestiarioCount = null;
     private GameObject player = null;
 
@@ -82,6 +90,8 @@ public class FlyingEnemy_AI : MonoBehaviour
         enemyAttackColLeft = new Vector3(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
         bestiarioCount = GameObject.FindGameObjectWithTag("BestiarioCount");
         speed = runSpeed;
+        m_animator = GetComponent<Animator>();
+        rotatedObject.Set(0, 180, 0, 1);
     }
 
     // Update is called once per frame
@@ -89,6 +99,7 @@ public class FlyingEnemy_AI : MonoBehaviour
     {
         IsFacingRight(direction);
         GetDamage(0);
+        CollisionWithWall();
     }
 
     private void FixedUpdate()
@@ -150,6 +161,26 @@ public class FlyingEnemy_AI : MonoBehaviour
                 RandomDirection();
                 ChangeAttackDirection();
             }
+        }
+    }
+
+    private void CollisionWithWall()
+    {
+        RaycastHit2D hitWall = Physics2D.Raycast(new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), 
+            new Vector3(flyDirection, 0.0f, 0.0f), 1.5f, ground);
+        if (hitWall && hitWall.collider.gameObject.tag == "Ground")
+        {
+            if (flyDirection > 0)
+            {
+                flyDirection = -1;
+                wall = true;
+            }
+            else
+            {
+                flyDirection = 1;
+                wall = true;
+            }
+
         }
     }
 
@@ -246,18 +277,22 @@ public class FlyingEnemy_AI : MonoBehaviour
                 if (flyTime - flyTimeCoolDown >= 3.0f)
                 {
                     actualFly = true;
+                    wall = false;
                 }
                 break;
         }
-        switch (flyDirectionRand)
+        if(!wall)
         {
-            case 0:
-                flyDirection = 1;
-                break;
-            case 1:
-                flyDirection = -1;
-                break;
-        }
+            switch (flyDirectionRand)
+            {
+                case 0:
+                    flyDirection = 1;
+                    break;
+                case 1:
+                    flyDirection = -1;
+                    break;
+            }
+        }    
     }
 
     ////Attack
@@ -292,7 +327,7 @@ public class FlyingEnemy_AI : MonoBehaviour
         {
             if (timerAttack <= 0.0f && !hurtAnimation)  //Se activa la animacion de ataque
             {
-                //Animator.SetTrigger("Attack");
+                m_animator.SetTrigger("Attack");
                 timerAttack += Time.deltaTime;
                 enemyAttackCheck = true;
             }
@@ -350,6 +385,14 @@ public class FlyingEnemy_AI : MonoBehaviour
             }
             dropMoney = false;
             bestiarioCount.GetComponent<Bestiario_Count>().AddToDeathCount(enemyID);
+            if (direction.x < 0)
+            {
+                Instantiate(enemyDead, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), rotatedObject);
+            }
+            else
+            {
+                Instantiate(enemyDead, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity);
+            }
             Destroy(this.gameObject);
         }
         else
@@ -358,7 +401,7 @@ public class FlyingEnemy_AI : MonoBehaviour
             {
                 if (hurtTime <= 0)
                 {
-                    //Animator.SetTrigger("Hurt");
+                    m_animator.SetTrigger("Hurt");
                     hurtAnimation = true;
                     hurtTime += Time.deltaTime;
                 }

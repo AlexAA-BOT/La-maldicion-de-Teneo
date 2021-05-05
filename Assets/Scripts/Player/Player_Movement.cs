@@ -62,34 +62,42 @@ public class Player_Movement : MonoBehaviour
 
     private void Update()
     {
-        ControlInputs();
-        OpenShop();
-        m_Animator.SetFloat("Velocity_Falling", m_Rigidbody2D.velocity.y);
+        if(!this.gameObject.GetComponent<Player_Attack>().GetPlayerLiveState())
+        {
+            ControlInputs();
+
+            OpenShop();
+            m_Animator.SetFloat("Velocity_Falling", m_Rigidbody2D.velocity.y);
+        }
+            
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Collider2D[] collidersGround = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
-        for (int i = 0; i < collidersGround.Length; i++)
+        if (!this.gameObject.GetComponent<Player_Attack>().GetPlayerLiveState())
         {
-            if (collidersGround[i].gameObject != gameObject)
+            Collider2D[] collidersGround = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+            for (int i = 0; i < collidersGround.Length; i++)
             {
-                m_Grounded = true;
-                m_Animator.SetBool("InAir", !m_Grounded);
-                totalJumps = maxNumJumps;
-                doubleJump = false;
+                if (collidersGround[i].gameObject != gameObject)
+                {
+                    m_Grounded = true;
+                    m_Animator.SetBool("InAir", !m_Grounded);
+                    totalJumps = maxNumJumps;
+                    doubleJump = false;
+                }
             }
+
+
+
+            Salto();
+            if (state != State.DODGEROLL)
+                Movement();
+
+            ControlGravity();
+            Dash();
         }
-
-        
-
-        Salto();
-        if (state != State.DODGEROLL)
-            Movement();
-        ControlGravity();
-        Dash();
-
     }
 
     void Salto()
@@ -140,8 +148,11 @@ public class Player_Movement : MonoBehaviour
             transform.localScale = theScale;
         }
 
-
-        m_Rigidbody2D.velocity = new Vector2(horizontalMove * runSpeed, m_Rigidbody2D.velocity.y);
+        if(!this.gameObject.GetComponent<Player_Attack>().GetDefendState())
+        {
+            m_Rigidbody2D.velocity = new Vector2(horizontalMove * runSpeed, m_Rigidbody2D.velocity.y);
+        }
+        
         m_Animator.SetFloat("Velocity", Mathf.Abs(m_Rigidbody2D.velocity.x));
 
         //if (Input.GetKey(KeyCode.D))
@@ -226,7 +237,8 @@ public class Player_Movement : MonoBehaviour
 
     private void Dash()
     {
-        if(rollBtn && m_Grounded && (horizontalMove > 0.0f || horizontalMove < 0.0f))
+        //(horizontalMove > 0.0f || horizontalMove < 0.0f)
+        if (rollBtn && m_Grounded && Mathf.Abs(m_Rigidbody2D.velocity.x) > 0.0f)
         {
             state = State.DODGEROLL;
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player_Inventory : MonoBehaviour
 {
 
-    [HideInInspector] public enum Items { HEALTHPOTION, STAMINAPOTION, MONEY };
+    [HideInInspector] public enum Items { HEALTHPOTION, STAMINAPOTION, MONEY, GOLDBAG };
     [HideInInspector] public Items item;
 
     [SerializeField] private int money = 0;
@@ -48,8 +48,13 @@ public class Player_Inventory : MonoBehaviour
             case (Items.HEALTHPOTION):
                 numHealthPotions++;
                 break;
+
             case (Items.STAMINAPOTION):
                 numStaminaPotions++;
+                break;
+
+            case (Items.GOLDBAG):
+                money += 10;
                 break;
         }
     }
