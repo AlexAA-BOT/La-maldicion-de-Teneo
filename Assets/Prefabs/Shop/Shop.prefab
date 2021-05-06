@@ -877,7 +877,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Health Potion
+  m_text: Mana Potion
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1300,7 +1300,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 80
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
@@ -1336,7 +1336,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -72.233246, w: -56.181396}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1775,7 +1775,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -25, y: -34}
+  m_AnchoredPosition: {x: -25, y: -40}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4823022309329695810
@@ -1914,10 +1914,10 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 787.98566, y: 443.24194}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4823022309396721819
 CanvasRenderer:
@@ -2006,7 +2006,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 96}
+  m_AnchoredPosition: {x: 0, y: 109}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4823022309463294923
@@ -2233,7 +2233,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -189.94678, y: 0, z: -32.103638, w: -69.55798}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2253,7 +2253,7 @@ GameObject:
   - component: {fileID: 4823022309479160380}
   - component: {fileID: 4823022309479161283}
   m_Layer: 5
-  m_Name: Button (4)
+  m_Name: Mana
   m_TagString: Item_Shop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2276,10 +2276,10 @@ RectTransform:
   m_Father: {fileID: 4823022310592266927}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 760, y: -121.7337}
-  m_SizeDelta: {x: 130, y: 130}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4823022309479160382
 CanvasRenderer:
@@ -2499,7 +2499,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 96}
+  m_AnchoredPosition: {x: 0, y: 109}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4823022309678489325
@@ -2878,7 +2878,7 @@ GameObject:
   - component: {fileID: 4823022309722407359}
   - component: {fileID: 4823022309722407358}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: Health-Ampliation
   m_TagString: Item_Shop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2904,10 +2904,10 @@ RectTransform:
   m_Father: {fileID: 4823022310592266927}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 480, y: -121.7337}
-  m_SizeDelta: {x: 130, y: 130}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4823022309722407353
 CanvasRenderer:
@@ -3184,7 +3184,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -25, y: -40}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4823022309764008529
@@ -3613,7 +3613,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Health Potion
+  m_text: Stamina Potion
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3772,7 +3772,7 @@ GameObject:
   - component: {fileID: 4823022310197504792}
   - component: {fileID: 4823022310197504799}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: Stamina-Ampliation
   m_TagString: Item_Shop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3798,10 +3798,10 @@ RectTransform:
   m_Father: {fileID: 4823022310592266927}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 620, y: -121.7337}
-  m_SizeDelta: {x: 130, y: 130}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4823022310197504794
 CanvasRenderer:
@@ -4055,7 +4055,7 @@ GameObject:
   - component: {fileID: 4823022310277686804}
   - component: {fileID: 4823022310277686811}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Stamina
   m_TagString: Item_Shop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4080,10 +4080,10 @@ RectTransform:
   m_Father: {fileID: 4823022310592266927}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: -121.7337}
-  m_SizeDelta: {x: 130, y: 130}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4823022310277686806
 CanvasRenderer:
@@ -4651,7 +4651,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -98.98627, y: 0, z: -98.98633, w: -48.155457}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4671,7 +4671,7 @@ GameObject:
   - component: {fileID: 4823022310715069380}
   - component: {fileID: 4823022310715069383}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Health
   m_TagString: Item_Shop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4696,10 +4696,10 @@ RectTransform:
   m_Father: {fileID: 4823022310592266927}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 200, y: -121.7337}
-  m_SizeDelta: {x: 130, y: 130}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4823022310715069382
 CanvasRenderer:
@@ -4976,7 +4976,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -25, y: -34}
+  m_AnchoredPosition: {x: -25, y: -40}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4823022310805256676
@@ -5206,7 +5206,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -456}
+  m_AnchoredPosition: {x: -8, y: -456}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1957867372849274568

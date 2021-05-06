@@ -15,9 +15,12 @@ public class Scene_Manager : MonoBehaviour
     [SerializeField] private bool verticalNextLevExit = false;
     [SerializeField] private GameObject collLastLev = null;
     [SerializeField] private bool verticalLastLevExit = false;
+    [SerializeField] private GameObject collThirdLevel = null;
+    [SerializeField] private bool verticalThirdLevelExit = false;
 
-    bool collisionNext = false;
-    bool collisionLast = false;
+    private bool collisionNext = false;
+    private bool collisionLast = false;
+    private bool collisionThird = false;
 
     private void Start()
     {
@@ -36,6 +39,10 @@ public class Scene_Manager : MonoBehaviour
             collisionLast = collLastLev.GetComponent<Scene_Exit>().exit;
         }
         
+        if(collThirdLevel != null)
+        {
+            collisionThird = collThirdLevel.GetComponent<Scene_Exit>().exit;
+        }
 
         if(collisionNext)
         {
@@ -94,6 +101,35 @@ public class Scene_Manager : MonoBehaviour
 
             }
             
+        }
+        else if(collisionThird)
+        {
+            SceneManager.LoadScene(thirdLevel);
+            if (verticalThirdLevelExit)
+            {
+                if (player.transform.position.y > 0.0f)
+                {
+                    player.transform.position = new Vector3(player.transform.position.x, -9.0f, player.transform.position.z); // y = -11.0f -> cambiado para quye salga arriba
+                    //player.GetComponent<Player_Movement>().GetRigidBody().AddForce(new Vector2(player.GetComponent<Player_Movement>().GetRigidBody().velocity.x, 100.0f), ForceMode2D.Impulse);
+                }
+                else
+                {
+                    player.transform.position = new Vector3(player.transform.position.x, 10.0f, player.transform.position.z);
+                }
+            }
+            else
+            {
+                if (player.transform.position.x > 0.0f)
+                {
+                    player.transform.position = new Vector3(-23.0f, player.transform.position.y, player.transform.position.z);
+                }
+                else
+                {
+                    player.transform.position = new Vector3(23.0f, player.transform.position.y, player.transform.position.z);
+                }
+
+            }
+            Data_Control.instance.SavePlayerPos(player.transform.position);
         }
 
     }
