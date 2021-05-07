@@ -46,6 +46,7 @@ public class False_Boss_AI : MonoBehaviour
     private int attackType = 0;  //Tipo de ataque que hará el enemigo
     private bool enemyAttackDecided = false;
     private bool enemyAttack2Col = false;
+    private bool attackOneTime = false;
     //Variables tiempo de ataque
     //private float coolDownTime = 0.0f;
     private float timerAttack = 0.0f;
@@ -93,11 +94,11 @@ public class False_Boss_AI : MonoBehaviour
 
     private void Update()
     {
-        changeAttackDirection(direction);
-        animationMovement();
+        ChangeAttackDirection(direction);
+        AnimationMovement();
         IsFacingRight();
-        enemyTurnAround();
-        getDamage(0);
+        EnemyTurnAround();
+        GetDamage(0);
     }
 
     // Update is called once per frame
@@ -151,11 +152,11 @@ public class False_Boss_AI : MonoBehaviour
         //Controla la direccion del enemigo
         m_rigidBody2D.velocity = new Vector2(direction * speed, 0);
         
-        enemyAttack();
+        EnemyAttack();
         
     }
 
-    void enemyAttack()
+    void EnemyAttack()
     {
         RaycastHit2D playerHitRight = Physics2D.Raycast(enemyVision, Vector2.right, 1.4f, LayerMask.GetMask("Player"));
         RaycastHit2D playerHitLeft = Physics2D.Raycast(enemyVision, Vector2.left, 1.4f, LayerMask.GetMask("Player"));
@@ -178,7 +179,7 @@ public class False_Boss_AI : MonoBehaviour
                 {
                     timerAttack = 0.0f;
                     enemyAttackCheck1 = false;
-                    Debug.Log("reset time");
+                    attackOneTime = false;
                 }
                 else
                 {
@@ -203,6 +204,7 @@ public class False_Boss_AI : MonoBehaviour
                 {
                     timerAttack = 0.0f;
                     enemyAttackCheck1 = false;
+                    attackOneTime = false;
                 }
                 else
                 {
@@ -242,6 +244,7 @@ public class False_Boss_AI : MonoBehaviour
                         timerAttack = 0.0f;
                         enemyAttackCheck1 = false;
                         enemyAttackDecided = false;
+                        attackOneTime = false;
                     }
                     else
                     {
@@ -260,7 +263,6 @@ public class False_Boss_AI : MonoBehaviour
                     {
                         attack();
                         timerAttack += Time.deltaTime;
-                        //coolDownTime = 0;
                         Debug.Log("Ataca");
                     }
                     else if (timerAttack >= endSecondAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
@@ -268,6 +270,7 @@ public class False_Boss_AI : MonoBehaviour
                         timerAttack = 0.0f;
                         enemyAttackCheck2 = false;
                         enemyAttackDecided = false;
+                        attackOneTime = false;
                     }
                     else
                     {
@@ -290,14 +293,13 @@ public class False_Boss_AI : MonoBehaviour
                     {
                         attack();
                         timerAttack += Time.deltaTime;
-                        //coolDownTime = 0;
-                        Debug.Log("Ataca");
                     }
                     else if (timerAttack >= endAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
                     {
                         timerAttack = 0.0f;
                         enemyAttackCheck1 = false;
                         enemyAttackDecided = false;
+                        attackOneTime = false;
                     }
                     else
                     {
@@ -316,13 +318,13 @@ public class False_Boss_AI : MonoBehaviour
                     {
                         attack();
                         timerAttack += Time.deltaTime;
-                        Debug.Log("Ataca");
                     }
                     else if (timerAttack >= endSecondAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
                     {
                         timerAttack = 0.0f;
                         enemyAttackCheck2 = false;
                         enemyAttackDecided = false;
+                        attackOneTime = false;
                     }
                     else
                     {
@@ -357,7 +359,7 @@ public class False_Boss_AI : MonoBehaviour
     }
 
     //Cambiara la colisión de la bola de derecha a izquierda segun hacia donde este mirando
-    void changeAttackDirection(int currentDirection)
+    void ChangeAttackDirection(int currentDirection)
     {
         switch (currentDirection)
         {
@@ -379,11 +381,12 @@ public class False_Boss_AI : MonoBehaviour
         {
             //Funcion de recibir daño del jugador
             //Tambien se puede añadir funcion para rom,per objetos del escenario
-            if (colliders.gameObject.tag == "Player")
+            if (colliders.gameObject.tag == "Player" && !attackOneTime)
             {
                 if (colliders.GetComponent<Player_Attack>().defendState == true && colliders.GetComponent<Player_Movement>().IsFacingLeft() == isFacingRight)
                 {
                     colliders.GetComponent<Player_Attack>().GetStamina(damageAttack);
+                    attackOneTime = true;
                 }
                 else
                 {
@@ -403,7 +406,7 @@ public class False_Boss_AI : MonoBehaviour
     }
 
     //Recibe daño del jugador (Player)
-    public void getDamage(int playerDamage)
+    public void GetDamage(int playerDamage)
     {
         health -= playerDamage;
 
@@ -417,20 +420,19 @@ public class False_Boss_AI : MonoBehaviour
             {
                 Instantiate(enemyDead, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity);
             }
-            
+
             //Añadir Boss al bestiario
-            
+            Data_Control.instance.SetFalseBossCount();
             ///////////////////////////
             ///////////////////////////
 
             Destroy(this.gameObject);
             //Destruccion del enemigo
-            Debug.Log("Enemigo muerto");
         }
 
     }
 
-    void animationMovement()
+    void AnimationMovement()
     {
         if (dashMode)
         {
@@ -455,7 +457,7 @@ public class False_Boss_AI : MonoBehaviour
         
     }
 
-    void enemyTurnAround()
+    void EnemyTurnAround()
     {
         visionTime += Time.deltaTime;
         if (transform.position.x < player.transform.position.x && direction < 0 && !enemyAttackCheck1 && !enemyAttackCheck2)

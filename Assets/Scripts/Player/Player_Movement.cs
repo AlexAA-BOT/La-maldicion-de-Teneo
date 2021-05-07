@@ -23,6 +23,7 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private float rollSpeed = 10.0f;
     [SerializeField] private float dashSpeed = 15.0f;
     [SerializeField] private float dashTime = 0.3f;
+    [SerializeField] private float staminaToRoll = 30.0f;
     [SerializeField] private bool isFacingLeft = true;
     private bool oneWayPlatform = false;
     private float startDashTime = 0.0f;
@@ -257,7 +258,7 @@ public class Player_Movement : MonoBehaviour
     private void Dash()
     {
         //(horizontalMove > 0.0f || horizontalMove < 0.0f)
-        if (rollBtn && state == State.NORMAL && m_Grounded && Mathf.Abs(m_Rigidbody2D.velocity.x) > 0.0f)
+        if (rollBtn && m_Grounded && this.gameObject.GetComponent<Player_Attack>().GetStamina() >= staminaToRoll && Mathf.Abs(m_Rigidbody2D.velocity.x) > 0.0f || state == State.DODGEROLL)
         {
             state = State.DODGEROLL;
 
@@ -265,6 +266,7 @@ public class Player_Movement : MonoBehaviour
             {
                 m_Animator.SetTrigger("Roll");
                 dashDirection = new Vector2(horizontalMove * dashSpeed, m_Rigidbody2D.velocity.y);
+                this.gameObject.GetComponent<Player_Attack>().SetStamina(staminaToRoll);
                 dashDirectionDecided = true;
             }
 

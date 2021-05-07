@@ -8,16 +8,15 @@ public class Item_Script : MonoBehaviour
     [SerializeField] private Transform parent = null;
     [SerializeField] private Player_Inventory.Items itemID = Player_Inventory.Items.MONEY;
 
+    [Header("Coins ID")]
+    [SerializeField] private int zone = 1;
+    [SerializeField] private int room = 1;
+    [SerializeField] private int coinID = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -25,6 +24,7 @@ public class Item_Script : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             player.GetComponent<Player_Inventory>().AddItem(itemID);
+            Data_Control.instance.SetCoinState(zone, room, coinID, true);
             Destroy(parent.gameObject);
         }
     }

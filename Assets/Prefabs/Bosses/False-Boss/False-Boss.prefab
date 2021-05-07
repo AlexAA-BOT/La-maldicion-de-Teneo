@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 1172173107949940285}
   m_Layer: 10
   m_Name: False-Boss
-  m_TagString: Enemy
+  m_TagString: FalseBoss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

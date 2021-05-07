@@ -7,6 +7,8 @@ public class Bestiario_Count : MonoBehaviour
     private int greenSkeleton = 0;
     private int goblin = 0;
     private int observer = 0;
+    private int falseBoss = 0;
+    private int theRealBoss = 0;
 
     // Start is called before the first frame update
     void Start()

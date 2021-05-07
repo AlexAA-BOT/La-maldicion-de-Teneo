@@ -61,6 +61,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 5592265374850845282}
+  itemID: 2
+  zone: 1
+  room: 1
+  coinID: 0
 --- !u!1 &5592265374850845294
 GameObject:
   m_ObjectHideFlags: 0

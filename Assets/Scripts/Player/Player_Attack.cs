@@ -120,7 +120,9 @@ public class Player_Attack : MonoBehaviour
                 case ("FlyingEnemy"):
                     enemy.GetComponent<FlyingEnemy_AI>().GetDamage(playerDamage);
                     break;
-
+                case ("FalseBoss"):
+                    enemy.GetComponent<False_Boss_AI>().GetDamage(playerDamage);
+                    break;
             }
         }
 
@@ -205,7 +207,7 @@ public class Player_Attack : MonoBehaviour
         {
             if(timerStaminaReload >= timeStaminaRecovery)
             {
-                if(!defendBtn)
+                if(!defendBtn && this.gameObject.GetComponent<Player_Movement>().state != Player_Movement.State.DODGEROLL)
                 {
                     playerEnergy += recoveryEnergy * Time.deltaTime;
                 }
@@ -225,6 +227,8 @@ public class Player_Attack : MonoBehaviour
     public float GetHealth() { return playerHealth; }
 
     public float GetStamina() { return playerEnergy; }
+
+    public void SetStamina(float quantity) { playerEnergy -= quantity; }
 
     public bool GetDefendState() { return defendBtn; }
 

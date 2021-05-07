@@ -18,6 +18,12 @@ public class Scene_Manager : MonoBehaviour
     [SerializeField] private GameObject collThirdLevel = null;
     [SerializeField] private bool verticalThirdLevelExit = false;
 
+    [Header("Items")]
+    [SerializeField] private GameObject[] coinsObjects = null;
+    [SerializeField] private bool[] coinsState = null;
+    [SerializeField] private int zone = 1;
+    [SerializeField] private int room = 1;
+
     private bool collisionNext = false;
     private bool collisionLast = false;
     private bool collisionThird = false;
@@ -25,6 +31,13 @@ public class Scene_Manager : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+
+        for(int i = 0; i < coinsObjects.Length; i++)
+        {
+            coinsState[i] = Data_Control.instance.GetCoinsState(zone, room, i);
+            coinsObjects[i].SetActive(!coinsState[i]);
+        }
+
     }
 
     private void Update()
