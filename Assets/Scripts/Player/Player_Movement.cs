@@ -7,7 +7,7 @@ public class Player_Movement : MonoBehaviour
     //Inputs
     private float horizontalMove = 0f;
     private bool interactButtonInput = false;
-    private bool attackButton = false;  ////Mirar si se usa
+    //private bool attackButton = false;  ////Mirar si se usa
     private bool jmpBtn = false;
     private bool jmpBtnDown = false;
     private bool rollBtn = false;
@@ -257,7 +257,7 @@ public class Player_Movement : MonoBehaviour
     private void Dash()
     {
         //(horizontalMove > 0.0f || horizontalMove < 0.0f)
-        if (rollBtn && m_Grounded && Mathf.Abs(m_Rigidbody2D.velocity.x) > 0.0f)
+        if (rollBtn && state == State.NORMAL && m_Grounded && Mathf.Abs(m_Rigidbody2D.velocity.x) > 0.0f)
         {
             state = State.DODGEROLL;
 

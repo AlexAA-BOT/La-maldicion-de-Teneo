@@ -23,8 +23,8 @@ TagManager:
   - Enemy
   - Items
   - OneWayPlatform
-  - 
-  - 
+  - Door
+  - Wall-Enemies
   - 
   - 
   - 
@@ -54,4 +54,7 @@ TagManager:
     locked: 0
   - name: Items
     uniqueID: 2017327621
+    locked: 0
+  - name: Text
+    uniqueID: 3802105115
     locked: 0

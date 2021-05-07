@@ -12,7 +12,7 @@ public class Player_Attack : MonoBehaviour
     [SerializeField] private float timeStaminaRecovery = 0.5f;
     [SerializeField] private float recoveryEnergy = 15.0f;
     [SerializeField] private float invencibilityTransparency = 0.5f;
-    private bool reloadEnergy = false;  //// Mirar si se usa
+    //private bool reloadEnergy = false;  //// Mirar si se usa
 
     [Header("Attack")]
     [SerializeField] private Transform attackPoint = null;
