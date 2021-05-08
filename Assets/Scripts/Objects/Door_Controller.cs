@@ -96,13 +96,17 @@ public class Door_Controller : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             onDoor = true;
-            if(needAKey)
+            if(needAKey && Data_Control.instance.GetDoorState_Z1(ID) == Data_Control.DoorState.CLOSE)
             {
                 text.enabled = true;
                 if(!player.GetComponent<Player_Inventory>().GetKeyState(k_ID))
                     text.text = "You need a key";
                 else
                     text.text = "Press E to open the door";
+            }
+            else if(needAKey && Data_Control.instance.GetDoorState_Z1(ID) == Data_Control.DoorState.OPEN)
+            {
+                text.enabled = false;
             }
                 
                 

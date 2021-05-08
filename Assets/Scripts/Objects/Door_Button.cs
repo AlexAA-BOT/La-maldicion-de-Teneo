@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Door_Button : MonoBehaviour
 {
+    [Header("Text")]
+    [SerializeField] private TextMeshPro text = null;
+
     [Header("Door ID")]
     [SerializeField] private int ID = 0;
     private GameObject player = null;
@@ -25,6 +29,7 @@ public class Door_Button : MonoBehaviour
             if(Data_Control.instance.GetDoorState_Z1(ID) == Data_Control.DoorState.CLOSE)
             {
                 Data_Control.instance.SetDoorState_Z1(ID, Data_Control.DoorState.OPEN_FIRST_TIME);
+                text.enabled = false;
             }
             interact = false;
         }
@@ -46,7 +51,13 @@ public class Door_Button : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            onButton = true;
+            if(Data_Control.instance.GetDoorState_Z1(ID) == Data_Control.DoorState.CLOSE)
+            {
+                onButton = true;
+                text.enabled = true;
+            }
+
+            
         }
     }
 
@@ -55,6 +66,7 @@ public class Door_Button : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             onButton = false;
+            text.enabled = false;
         }
     }
 

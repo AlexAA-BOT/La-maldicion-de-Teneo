@@ -195,7 +195,7 @@ MonoBehaviour:
   fallVelocity: -15
   jumpGravityPercentage: 0.7
   rollSpeed: 100
-  dashSpeed: 20
+  dashSpeed: 15
   dashTime: 0.6
   staminaToRoll: 30
   isFacingLeft: 0

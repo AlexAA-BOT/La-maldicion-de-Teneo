@@ -19,6 +19,7 @@ public class Player_Attack : MonoBehaviour
     [SerializeField] private float attackRange = 0.2f;
     [SerializeField] private int playerDamage = 20;
     [SerializeField] private float timeBetweenAttack = 0.0f;
+    [SerializeField] private float energyForEachAttack = 25.0f;
 
     private float timerAttack = 0.0f;
 
@@ -69,11 +70,15 @@ public class Player_Attack : MonoBehaviour
     {
         if (timerAttack <= 0.0f)
         {
-            if (attackBtn)
+            if (attackBtn && playerEnergy >= energyForEachAttack)
             {
                 m_Animator.SetTrigger("Attack");
                 Attack();
                 timerAttack += Time.deltaTime;
+            }
+            else
+            {
+                attackBtn = false;
             }
         }
         else if(timerAttack >= timeBetweenAttack)
@@ -125,7 +130,7 @@ public class Player_Attack : MonoBehaviour
                     break;
             }
         }
-
+        SetStamina(energyForEachAttack);
         attackBtn = false;
 
     }
@@ -207,7 +212,7 @@ public class Player_Attack : MonoBehaviour
         {
             if(timerStaminaReload >= timeStaminaRecovery)
             {
-                if(!defendBtn && this.gameObject.GetComponent<Player_Movement>().state != Player_Movement.State.DODGEROLL)
+                if(!defendBtn && !attackBtn &&this.gameObject.GetComponent<Player_Movement>().state != Player_Movement.State.DODGEROLL)
                 {
                     playerEnergy += recoveryEnergy * Time.deltaTime;
                 }
