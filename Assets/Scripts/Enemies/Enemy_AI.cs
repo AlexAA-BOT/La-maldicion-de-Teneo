@@ -6,7 +6,7 @@ public class Enemy_AI : MonoBehaviour
 {
 
     //EnemyID
-    [HideInInspector] public enum EnemyID { GREENSKELETON, GOBLIN, OBSERVER };
+    [HideInInspector] public enum EnemyID { GREENSKELETON, GOBLIN, OBSERVER, NONE };
     public EnemyID enemyID = EnemyID.GREENSKELETON;
 
     [Header("Health")]
@@ -449,7 +449,7 @@ public class Enemy_AI : MonoBehaviour
                 Instantiate(gameObjectMoney, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
             }
             dropMoney = false;
-            bestiarioCount.GetComponent<Bestiario_Count>().AddToDeathCount(enemyID);
+            Data_Control.instance.AddToDeathCount(enemyID);
             if (direction < 0)
             {
                 Instantiate(enemyDead, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), rotatedObject);

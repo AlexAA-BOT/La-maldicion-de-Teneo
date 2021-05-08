@@ -384,7 +384,7 @@ public class FlyingEnemy_AI : MonoBehaviour
                 Instantiate(gameObjectMoney, this.transform);
             }
             dropMoney = false;
-            bestiarioCount.GetComponent<Bestiario_Count>().AddToDeathCount(enemyID);
+            Data_Control.instance.AddToDeathCount(enemyID);
             if (direction.x < 0)
             {
                 Instantiate(enemyDead, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), rotatedObject);

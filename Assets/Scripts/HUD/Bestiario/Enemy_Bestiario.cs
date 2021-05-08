@@ -11,6 +11,8 @@ public class Enemy_Bestiario : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] texts = null;
     [Space]
     [SerializeField] private Enemy_AI.EnemyID enemyID = Enemy_AI.EnemyID.GREENSKELETON;
+    [SerializeField] private enum BossID { FALSEBOSS, THEREALBOSS, NONE };
+    [SerializeField] private BossID bossID = BossID.NONE;
     private int count = 0;
     private GameObject bestiarioCount = null;
 
@@ -25,7 +27,15 @@ public class Enemy_Bestiario : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        count = bestiarioCount.GetComponent<Bestiario_Count>().ReturnDeathCount(enemyID);
+        if(enemyID != Enemy_AI.EnemyID.NONE)
+            count = Data_Control.instance.ReturnDeathCount(enemyID);
+        else
+            switch(bossID)
+            {
+                case BossID.FALSEBOSS:
+                    count = Data_Control.instance.GetFalseBossCount();
+                    break;
+            }
         texts[2].text = "Count: " + count;
     }
 

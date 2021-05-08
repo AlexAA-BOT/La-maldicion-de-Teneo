@@ -164,12 +164,12 @@ MonoBehaviour:
   runSpeed: 5
   direction: 1
   distanceToAttack: 0.8
-  startAttack: 0.43
-  endAttack: 0.71
-  endAttackAnimation: 1.38
+  startAttack: 0.86
+  endAttack: 1.21
+  endAttackAnimation: 1.71
   attack_Point: {fileID: 4966102799772442220}
   attackRange: 0.48
-  damageAttack: 20
+  damageAttack: 30
   hurtCoolDown: 1.07
   height: 0.5
   gameObjectMoney: {fileID: 5592265374850845294, guid: cc4713054659e6b45b974f40d9315a52,
@@ -177,7 +177,7 @@ MonoBehaviour:
   dropMoney: 1
   platform:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 24832
   playerMask:
     serializedVersion: 2
     m_Bits: 512

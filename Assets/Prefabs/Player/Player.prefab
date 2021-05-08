@@ -195,8 +195,9 @@ MonoBehaviour:
   fallVelocity: -15
   jumpGravityPercentage: 0.7
   rollSpeed: 100
-  dashSpeed: 30
-  dashTime: 0.2
+  dashSpeed: 15
+  dashTime: 0.6
+  staminaToRoll: 30
   isFacingLeft: 0
   m_GroundCheck: {fileID: 6787332348398596318}
   totalJumps: 0
@@ -207,7 +208,6 @@ MonoBehaviour:
   gravityScale: 20
   k_GroundedRadius: 0.2
   shop: {fileID: 0}
-  shopEntrance: {fileID: 0}
 --- !u!114 &605359229914358943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,8 +224,8 @@ MonoBehaviour:
   playerEnergy: 100
   timeWithInvencibility: 4
   timeWithInvencibilityStamina: 0.2
-  timeStaminaRecovery: 0.5
-  recoveryEnergy: 15
+  timeStaminaRecovery: 0.8
+  recoveryEnergy: 12
   invencibilityTransparency: 0.5
   attackPoint: {fileID: 2666114758522683666}
   attackRange: 0.66
@@ -255,6 +255,7 @@ MonoBehaviour:
   healthPotionRecover: 25
   staminaPotionRecover: 30
   bestiario: {fileID: 0}
+  keys: 00
 --- !u!1 &6787332348398596289
 GameObject:
   m_ObjectHideFlags: 0

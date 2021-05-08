@@ -28,6 +28,9 @@ public class Player_Inventory : MonoBehaviour
     private bool openBestiario = false;
     private bool isBestiarioOpen = false;
 
+    [Header("Keys")]
+    [SerializeField] private bool[] keys = { false };
+
     // Update is called once per frame
     void Update()
     {
@@ -184,6 +187,16 @@ public class Player_Inventory : MonoBehaviour
                 openBestiario = false;
             }
         }
+    }
+
+    public void SetKeyState(int keyID, bool state)
+    {
+        keys[keyID] = state;
+    }
+
+    public bool GetKeyState(int keyID)
+    {
+        return keys[keyID];
     }
 
 }

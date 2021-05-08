@@ -12,13 +12,14 @@ public class Player_Attack : MonoBehaviour
     [SerializeField] private float timeStaminaRecovery = 0.5f;
     [SerializeField] private float recoveryEnergy = 15.0f;
     [SerializeField] private float invencibilityTransparency = 0.5f;
-    private bool reloadEnergy = false;  //// Mirar si se usa
+    //private bool reloadEnergy = false;  //// Mirar si se usa
 
     [Header("Attack")]
     [SerializeField] private Transform attackPoint = null;
     [SerializeField] private float attackRange = 0.2f;
     [SerializeField] private int playerDamage = 20;
     [SerializeField] private float timeBetweenAttack = 0.0f;
+    [SerializeField] private float energyForEachAttack = 25.0f;
 
     private float timerAttack = 0.0f;
 
@@ -69,11 +70,15 @@ public class Player_Attack : MonoBehaviour
     {
         if (timerAttack <= 0.0f)
         {
-            if (attackBtn)
+            if (attackBtn && playerEnergy >= energyForEachAttack)
             {
                 m_Animator.SetTrigger("Attack");
                 Attack();
                 timerAttack += Time.deltaTime;
+            }
+            else
+            {
+                attackBtn = false;
             }
         }
         else if(timerAttack >= timeBetweenAttack)
@@ -120,10 +125,12 @@ public class Player_Attack : MonoBehaviour
                 case ("FlyingEnemy"):
                     enemy.GetComponent<FlyingEnemy_AI>().GetDamage(playerDamage);
                     break;
-
+                case ("FalseBoss"):
+                    enemy.GetComponent<False_Boss_AI>().GetDamage(playerDamage);
+                    break;
             }
         }
-
+        SetStamina(energyForEachAttack);
         attackBtn = false;
 
     }
@@ -205,7 +212,7 @@ public class Player_Attack : MonoBehaviour
         {
             if(timerStaminaReload >= timeStaminaRecovery)
             {
-                if(!defendBtn)
+                if(!defendBtn && !attackBtn &&this.gameObject.GetComponent<Player_Movement>().state != Player_Movement.State.DODGEROLL)
                 {
                     playerEnergy += recoveryEnergy * Time.deltaTime;
                 }
@@ -225,6 +232,8 @@ public class Player_Attack : MonoBehaviour
     public float GetHealth() { return playerHealth; }
 
     public float GetStamina() { return playerEnergy; }
+
+    public void SetStamina(float quantity) { playerEnergy -= quantity; }
 
     public bool GetDefendState() { return defendBtn; }
 
