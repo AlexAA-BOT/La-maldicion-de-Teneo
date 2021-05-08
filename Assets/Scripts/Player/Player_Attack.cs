@@ -23,11 +23,14 @@ public class Player_Attack : MonoBehaviour
 
     private float timerAttack = 0.0f;
 
+    //Cheat
+    private bool invincibilityCheat = false;
+
     private bool playerIsDead = false;
     private bool attackBtn = false;
     private bool defendBtn = false;
     [HideInInspector] public bool defendState = false;
-    private bool invencibility = false;
+    private bool invincibility = false;
     private float invencibilityTime = 0.0f;
     private bool invencibilityStamina = false;
     private float invencibilityTimeStamina = 0.0f;
@@ -145,16 +148,16 @@ public class Player_Attack : MonoBehaviour
 
     public void GetDamage(int enemyDamage)
     {
-        if (invencibility)
+        if (invincibility)
         {
             if (invencibilityTime <= 0.0f)
             {
                 invencibilityTime += Time.deltaTime;
                 mySprite.color = new Color(mySprite.color.r, mySprite.color.g, mySprite.color.b, invencibilityTransparency);
             }
-            else if (invencibilityTime >= timeWithInvencibility)
+            else if (invencibilityTime >= timeWithInvencibility && !invincibilityCheat)
             {
-                invencibility = false;
+                invincibility = false;
                 invencibilityTime = 0.0f;
                 mySprite.color = new Color(mySprite.color.r, mySprite.color.g, mySprite.color.b, 1.0f);
             }
@@ -165,13 +168,13 @@ public class Player_Attack : MonoBehaviour
         }
         else if (playerHealth > 0.0f && enemyDamage > 0.0f && gameObject.GetComponent<Player_Movement>().state != Player_Movement.State.DODGEROLL)
         {
-            invencibility = true;
+            invincibility = true;
             playerHealth -= enemyDamage;
         }
 
         if (playerHealth <= 0 && !playerIsDead)
         {
-            invencibility = false;
+            invincibility = false;
             invencibilityTime = 0.0f;
             mySprite.color = new Color(mySprite.color.r, mySprite.color.g, mySprite.color.b, 1.0f);
             playerIsDead = true;
@@ -241,5 +244,8 @@ public class Player_Attack : MonoBehaviour
 
     public void AddHealth(float _health) { playerHealth += _health; if (playerHealth > 100.0f) playerHealth = 100.0f; }
     public void AddStamina(float _stamina) { playerEnergy += _stamina; if (playerEnergy > 100.0f) playerEnergy = 100.0f; }
+
+    public bool GetInvincibility() { return invincibilityCheat; }
+    public void SetInvincibility(bool newValue) { invincibilityCheat = newValue; invincibility = true; }
 
 }
