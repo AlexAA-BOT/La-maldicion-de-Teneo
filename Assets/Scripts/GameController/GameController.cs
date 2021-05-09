@@ -55,9 +55,11 @@ public class GameController : MonoBehaviour
             if (timerRestart <= 0.0f)
             {
                 timerRestart += Time.deltaTime;
+                Data_Control.instance.RestartCoins_Z1();
             }
             else if (timerRestart >= timeToRestart)
             {
+                Destroy(player);
                 SceneManager.LoadScene("1-Room-1");
                 timerRestart = 0.0f;
             }
@@ -65,7 +67,6 @@ public class GameController : MonoBehaviour
             {
                 timerRestart += Time.deltaTime;
             }
-            SceneManager.LoadScene("1-Room-1");
         }
     }
 

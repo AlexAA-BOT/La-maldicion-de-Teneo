@@ -20673,14 +20673,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 58831750892970651, guid: cffb297f6d307674d85e48fb2d36b982,
         type: 3}
-      propertyPath: attackRange
+      propertyPath: direction
       value: -1
       objectReference: {fileID: 0}
-    - target: {fileID: 58831750892970651, guid: cffb297f6d307674d85e48fb2d36b982,
-        type: 3}
-      propertyPath: enemyDead
-      value: 
-      objectReference: {fileID: 4939513353715337643, guid: d3e41cb63bd270a489c3ec71b613b00d,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cffb297f6d307674d85e48fb2d36b982, type: 3}

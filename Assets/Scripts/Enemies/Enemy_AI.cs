@@ -21,6 +21,7 @@ public class Enemy_AI : MonoBehaviour
     //Movement
     [Header("Movement")]
     [SerializeField] private float runSpeed = 1.5f;
+    [SerializeField] private float distanceView = 15.0f;
     private float speed = 0.0f;
     /*[HideInInspector]*/ public int direction = 1;
     private bool fall = false;
@@ -128,17 +129,6 @@ public class Enemy_AI : MonoBehaviour
         RaycastHit2D hitPlatformDown = Physics2D.Raycast(this.gameObject.transform.position, enemyPlatformDown, 2.0f, platform);
         if(!falseDeath)
         {
-            if (hitPlatformDown && hitPlatformLeft.collider == false && hitPlatformDown.collider.gameObject.tag == "Ground" && direction < 0)
-            {
-                direction = 1;
-                fall = true;
-            }
-            else if (hitPlatformDown && hitPlatformRight.collider == false && hitPlatformDown.collider.gameObject.tag == "Ground" && direction > 0)
-            {
-                direction = -1;
-                fall = true;
-            }
-
             CollisionWithWall();
             SeePlayer();
             EnemyAttack();
@@ -149,22 +139,53 @@ public class Enemy_AI : MonoBehaviour
 
     private void SeePlayer()
     {
+        enemyVision = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + height, this.gameObject.transform.position.z);
+        enemyCenter = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y + 0.5f);
+
         //Codigo para poder ver al jugador
         LayerMask mask = LayerMask.GetMask("Player");
-        RaycastHit2D hitRight = Physics2D.Raycast(enemyVision, enemyDirectionRight, 6.0f, mask);
-        RaycastHit2D hitLeft = Physics2D.Raycast(enemyVision, enemyDirectionLeft, 6.0f, mask);
+        RaycastHit2D hitRight = Physics2D.Raycast(enemyVision, enemyDirectionRight, distanceView, mask);
+        RaycastHit2D hitLeft = Physics2D.Raycast(enemyVision, enemyDirectionLeft, distanceView, mask);
+
+        //Codigo para detectar plataformas
+        RaycastHit2D hitPlatformRight = Physics2D.Raycast(enemyCenter, enemyPlatformRight, 3.0f, platform);
+        RaycastHit2D hitPlatformLeft = Physics2D.Raycast(enemyCenter, enemyPlatformLeft, 3.0f, platform);
+        RaycastHit2D hitPlatformDown = Physics2D.Raycast(this.gameObject.transform.position, enemyPlatformDown, 2.0f, platform);
+
         if (hitRight && hitRight.collider.gameObject.tag == "Player" && direction > 0 && !enemyAttackCheck && !hurtAnimation)
         {
-            //Debug.Log("enemigo ve personaje derecha");
-            speed = runSpeed;
-        }
+            if (hitPlatformDown && !hitPlatformRight.collider && hitPlatformDown.collider.gameObject.tag == "Ground")
+            {
+                speed = 0.0f;
+            }
+            else
+            {
+                speed = runSpeed;
+            }
+        } 
         else if (hitLeft && hitLeft.collider.gameObject.tag == "Player" && direction < 0 && !enemyAttackCheck && !hurtAnimation)
         {
-            //Debug.Log("enemigo ve personaje izquierda");
-            speed = runSpeed;
+            if (hitPlatformDown && !hitPlatformLeft.collider && hitPlatformDown.collider.gameObject.tag == "Ground")
+            {
+                speed = 0.0f;
+            }
+            else
+            {
+                speed = runSpeed;
+            }
         }
         else if (!enemyAttackCheck && !hurtAnimation)
         {
+            if (hitPlatformDown && !hitPlatformLeft.collider && hitPlatformDown.collider.gameObject.tag == "Ground" && direction < 0)
+            {
+                direction = 1;
+                fall = true;
+            }
+            else if (hitPlatformDown && !hitPlatformRight.collider && hitPlatformDown.collider.gameObject.tag == "Ground" && direction > 0)
+            {
+                direction = -1;
+                fall = true;
+            }
             RandomDirection();
         }
         else
@@ -173,8 +194,8 @@ public class Enemy_AI : MonoBehaviour
         }
 
         //Codigo para poder ver al jugador por detras
-        hitRight = Physics2D.Raycast(enemyVision, enemyDirectionRight, 3.5f, mask);
-        hitLeft = Physics2D.Raycast(enemyVision, enemyDirectionLeft, 3.5f, mask);
+        hitRight = Physics2D.Raycast(enemyVision, enemyDirectionRight, distanceView/2, mask);
+        hitLeft = Physics2D.Raycast(enemyVision, enemyDirectionLeft, distanceView/2, mask);
         if (hitRight && hitRight.collider.gameObject.tag == "Player" && direction < 0 && !enemyAttackCheck && !hurtAnimation)
         {
             direction = 1;

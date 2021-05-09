@@ -4522,7 +4522,7 @@ GameObject:
   - component: {fileID: 4823022310694023520}
   - component: {fileID: 4823022310694023527}
   m_Layer: 5
-  m_Name: Shop
+  m_Name: Shop-Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
