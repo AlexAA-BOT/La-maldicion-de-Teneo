@@ -191,7 +191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5141952733801924790}
   - component: {fileID: 5141952733801924788}
-  - component: {fileID: 5141952733801924789}
+  - component: {fileID: 593795602401076030}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -206,13 +206,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5141952733801924791}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5141952733409538710}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!114 &5141952733801924788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,8 +226,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDetected: 0
---- !u!58 &5141952733801924789
-CircleCollider2D:
+--- !u!70 &593795602401076030
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -239,9 +239,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 3.39
+  m_Offset: {x: 0.008975027, y: -0.0068302145}
+  m_Size: {x: 6.7859473, y: 19.940584}
+  m_Direction: 0
 --- !u!1 &5141952734887618463
 GameObject:
   m_ObjectHideFlags: 0

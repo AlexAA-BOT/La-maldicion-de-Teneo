@@ -6,8 +6,11 @@ public class False_Boss_AI : MonoBehaviour
 {
 
     [Header("Health")]
-    [SerializeField]private int health = 100;
+    [SerializeField] private int health = 100;
+    [SerializeField] private float invincibilityTime = 1.0f;
+    private float invincibilityTimer = 0.0f;
     private int maxHealth = 100;
+    private bool invincinility = false;
 
     //Enemy ID
     //public int enemyType;
@@ -20,16 +23,20 @@ public class False_Boss_AI : MonoBehaviour
     private float speed = 0.0f;
     private bool isFacingRight = true;
     //Variables tiempo de giro
-    private float visionTime = 0.0f;  //Tiempo que tarda el enemigo en girarse para atras
-    private float visionTimeCoolDown = 0.0f;
+    private float visionTime = 0.0f;  
+    [SerializeField] private float visionTimeToLookBack = 5.0f; //Tiempo que tarda el enemigo en girarse para atras
     private bool playerBehind = false;
     //Variables del Dash
     private bool dashMode = false;
     private float dashTime = 0.5f;
     private float dashTimeCoolDown = 0.0f;
+    private float distance = 0.0f;
+    [SerializeField] private float distanceToDash = 10.0f;
+    [SerializeField] private float dashSpeed = 25.0f;
 
     [Header("Attack")]
     [SerializeField] private int damageAttack = 10;
+    [SerializeField] private int damageShield = 25;
     [SerializeField] private Transform Attack_Point = null;
     [SerializeField] private float attackRange = 1.0f;
     [SerializeField] private float height = 1.7f;
@@ -61,7 +68,7 @@ public class False_Boss_AI : MonoBehaviour
 
     //Componentes
     private Animator m_animator = null;
-    private Rigidbody2D m_rigidBody2D = null;
+    private Rigidbody2D m_RigidBody2D = null;
 
     private Quaternion quaternionDirection = new Quaternion();
     
@@ -74,15 +81,16 @@ public class False_Boss_AI : MonoBehaviour
     private Vector2 enemyAttackColRight = new Vector2(1, 1);
     private Vector2 enemyAttackColLeft = new Vector2(-1, 1);
     private Vector2 enemyVision = Vector2.zero;
+    private Vector2 heading = Vector2.zero;
 
     //Boss_Start bossAnimation;
 
     // Start is called before the first frame update
     void Start()
     {
-        health = maxHealth;
+        maxHealth = health;
         player = GameObject.FindGameObjectWithTag("Player");
-        m_rigidBody2D = GetComponent<Rigidbody2D>();
+        m_RigidBody2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
 
         quaternionDirection.Set(0, 180, 0, 1);
@@ -124,17 +132,40 @@ public class False_Boss_AI : MonoBehaviour
         RaycastHit2D hitLeft = Physics2D.Raycast(enemyVision, enemyDirectionLeft, viewDistance, LayerMask.GetMask("Player"));
         if (hitRight && hitRight.collider.gameObject.tag == "Player" && direction > 0 && !enemyAttackCheck1)
         {
-            speed = startSpeed;
+            heading = player.transform.position - this.gameObject.transform.position;
+            distance = heading.magnitude;
+
+            if(distance > distanceToDash)
+            {
+                speed = dashSpeed;
+                dashMode = true;
+            }
+            else
+            {
+                speed = startSpeed;
+            }
         }
         else if (hitLeft && hitLeft.collider.gameObject.tag == "Player" && direction < 0 && !enemyAttackCheck1)
         {
-            speed = startSpeed;
+            heading = player.transform.position - this.gameObject.transform.position;
+            distance = heading.magnitude;
+
+            if (distance > distanceToDash)
+            {
+                speed = dashSpeed;
+                dashMode = true;
+            }
+            else
+            {
+                speed = startSpeed;
+            }
         }
         else
         {
             //Hacer patron aleatorio de movimiento recordatorio
             speed = 0f;
         }
+
 
         //Codigo para para cuando el jugador este muy cerca
         RaycastHit2D playerHitRight = Physics2D.Raycast(enemyVision, Vector2.right, 1.4f, LayerMask.GetMask("Player"));
@@ -150,7 +181,7 @@ public class False_Boss_AI : MonoBehaviour
         }
 
         //Controla la direccion del enemigo
-        m_rigidBody2D.velocity = new Vector2(direction * speed, 0);
+        m_RigidBody2D.velocity = new Vector2(direction * speed, 0);
         
         EnemyAttack();
         
@@ -183,6 +214,7 @@ public class False_Boss_AI : MonoBehaviour
                 }
                 else
                 {
+                    attackOneTime = false;
                     timerAttack += Time.deltaTime;
                 }
             }
@@ -197,7 +229,6 @@ public class False_Boss_AI : MonoBehaviour
                 else if ((timerAttack >= startAttack && timerAttack <= endAttack) || (timerAttack >= startAttackContinue && timerAttack <= endAttackContinue))  //Enemigo esta en el momento en que hace el corte y es ahi cuando el Player puede recivir daño
                 {
                     attack();
-                    Debug.Log("Ataca");
                     timerAttack += Time.deltaTime;
                 }
                 else if (timerAttack >= endAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
@@ -208,6 +239,7 @@ public class False_Boss_AI : MonoBehaviour
                 }
                 else
                 {
+                    attackOneTime = false;
                     timerAttack += Time.deltaTime;
                 }
             }
@@ -224,7 +256,7 @@ public class False_Boss_AI : MonoBehaviour
                 attackType = Random.Range(1, 11);
                 enemyAttackDecided = true;
             }
-            if ((playerHitRight && playerHitRight.collider.gameObject.tag == "Player" && direction > 0) || enemyAttackCheck1)
+            if ((playerHitRight && playerHitRight.collider.gameObject.tag == "Player" && direction > 0) || enemyAttackCheck1 || enemyAttackCheck2)
             {
                 if (attackType <= 6)
                 {
@@ -248,22 +280,23 @@ public class False_Boss_AI : MonoBehaviour
                     }
                     else
                     {
+                        attackOneTime = false;
                         timerAttack += Time.deltaTime;
                     }
                 }
                 else
                 {
-                    if (timerAttack < 1)  //Se activa la animacion de ataque
+                    if (timerAttack <= 0.0f)  //Se activa la animacion de ataque
                     {
                         timerAttack += Time.deltaTime;
                         m_animator.SetTrigger("Spin-Attack");
+                        speed = startSpeed;
                         enemyAttackCheck2 = true;
                     }
                     else if (timerAttack >= startSecondAttack && timerAttack <= endSecondAttack)  //Enemigo esta en el momento en que hace el corte y es ahi cuando el Player puede recivir daño
                     {
                         attack();
                         timerAttack += Time.deltaTime;
-                        Debug.Log("Ataca");
                     }
                     else if (timerAttack >= endSecondAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
                     {
@@ -279,7 +312,7 @@ public class False_Boss_AI : MonoBehaviour
                 }
 
             }
-            else if ((playerHitLeft && playerHitLeft.collider.gameObject.tag == "Player" && direction < 0) || enemyAttackCheck1)
+            else if ((playerHitLeft && playerHitLeft.collider.gameObject.tag == "Player" && direction < 0) || enemyAttackCheck1 || enemyAttackCheck2)
             {
                 if (attackType <= 6)
                 {
@@ -303,6 +336,7 @@ public class False_Boss_AI : MonoBehaviour
                     }
                     else
                     {
+                        attackOneTime = false;
                         timerAttack += Time.deltaTime;
                     }
                 }
@@ -312,6 +346,7 @@ public class False_Boss_AI : MonoBehaviour
                     {
                         timerAttack += Time.deltaTime;
                         m_animator.SetTrigger("Spin-Attack");
+                        speed = startSpeed;
                         enemyAttackCheck2 = true;
                     }
                     else if (timerAttack >= startSecondAttack && timerAttack <= endSecondAttack)  //Enemigo esta en el momento en que hace el corte y es ahi cuando el Player puede recivir daño
@@ -385,12 +420,12 @@ public class False_Boss_AI : MonoBehaviour
             {
                 if (colliders.GetComponent<Player_Attack>().defendState == true && colliders.GetComponent<Player_Movement>().IsFacingLeft() == isFacingRight)
                 {
-                    colliders.GetComponent<Player_Attack>().GetStamina(damageAttack);
+                    colliders.GetComponent<Player_Attack>().GetStamina(damageShield);
                     attackOneTime = true;
                 }
                 else
                 {
-                    colliders.GetComponent<Player_Attack>().GetDamage(damageAttack * 2);
+                    colliders.GetComponent<Player_Attack>().GetDamage(damageAttack);
                 }
             }
 
@@ -408,7 +443,16 @@ public class False_Boss_AI : MonoBehaviour
     //Recibe daño del jugador (Player)
     public void GetDamage(int playerDamage)
     {
-        health -= playerDamage;
+
+        if (invincinility && invincibilityTimer >= invincibilityTime)
+        {
+            invincinility = false;
+            invincibilityTimer = 0.0f;
+        }
+        else if(invincinility)
+        {
+            invincibilityTimer += Time.deltaTime;
+        }
 
         if (health <= 0)
         {
@@ -429,7 +473,25 @@ public class False_Boss_AI : MonoBehaviour
             Destroy(this.gameObject);
             //Destruccion del enemigo
         }
+        else if(playerDamage > 0.0f)
+        {
+            if (transform.position.x < player.transform.position.x && direction < 0 && !enemyAttackCheck1 && !enemyAttackCheck2)
+            {
+                direction = 1;
+            }
+            else if (transform.position.x > player.transform.position.x && direction > 0 && !enemyAttackCheck1 && !enemyAttackCheck2)
+            {
+                direction = -1;
+            }
 
+            if (!invincinility)
+            {
+                health -= playerDamage;
+                invincinility = true;
+                invincibilityTimer += Time.deltaTime;
+            }
+
+        }
     }
 
     void AnimationMovement()
@@ -453,44 +515,49 @@ public class False_Boss_AI : MonoBehaviour
 
         }
         
-        m_animator.SetFloat("Speed", Mathf.Abs(m_rigidBody2D.velocity.x));
+        m_animator.SetFloat("Speed", Mathf.Abs(m_RigidBody2D.velocity.x));
         
     }
 
     void EnemyTurnAround()
     {
-        visionTime += Time.deltaTime;
         if (transform.position.x < player.transform.position.x && direction < 0 && !enemyAttackCheck1 && !enemyAttackCheck2)
         {
             if (!playerBehind)
             {
-                visionTimeCoolDown = visionTime;
+                visionTime += Time.deltaTime;
                 playerBehind = true;
             }
-            else if (visionTime - visionTimeCoolDown >= 5.0f)
+            else if (visionTime >= visionTimeToLookBack)
             {
                 direction = 1;
                 speed = startSpeed;
                 playerBehind = false;
+                visionTime = 0.0f;
+            }
+            else
+            {
+                visionTime += Time.deltaTime;
             }
         }
         else if (transform.position.x > player.transform.position.x && direction > 0 && !enemyAttackCheck1 && !enemyAttackCheck2)
         {
             if (!playerBehind)
             {
-                visionTimeCoolDown = visionTime;
+                visionTime += Time.deltaTime;
                 playerBehind = true;
             }
-            else if (visionTime - visionTimeCoolDown >= 5.0f)
+            else if (visionTime >= visionTimeToLookBack)
             {
                 direction = -1;
                 speed = startSpeed;
                 playerBehind = false;
+                visionTime = 0.0f;
             }
-        }
-        else if (visionTime - visionTimeCoolDown >= 5.0f)
-        {
-            playerBehind = false;
+            else
+            {
+                visionTime += Time.deltaTime;
+            }
         }
     }
 

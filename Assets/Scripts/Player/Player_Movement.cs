@@ -5,7 +5,8 @@ using UnityEngine;
 public class Player_Movement : MonoBehaviour
 {
     //Inputs
-    private float horizontalMove = 0f;
+    private float horizontalMove = 0.0f;
+    private float verticalMove = 0.0f;
     private bool interactButtonInput = false;
     //private bool attackButton = false;  ////Mirar si se usa
     private bool jmpBtn = false;
@@ -125,7 +126,7 @@ public class Player_Movement : MonoBehaviour
 
         if (jmpBtn/*Input.GetButtonDown("Jump")*/ /*&& totalJumps > 0*/)
         {
-            if(m_Grounded)
+            if(m_Grounded && verticalMove < 0.4f)
             {
                 m_Animator.SetTrigger("Jump");
                 m_Rigidbody2D.AddForce(new Vector2(m_Rigidbody2D.velocity.x, jumpForce), ForceMode2D.Impulse);
@@ -221,6 +222,7 @@ public class Player_Movement : MonoBehaviour
     private void ControlInputs()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal");
+        verticalMove = Input.GetAxisRaw("Vertical-J");
         interactButtonInput = Input.GetButton("Interact");
         jmpBtn = Input.GetButton("Jump");
         oneWayPlatform = Input.GetButton("Down");
@@ -315,7 +317,18 @@ public class Player_Movement : MonoBehaviour
 
     public Rigidbody2D GetRigidBody() { return m_Rigidbody2D; }
 
-    public bool GetOneWayPlatformState() { return oneWayPlatform; }
+    public bool GetOneWayPlatformState()
+    {
+        if(oneWayPlatform)
+        {
+            return oneWayPlatform;
+        }
+        else if(verticalMove > 0.0f && jmpBtn)
+        {
+            return true;
+        }
+        return false;
+    }
 
     public void SetCanEnterShop(bool state)
     {

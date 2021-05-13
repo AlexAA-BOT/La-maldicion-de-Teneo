@@ -37,6 +37,19 @@ public class Enemy_Bestiario : MonoBehaviour
                     break;
             }
         texts[2].text = "Count: " + count;
+        UpdateImages();
+    }
+
+    private void UpdateImages()
+    {
+        if(count > 0)
+        {
+            images[0].SetActive(false);
+            images[1].SetActive(true);
+
+            texts[0].gameObject.SetActive(false);
+            texts[1].gameObject.SetActive(true);
+        }
     }
 
     public void AddCount()

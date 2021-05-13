@@ -193,4 +193,48 @@ public class Data_Control : MonoBehaviour
 
     public Vector3 GetPlayerPos() { return playerPos; }
 
+    public void RestartCoins_Z1()
+    {
+        for(int i = 0; i < z1_Coins_1.Length; i++)
+        {
+            z1_Coins_1[i] = false;
+        }
+
+        for (int i = 0; i < z1_Coins_2.Length; i++)
+        {
+            z1_Coins_2[i] = false;
+        }
+
+        for (int i = 0; i < z1_Coins_3.Length; i++)
+        {
+            z1_Coins_3[i] = false;
+        }
+
+        for (int i = 0; i < z1_Coins_4.Length; i++)
+        {
+            z1_Coins_4[i] = false;
+        }
+
+        for (int i = 0; i < z1_Coins_5.Length; i++)
+        {
+            z1_Coins_5[i] = false;
+        }
+
+        for (int i = 0; i < z1_Coins_6.Length; i++)
+        {
+            z1_Coins_6[i] = false;
+        }
+
+        for (int i = 0; i < z1_Coins_7.Length; i++)
+        {
+            z1_Coins_7[i] = false;
+        }
+
+        for (int i = 0; i < z1_Coins_8.Length; i++)
+        {
+            z1_Coins_8[i] = false;
+        }
+    }
+
+
 }

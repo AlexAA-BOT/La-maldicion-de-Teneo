@@ -186,11 +186,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4d7feb7f4a637b46a4efa91a1e5890b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 200
+  invincibilityTime: 1
   startSpeed: 4
   direction: 1
   viewDistance: 46
-  damageAttack: 25
+  visionTimeToLookBack: 4
+  distanceToDash: 10
+  dashSpeed: 30
+  damageAttack: 32
+  damageShield: 25
   Attack_Point: {fileID: 58831750157157388}
   attackRange: 1
   height: 0.6
@@ -202,7 +207,8 @@ MonoBehaviour:
   startSecondAttack: 0.64
   endSecondAttack: 1.57
   endSecondAttackAnimation: 2.07
-  enemyDead: {fileID: 0}
+  enemyDead: {fileID: 5939210920728243218, guid: c24e932274fc38e44b111c46d90826e5,
+    type: 3}
   playerLayer:
     serializedVersion: 2
     m_Bits: 512
