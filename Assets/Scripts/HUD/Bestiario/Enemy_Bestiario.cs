@@ -47,8 +47,8 @@ public class Enemy_Bestiario : MonoBehaviour
             images[0].SetActive(false);
             images[1].SetActive(true);
 
-            texts[0].enabled = false;
-            texts[1].enabled = true;
+            texts[0].gameObject.SetActive(false);
+            texts[1].gameObject.SetActive(true);
         }
     }
 
