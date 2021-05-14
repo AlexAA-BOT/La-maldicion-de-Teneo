@@ -202,11 +202,16 @@ MonoBehaviour:
   startAttack: 0.36
   endAttack: 0.64
   startAttackContinue: 1
-  endAttackContinue: 1.86
-  endAttackAnimation: 2.07
+  endAttackContinue: 1.14
+  endAttackAnimation: 1.29
+  startAttackRecovery: 0
+  endAttackRecovery: 0.29
+  endAttackRecoveryAnimation: 0.57
   startSecondAttack: 0.64
   endSecondAttack: 1.57
   endSecondAttackAnimation: 2.07
+  stuckTime: 3
+  recoveryTime: 0.57
   enemyDead: {fileID: 5939210920728243218, guid: c24e932274fc38e44b111c46d90826e5,
     type: 3}
   playerLayer:
