@@ -102,7 +102,7 @@ public class Door_Controller : MonoBehaviour
                 if(!player.GetComponent<Player_Inventory>().GetKeyState(k_ID))
                     text.text = "You need a key";
                 else
-                    text.text = "Press E to open the door";
+                    text.text = "Press F to open the door";
             }
             else if(needAKey && Data_Control.instance.GetDoorState_Z1(ID) == Data_Control.DoorState.OPEN)
             {
