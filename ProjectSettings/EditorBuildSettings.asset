@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Menu/Menu.unity
+    guid: 0b3434f582e515c4c9c5855a211a8d27
+  - enabled: 1
     path: Assets/Scenes/Holbet-Castle/Zone 1/1-Room-1.unity
     guid: 5c6fe07f80e788c42b717fdfd4d21fc4
   - enabled: 1

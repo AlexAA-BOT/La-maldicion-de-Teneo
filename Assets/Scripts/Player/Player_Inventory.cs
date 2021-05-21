@@ -31,6 +31,15 @@ public class Player_Inventory : MonoBehaviour
     [Header("Keys")]
     [SerializeField] private bool[] keys = { false };
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip moneySound = null;
+    private AudioSource m_audioSource = null;
+
+    private void Start()
+    {
+        m_audioSource = GetComponent<AudioSource>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -51,6 +60,7 @@ public class Player_Inventory : MonoBehaviour
         {
             case (Items.MONEY):
                 money++;
+                m_audioSource.PlayOneShot(moneySound);
                 break;
 
             case (Items.HEALTHPOTION):
@@ -63,6 +73,7 @@ public class Player_Inventory : MonoBehaviour
 
             case (Items.GOLDBAG):
                 money += 10;
+                m_audioSource.PlayOneShot(moneySound);
                 break;
 
             case (Items.HEALTHPOTIONAMPLIATION):

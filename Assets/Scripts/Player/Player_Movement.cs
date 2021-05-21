@@ -55,6 +55,12 @@ public class Player_Movement : MonoBehaviour
     private bool canEnterShop = false;
     //[SerializeField] private GameObject shopEntrance = null;
 
+    [Header("Audio")]
+    private bool firstFootStep = true;
+    [SerializeField] private AudioClip[] footStep = null;
+    [SerializeField] private AudioClip jumpSound = null;
+    private AudioSource m_audioSource = null;
+
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -70,6 +76,7 @@ public class Player_Movement : MonoBehaviour
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_Animator = GetComponent<Animator>();
+        m_audioSource = GetComponent<AudioSource>();
         totalJumps = maxNumJumps;
         state = State.NORMAL;
     }
@@ -333,6 +340,19 @@ public class Player_Movement : MonoBehaviour
     public void SetCanEnterShop(bool state)
     {
         canEnterShop = state;
+    }
+
+    public void PlayFootSteps()
+    {
+        if(firstFootStep)
+        {
+            m_audioSource.PlayOneShot(footStep[0]);
+        }
+        else
+        {
+            m_audioSource.PlayOneShot(footStep[1]);
+        }
+        
     }
 
     void OnDrawGizmosSelected()

@@ -41,11 +41,17 @@ public class Player_Attack : MonoBehaviour
     [Header("Layers")]
     [SerializeField] private LayerMask enemyLayers = 0;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip attackMiss = null;
+    [SerializeField] private AudioClip attackHit = null;
+    private new AudioSource m_audioSource = null;
+
     // Start is called before the first frame update
     void Start()
     {
         mySprite = GetComponent<SpriteRenderer>();
         m_Animator = GetComponent<Animator>();
+        m_audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -116,23 +122,31 @@ public class Player_Attack : MonoBehaviour
     {
         //Detect enemies in range of attack
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-
-        //Damage them
-        foreach (Collider2D enemy in hitEnemies)
+        if(hitEnemies.Length != 0)
         {
-            switch (enemy.gameObject.tag)
+            //Damage them
+            foreach (Collider2D enemy in hitEnemies)
             {
-                case ("Enemy"):
-                    enemy.GetComponent<Enemy_AI>().GetDamage(playerDamage);
-                    break;
-                case ("FlyingEnemy"):
-                    enemy.GetComponent<FlyingEnemy_AI>().GetDamage(playerDamage);
-                    break;
-                case ("FalseBoss"):
-                    enemy.GetComponent<False_Boss_AI>().GetDamage(playerDamage);
-                    break;
+                switch (enemy.gameObject.tag)
+                {
+                    case ("Enemy"):
+                        enemy.GetComponent<Enemy_AI>().GetDamage(playerDamage);
+                        break;
+                    case ("FlyingEnemy"):
+                        enemy.GetComponent<FlyingEnemy_AI>().GetDamage(playerDamage);
+                        break;
+                    case ("FalseBoss"):
+                        enemy.GetComponent<False_Boss_AI>().GetDamage(playerDamage);
+                        break;
+                }
             }
+            m_audioSource.PlayOneShot(attackHit);
         }
+        else
+        {
+            m_audioSource.PlayOneShot(attackMiss);
+        }
+
         SetStamina(energyForEachAttack);
         attackBtn = false;
 

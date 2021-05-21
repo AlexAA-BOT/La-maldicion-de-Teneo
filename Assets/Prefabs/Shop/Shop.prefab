@@ -3405,7 +3405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   shop: {fileID: 4823022309396721816}
-  price: 10
+  price: 20
   itemID: 4
   quantity: {fileID: 1330225960632865765}
 --- !u!1 &4823022309764008534
@@ -4172,7 +4172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   shop: {fileID: 4823022309396721816}
-  price: 10
+  price: 18
   itemID: 5
   quantity: {fileID: 7677487146269685224}
 --- !u!1 &4823022310224107205
@@ -4456,7 +4456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   shop: {fileID: 4823022309396721816}
-  price: 10
+  price: 5
   itemID: 1
   quantity: {fileID: 8798775195759440720}
 --- !u!1 &4823022310592266926
