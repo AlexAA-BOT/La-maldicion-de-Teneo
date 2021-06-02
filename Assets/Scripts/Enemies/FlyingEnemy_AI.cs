@@ -80,11 +80,20 @@ public class FlyingEnemy_AI : MonoBehaviour
     //EnemyCollider
     private FlyingEnemy_Collider enemyCollider = null;
 
+    //Audio
+    private AudioSource m_audioSource = null;
+    [SerializeField] private AudioClip wingFlap = null;
+    [SerializeField] private AudioClip hurtSound = null;
+    [SerializeField] private AudioClip hurtSoundJoke = null;
+    [SerializeField] private AudioClip attackSound = null;
+    [SerializeField] private AudioClip attackSoundShield = null;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         m_rigidbody2D = GetComponent<Rigidbody2D>();
+        m_audioSource = GetComponent<AudioSource>();
         enemyCollider = GetComponentInChildren<FlyingEnemy_Collider>();
         enemyAttackColRight = new Vector3(this.gameObject.transform.localScale.x, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
         enemyAttackColLeft = new Vector3(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
@@ -360,11 +369,14 @@ public class FlyingEnemy_AI : MonoBehaviour
             {
                 if (colliders.GetComponent<Player_Attack>().defendState == true && colliders.GetComponent<Player_Movement>().IsFacingLeft() == isFacingRight)
                 {
+                    m_audioSource.PlayOneShot(attackSoundShield);
                     colliders.GetComponent<Player_Attack>().GetStamina(damageAttack);
                     attackOneTime = true;
                 }
                 else
                 {
+                    m_audioSource.PlayOneShot(attackSound);
+                    attackOneTime = true;
                     colliders.GetComponent<Player_Attack>().GetDamage(damageAttack);
                 }
             }
@@ -397,10 +409,20 @@ public class FlyingEnemy_AI : MonoBehaviour
         }
         else
         {
+            int randomSound = 0;
             if (playerDamage > 0 || hurtAnimation)
             {
                 if (hurtTime <= 0)
                 {
+                    randomSound = Random.Range(1, 100);
+                    if(randomSound > 11)
+                    {
+                        m_audioSource.PlayOneShot(hurtSound);
+                    }
+                    else
+                    {
+                        m_audioSource.PlayOneShot(hurtSoundJoke);
+                    }
                     m_animator.SetTrigger("Hurt");
                     hurtAnimation = true;
                     hurtTime += Time.deltaTime;
@@ -416,6 +438,11 @@ public class FlyingEnemy_AI : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void WingFlap()
+    {
+        m_audioSource.PlayOneShot(wingFlap);
     }
 
     void OnDrawGizmosSelected() //Dibuja el area de ataque del enemigo luego hay que eliminarlo para los tests
