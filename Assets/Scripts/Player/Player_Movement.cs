@@ -59,6 +59,8 @@ public class Player_Movement : MonoBehaviour
     private bool firstFootStep = true;
     [SerializeField] private AudioClip[] footStep = null;
     [SerializeField] private AudioClip jumpSound = null;
+    [SerializeField] private AudioClip rollSound = null;
+    [SerializeField] private AudioClip landSound = null;
     private AudioSource m_audioSource = null;
 
     private void Awake()
@@ -108,11 +110,20 @@ public class Player_Movement : MonoBehaviour
             {
                 if (collidersGround[i].gameObject != gameObject)
                 {
+                    if(!m_Grounded)
+                    {
+                        m_audioSource.PlayOneShot(landSound);
+                    }
                     m_Grounded = true;
                     m_Animator.SetBool("InAir", !m_Grounded);
                     totalJumps = maxNumJumps;
                     doubleJump = false;
                 }
+                else
+                {
+                    Debug.Log("Entro");
+                }
+                
             }
 
 
@@ -274,6 +285,7 @@ public class Player_Movement : MonoBehaviour
             if (!dashDirectionDecided)
             {
                 m_Animator.SetTrigger("Roll");
+                m_audioSource.PlayOneShot(rollSound);
                 dashDirection = new Vector2(horizontalMove * dashSpeed, m_Rigidbody2D.velocity.y);
                 this.gameObject.GetComponent<Player_Attack>().SetStamina(staminaToRoll);
                 dashDirectionDecided = true;

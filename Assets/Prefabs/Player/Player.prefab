@@ -213,6 +213,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5d922ac8fbbc98d4c9cc7bfd3bac9954, type: 3}
   - {fileID: 8300000, guid: 928dafc8d8ffb5d4e992825b61c5d7dd, type: 3}
   jumpSound: {fileID: 0}
+  rollSound: {fileID: 8300000, guid: aac48b3c55be8e1448934b52a7b25425, type: 3}
+  landSound: {fileID: 8300000, guid: a721a31a70ab49d41aba97665c79fa8e, type: 3}
 --- !u!114 &605359229914358943
 MonoBehaviour:
   m_ObjectHideFlags: 0

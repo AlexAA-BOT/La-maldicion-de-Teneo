@@ -28,10 +28,14 @@ public class Door_Controller : MonoBehaviour
     private GameObject player = null;
     private float yPos = 0.0f;
 
+    //Audio
+    private AudioSource m_AudioSource = null;
+
     // Start is called before the first frame update
     void Start()
     {
         m_rigidbody2D = GetComponent<Rigidbody2D>();
+        m_AudioSource = GetComponent<AudioSource>();
         player = GameObject.FindGameObjectWithTag("Player");
         yPos = this.gameObject.transform.position.y;
     }
@@ -73,6 +77,10 @@ public class Door_Controller : MonoBehaviour
         {
             m_rigidbody2D.velocity = new Vector2(0, speed);
             Data_Control.instance.SetDoorState_Z1(ID, Data_Control.DoorState.OPEN);
+            if(!openDoor)
+            {
+                m_AudioSource.Play();
+            }
             openDoor = true;
             if (this.gameObject.transform.position.y >= yPos + 4.0f)
             {

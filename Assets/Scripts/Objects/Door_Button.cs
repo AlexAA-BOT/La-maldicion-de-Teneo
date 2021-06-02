@@ -14,10 +14,14 @@ public class Door_Button : MonoBehaviour
     private bool onButton = false;
     private bool interact = false;
 
+    //Audio
+    private AudioSource m_AudioSource = null;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        m_AudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -28,6 +32,7 @@ public class Door_Button : MonoBehaviour
         {
             if(Data_Control.instance.GetDoorState_Z1(ID) == Data_Control.DoorState.CLOSE)
             {
+                m_AudioSource.Play();
                 Data_Control.instance.SetDoorState_Z1(ID, Data_Control.DoorState.OPEN_FIRST_TIME);
                 text.enabled = false;
             }

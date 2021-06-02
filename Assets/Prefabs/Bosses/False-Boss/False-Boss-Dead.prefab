@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5555295127039459613}
   - component: {fileID: 3278357523454912845}
   - component: {fileID: 6894517926057226439}
-  m_Layer: 10
+  m_Layer: 15
   m_Name: False-Boss-Dead
   m_TagString: Untagged
   m_Icon: {fileID: 0}

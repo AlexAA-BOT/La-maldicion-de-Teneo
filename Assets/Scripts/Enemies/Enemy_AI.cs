@@ -50,6 +50,7 @@ public class Enemy_AI : MonoBehaviour
     private float timerAttack = 0.0f;
     private float hurtTime = 0.0f;
     private bool attackOneTime = false;
+    private bool playerIsHit = false;
 
 
     //Vector2
@@ -79,6 +80,15 @@ public class Enemy_AI : MonoBehaviour
     private SpriteRenderer myColor = null;
 
     private Quaternion rotatedObject = new Quaternion();
+
+    //Audio
+    [SerializeField] private AudioSource m_AudioSourceGeneral = null;
+    [SerializeField] private AudioSource m_AudioSourceWalk = null;
+    [SerializeField] private AudioClip walkSound = null;
+    [SerializeField] private AudioClip attackSoundMiss = null;
+    [SerializeField] private AudioClip attackSoundHit = null;
+    [SerializeField] private AudioClip attackSoundHitShield = null;
+    [SerializeField] private AudioClip hurtSound = null;
 
     // Start is called before the first frame update
     void Start()
@@ -116,6 +126,7 @@ public class Enemy_AI : MonoBehaviour
 
         m_animator.SetFloat("Speed", Mathf.Abs(m_rigidbody2D.velocity.x));
 
+        
     }
 
     // Update is called once per frame
@@ -377,9 +388,11 @@ public class Enemy_AI : MonoBehaviour
         //Vector2 playerRight = new Vector2(1, 0);   //--- Codigo a eliminar
         //Vector2 playerLeft = new Vector2(-1, 0);   //--- Codigo a eliminar
 
-        RaycastHit2D playerHitRight = Physics2D.Raycast(enemyVision, Vector2.right, distanceToAttack, playerMask);
+        Vector2 enemyDirection = new Vector2(direction, 0);
+
+        RaycastHit2D playerHit = Physics2D.Raycast(enemyVision, enemyDirection, distanceToAttack, playerMask);
         RaycastHit2D playerHitLeft = Physics2D.Raycast(enemyVision, Vector2.left, distanceToAttack, playerMask);
-        if ((playerHitRight && playerHitRight.collider.gameObject.tag == "Player" && direction > 0) || enemyAttackCheck)
+        if ((playerHit && playerHit.collider.gameObject.tag == "Player") || enemyAttackCheck)
         {
             if (timerAttack <= 0.0f && !hurtAnimation)  //Se activa la animacion de ataque
             {
@@ -391,11 +404,16 @@ public class Enemy_AI : MonoBehaviour
             {
                 Attack();
                 timerAttack += Time.deltaTime;
+                if(!playerHit && timerAttack >= endAttack - 0.01f)
+                {
+                    m_AudioSourceGeneral.PlayOneShot(attackSoundMiss);
+                }
             }
             else if (timerAttack >= endAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
             {
                 timerAttack = 0.0f;
                 enemyAttackCheck = false;
+                playerIsHit = false;
                 attackOneTime = false;
             }
             else
@@ -404,30 +422,7 @@ public class Enemy_AI : MonoBehaviour
             }
 
         }
-        else if ((playerHitLeft && playerHitLeft.collider.gameObject.tag == "Player" && direction < 0) || enemyAttackCheck)
-        {
-            if (timerAttack <= 0.0f && !hurtAnimation)  //Se activa la animacion de ataque
-            {
-                m_animator.SetTrigger("Attack");
-                timerAttack += Time.deltaTime;
-                enemyAttackCheck = true;
-            }
-            else if (timerAttack >= startAttack && timerAttack <= endAttack && !hurtAnimation)  //Enemigo esta en el momento en que hace el corte y es ahi cuando el Player puede recivir daño
-            {
-                Attack();
-                timerAttack += Time.deltaTime;
-            }
-            else if (timerAttack >= endAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
-            {
-                timerAttack = 0.0f;
-                enemyAttackCheck = false;
-                attackOneTime = false;
-            }
-            else
-            {
-                timerAttack += Time.deltaTime;
-            }
-        }
+        
 
         if(hurtAnimation)
         {
@@ -442,16 +437,19 @@ public class Enemy_AI : MonoBehaviour
         Collider2D[] objectsInEnemyAttack = Physics2D.OverlapCircleAll(attack_Point.position, attackRange, playerMask);
         foreach (Collider2D colliders in objectsInEnemyAttack)
         {
-            if (colliders.gameObject.tag == "Player" && !attackOneTime)
+            if (colliders.gameObject.tag == "Player" && !attackOneTime && !playerIsHit)
             {
                 if(colliders.GetComponent<Player_Attack>().defendState == true && colliders.GetComponent<Player_Movement>().IsFacingLeft() == isFacingRight)
                 {
+                    m_AudioSourceGeneral.PlayOneShot(attackSoundHitShield);
                     colliders.GetComponent<Player_Attack>().GetStamina(damageAttack);
                     attackOneTime = true;
                 }
                 else
                 {
+                    playerIsHit = true;
                     colliders.GetComponent<Player_Attack>().GetDamage(damageAttack);
+                    m_AudioSourceGeneral.PlayOneShot(attackSoundHit);
                 }
             }
         }
@@ -513,6 +511,28 @@ public class Enemy_AI : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void WalkSound()
+    {
+        m_AudioSourceWalk.PlayOneShot(walkSound);
+        
+    }
+
+    public void StopWalk()
+    {
+        m_AudioSourceWalk.Stop();
+    }
+
+    public void AttackSound()
+    {
+
+    }
+
+    public void HurtSound()
+    {
+        m_AudioSourceGeneral.PlayOneShot(hurtSound);
+        
     }
 
     void OnDrawGizmosSelected()
