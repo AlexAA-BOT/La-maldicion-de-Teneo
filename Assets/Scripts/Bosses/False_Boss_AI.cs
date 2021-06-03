@@ -23,9 +23,9 @@ public class False_Boss_AI : MonoBehaviour
     private float speed = 0.0f;
     private bool isFacingRight = true;
     //Variables tiempo de giro
-    private float visionTime = 0.0f;  
-    [SerializeField] private float visionTimeToLookBack = 5.0f; //Tiempo que tarda el enemigo en girarse para atras
-    private bool playerBehind = false;
+    //private float visionTime = 0.0f;  
+    //[SerializeField] private float visionTimeToLookBack = 5.0f; //Tiempo que tarda el enemigo en girarse para atras
+    //private bool playerBehind = false;
     //Variables del Dash
     private bool dashMode = false;
     private float dashTime = 0.5f;
@@ -60,6 +60,7 @@ public class False_Boss_AI : MonoBehaviour
     private bool attackOneTime = false;
     private bool stuck = false;
     private bool recovery = false;
+    private bool playerIsHit = false;
     //Variables tiempo de ataque
     //private float coolDownTime = 0.0f;
     private float timerAttack = 0.0f;
@@ -97,6 +98,19 @@ public class False_Boss_AI : MonoBehaviour
 
     //Boss_Start bossAnimation;
 
+    //Audio
+    private AudioSource m_audioSource = null;
+    [SerializeField] private AudioClip[] walkSound = null;
+    private bool isfirstFootStep = true;
+    private bool isAngry = true;
+    [SerializeField] private AudioClip attackSwordMissSound = null;
+    [SerializeField] private AudioClip attackHammerMissSound = null;
+    [SerializeField] private AudioClip dashSound = null;
+    [SerializeField] private AudioClip stuckSound = null;
+    [SerializeField] private AudioClip whileStuckSound = null;
+    [SerializeField] private AudioClip spinAttackSound = null;
+    [SerializeField] private AudioClip hitAttackSound = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -104,6 +118,7 @@ public class False_Boss_AI : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         m_RigidBody2D = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
+        m_audioSource = GetComponent<AudioSource>();
 
         quaternionDirection.Set(0, 180, 0, 1);
 
@@ -124,9 +139,12 @@ public class False_Boss_AI : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        if(!stuck && !recovery)
+        if(!stuck)
         {
-            Movement();
+            if(!recovery)
+            {
+                Movement();
+            }
             EnemyAttack();
         }
     }
@@ -207,8 +225,8 @@ public class False_Boss_AI : MonoBehaviour
 
     private void EnemyAttack()
     {
-        RaycastHit2D playerHitRight = Physics2D.Raycast(enemyVision, Vector2.right, 1.4f, LayerMask.GetMask("Player"));
-        RaycastHit2D playerHitLeft = Physics2D.Raycast(enemyVision, Vector2.left, 1.4f, LayerMask.GetMask("Player"));
+        Vector2 enemyDirection = new Vector2(direction, 0);
+        RaycastHit2D playerHit = Physics2D.Raycast(enemyVision, enemyDirection, 1.4f, LayerMask.GetMask("Player"));
         if (health > maxHealth / 2)
         {
             if (attackRecovery)
@@ -230,7 +248,7 @@ public class False_Boss_AI : MonoBehaviour
                     timerAttack += Time.deltaTime;
                 }
             }
-            else if ((playerHitRight && playerHitRight.collider.gameObject.tag == "Player" && direction > 0) || enemyAttackCheck1)
+            else if ((playerHit && playerHit.collider.gameObject.tag == "Player") || enemyAttackCheck1)
             {
                 if (timerAttack <= 0.0f)  //Se activa la animacion de ataque
                 {
@@ -252,6 +270,8 @@ public class False_Boss_AI : MonoBehaviour
                     if (stuckProbability <= 70)
                     {
                         stuck = true;
+                        isAngry = true;
+                        m_audioSource.PlayOneShot(stuckSound);
                     }
                     recovery = true;
                 }
@@ -260,42 +280,6 @@ public class False_Boss_AI : MonoBehaviour
                     attackOneTime = false;
                     timerAttack += Time.deltaTime;
                 }
-            }
-            else if ((playerHitLeft && playerHitLeft.collider.gameObject.tag == "Player" && direction < 0) || enemyAttackCheck1)
-            {
-                if (timerAttack <= 0.0f)  //Se activa la animacion de ataque
-                {
-                    timerAttack += Time.deltaTime;
-                    m_animator.SetTrigger("Attack");
-                    enemyAttackCheck1 = true;
-                }
-                else if ((timerAttack >= startAttack && timerAttack <= endAttack) || (timerAttack >= startAttackContinue && timerAttack <= endAttackContinue))  //Enemigo esta en el momento en que hace el corte y es ahi cuando el Player puede recivir daño
-                {
-                    attack();
-                    timerAttack += Time.deltaTime;
-                }
-                else if (timerAttack >= endAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
-                {
-                    timerAttack = 0.0f;
-                    enemyAttackCheck1 = false;
-                    attackOneTime = false;
-                    stuckProbability = Random.Range(1, 100);
-                    if (stuckProbability <= 70)
-                    {
-                        stuck = true;
-                    }
-                    recovery = true;
-                }
-                else
-                {
-                    attackOneTime = false;
-                    timerAttack += Time.deltaTime;
-                }
-            }
-            else if (timerAttack >= endAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
-            {
-                timerAttack = 0.0f;
-                enemyAttackCheck1 = false;
             }
         }
         else if (health <= maxHealth / 2)
@@ -324,7 +308,7 @@ public class False_Boss_AI : MonoBehaviour
                     timerAttack += Time.deltaTime;
                 }
             }
-            else if ((playerHitRight && playerHitRight.collider.gameObject.tag == "Player" && direction > 0) || enemyAttackCheck1 || enemyAttackCheck2)
+            else if ((playerHit && playerHit.collider.gameObject.tag == "Player") || enemyAttackCheck1 || enemyAttackCheck2)
             {
                 if (attackType <= 6)
                 {
@@ -349,6 +333,8 @@ public class False_Boss_AI : MonoBehaviour
                         if(stuckProbability <= 55)
                         {
                             stuck = true;
+                            isAngry = true;
+                            m_audioSource.PlayOneShot(stuckSound);
                         }
                         recovery = true;
                     }
@@ -364,6 +350,7 @@ public class False_Boss_AI : MonoBehaviour
                     {
                         timerAttack += Time.deltaTime;
                         m_animator.SetTrigger("Spin-Attack");
+                        m_audioSource.PlayOneShot(spinAttackSound);
                         speed = startSpeed;
                         enemyAttackCheck2 = true;
                     }
@@ -377,6 +364,7 @@ public class False_Boss_AI : MonoBehaviour
                         timerAttack = 0.0f;
                         enemyAttackCheck2 = false;
                         enemyAttackDecided = false;
+                        m_audioSource.Stop();
                         attackOneTime = false;
                     }
                     else
@@ -385,67 +373,6 @@ public class False_Boss_AI : MonoBehaviour
                     }
                 }
 
-            }
-            else if ((playerHitLeft && playerHitLeft.collider.gameObject.tag == "Player" && direction < 0) || enemyAttackCheck1 || enemyAttackCheck2)
-            {
-                if (attackType <= 6)
-                {
-                    if (timerAttack <= 0.0f)  //Se activa la animacion de ataque
-                    {
-                        timerAttack += Time.deltaTime;
-                        m_animator.SetTrigger("Attack");
-                        enemyAttackCheck1 = true;
-                    }
-                    else if ((timerAttack >= startAttack && timerAttack <= endAttack) || (timerAttack >= startAttackContinue && timerAttack <= endAttackContinue))  //Enemigo esta en el momento en que hace el corte y es ahi cuando el Player puede recivir daño
-                    {
-                        attack();
-                        timerAttack += Time.deltaTime;
-                    }
-                    else if (timerAttack >= endAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
-                    {
-                        timerAttack = 0.0f;
-                        enemyAttackCheck1 = false;
-                        enemyAttackDecided = false;
-                        attackOneTime = false;
-                        stuckProbability = Random.Range(1, 100);
-                        if (stuckProbability <= 55)
-                        {
-                            stuck = true;
-                        }
-                        recovery = true;
-                    }
-                    else
-                    {
-                        attackOneTime = false;
-                        timerAttack += Time.deltaTime;
-                    }
-                }
-                else
-                {
-                    if (timerAttack <= 0.0f)  //Se activa la animacion de ataque
-                    {
-                        timerAttack += Time.deltaTime;
-                        m_animator.SetTrigger("Spin-Attack");
-                        speed = startSpeed;
-                        enemyAttackCheck2 = true;
-                    }
-                    else if (timerAttack >= startSecondAttack && timerAttack <= endSecondAttack)  //Enemigo esta en el momento en que hace el corte y es ahi cuando el Player puede recivir daño
-                    {
-                        attack();
-                        timerAttack += Time.deltaTime;
-                    }
-                    else if (timerAttack >= endSecondAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
-                    {
-                        timerAttack = 0.0f;
-                        enemyAttackCheck2 = false;
-                        enemyAttackDecided = false;
-                        attackOneTime = false;
-                    }
-                    else
-                    {
-                        timerAttack += Time.deltaTime;
-                    }
-                }
             }
             else if (timerAttack >= endSecondAttackAnimation || timerAttack >= endAttackAnimation)  //Se termina de realizar todo el ataque PD: el numero puede variar
             {
@@ -506,6 +433,7 @@ public class False_Boss_AI : MonoBehaviour
                 else
                 {
                     colliders.GetComponent<Player_Attack>().GetDamage(damageAttack);
+                    playerIsHit = true;
                 }
             }
 
@@ -556,6 +484,8 @@ public class False_Boss_AI : MonoBehaviour
         else if(playerDamage > 0.0f)
         {
             stuck = false;
+            attackRecovery = true;
+            timerAttack = 0.0f;
             stuckTimerCount = 0.0f;
 
             if (!invincinility)
@@ -602,6 +532,8 @@ public class False_Boss_AI : MonoBehaviour
             if (stuckTimerCount >= stuckTime)
             {
                 stuck = false;
+                attackRecovery = true;
+                timerAttack = 0.0f;
                 stuckTimerCount = 0.0f;
             }
             else
@@ -667,6 +599,62 @@ public class False_Boss_AI : MonoBehaviour
     }
 
     public void SetRecoveryAttack() { attackRecovery = true; }
+
+    public void StepSound()
+    {
+        if(isfirstFootStep)
+        {
+            m_audioSource.PlayOneShot(walkSound[0]);
+            isfirstFootStep = false;
+        }
+        else
+        {
+            m_audioSource.PlayOneShot(walkSound[1]);
+            isfirstFootStep = true;
+        }
+        
+    }
+
+    public void SwordSound()
+    {
+        if(playerIsHit)
+        {
+            m_audioSource.PlayOneShot(hitAttackSound);
+            playerIsHit = false;
+        }
+        else
+        {
+            m_audioSource.PlayOneShot(attackSwordMissSound);
+        }
+    }
+
+    public void HammerSound()
+    {
+        if (playerIsHit)
+        {
+            m_audioSource.PlayOneShot(hitAttackSound);
+            playerIsHit = false;
+        }
+        else
+        {
+            m_audioSource.PlayOneShot(attackHammerMissSound);
+        }
+    }
+
+    public void WhileStuck()
+    {
+        if(isAngry)
+        {
+            m_audioSource.PlayOneShot(whileStuckSound);
+            isAngry = false;
+        }
+        
+    }
+
+    public void DashSound()
+    {
+        m_audioSource.PlayOneShot(dashSound);
+    }
 
     void OnDrawGizmosSelected() //Dibuja el area de ataque del enemigo luego hay que eliminarlo para los tests
     {

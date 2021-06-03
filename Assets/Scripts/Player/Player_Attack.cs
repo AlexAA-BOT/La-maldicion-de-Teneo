@@ -44,7 +44,7 @@ public class Player_Attack : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip attackMiss = null;
     [SerializeField] private AudioClip attackHit = null;
-    private new AudioSource m_audioSource = null;
+    private AudioSource m_audioSource = null;
 
     // Start is called before the first frame update
     void Start()
