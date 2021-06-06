@@ -13,12 +13,17 @@ public class Menu_Controller : MonoBehaviour
 
     public void Options()
     {
-
+        SceneManager.LoadScene("Options");
     }
 
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene("Menu");
     }
 
 }

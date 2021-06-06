@@ -6,11 +6,13 @@ public class AudioManager : MonoBehaviour
 {
 
     private AudioSource m_audioSource = null;
+    [SerializeField] private TheRealBoss_Event bossScript = null;
 
     // Start is called before the first frame update
     void Start()
     {
         m_audioSource = GetComponent<AudioSource>();
+        bossScript = FindObjectOfType<TheRealBoss_Event>();
     }
 
     public void StartAudio()
@@ -21,6 +23,11 @@ public class AudioManager : MonoBehaviour
     public void StopAudio()
     {
         m_audioSource.Stop();
+    }
+
+    public void StartTheRealBoss()
+    {
+        bossScript.startEvent = true;
     }
 
 }

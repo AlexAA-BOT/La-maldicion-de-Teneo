@@ -38,4 +38,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Holbet-Castle/Zone 1/1-Room-Boss.unity
     guid: 387943245a508574394b232b37fabdce
+  - enabled: 1
+    path: Assets/Scenes/Menu/Credits.unity
+    guid: 94c740233b973804ea4b0225fd3af38f
+  - enabled: 1
+    path: Assets/Scenes/Menu/Options.unity
+    guid: 8fe1d512af7ec0f458bb3b458ae4d42a
   m_configObjects: {}
