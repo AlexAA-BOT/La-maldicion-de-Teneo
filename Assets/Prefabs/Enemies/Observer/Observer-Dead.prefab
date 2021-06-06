@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4997459628802750931}
   - component: {fileID: 4548317521358105989}
   - component: {fileID: 1995047595308879280}
-  m_Layer: 10
+  m_Layer: 15
   m_Name: Observer-Dead
   m_TagString: Untagged
   m_Icon: {fileID: 0}

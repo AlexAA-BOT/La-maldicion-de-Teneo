@@ -55,6 +55,14 @@ public class Player_Movement : MonoBehaviour
     private bool canEnterShop = false;
     //[SerializeField] private GameObject shopEntrance = null;
 
+    [Header("Audio")]
+    private bool firstFootStep = true;
+    [SerializeField] private AudioClip[] footStep = null;
+    [SerializeField] private AudioClip jumpSound = null;
+    [SerializeField] private AudioClip rollSound = null;
+    [SerializeField] private AudioClip landSound = null;
+    private AudioSource m_audioSource = null;
+
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -70,6 +78,7 @@ public class Player_Movement : MonoBehaviour
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_Animator = GetComponent<Animator>();
+        m_audioSource = GetComponent<AudioSource>();
         totalJumps = maxNumJumps;
         state = State.NORMAL;
     }
@@ -101,11 +110,20 @@ public class Player_Movement : MonoBehaviour
             {
                 if (collidersGround[i].gameObject != gameObject)
                 {
+                    if(!m_Grounded)
+                    {
+                        m_audioSource.PlayOneShot(landSound);
+                    }
                     m_Grounded = true;
                     m_Animator.SetBool("InAir", !m_Grounded);
                     totalJumps = maxNumJumps;
                     doubleJump = false;
                 }
+                else
+                {
+                    Debug.Log("Entro");
+                }
+                
             }
 
 
@@ -267,6 +285,7 @@ public class Player_Movement : MonoBehaviour
             if (!dashDirectionDecided)
             {
                 m_Animator.SetTrigger("Roll");
+                m_audioSource.PlayOneShot(rollSound);
                 dashDirection = new Vector2(horizontalMove * dashSpeed, m_Rigidbody2D.velocity.y);
                 this.gameObject.GetComponent<Player_Attack>().SetStamina(staminaToRoll);
                 dashDirectionDecided = true;
@@ -333,6 +352,19 @@ public class Player_Movement : MonoBehaviour
     public void SetCanEnterShop(bool state)
     {
         canEnterShop = state;
+    }
+
+    public void PlayFootSteps()
+    {
+        if(firstFootStep)
+        {
+            m_audioSource.PlayOneShot(footStep[0]);
+        }
+        else
+        {
+            m_audioSource.PlayOneShot(footStep[1]);
+        }
+        
     }
 
     void OnDrawGizmosSelected()

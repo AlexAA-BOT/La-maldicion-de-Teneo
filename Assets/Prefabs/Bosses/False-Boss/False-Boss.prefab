@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 5642619835053322037}
   - component: {fileID: 58831750892970651}
   - component: {fileID: 1172173107949940285}
+  - component: {fileID: 2050511812253894315}
   m_Layer: 10
   m_Name: False-Boss
   m_TagString: FalseBoss
@@ -191,7 +192,6 @@ MonoBehaviour:
   startSpeed: 4
   direction: 1
   viewDistance: 46
-  visionTimeToLookBack: 4
   distanceToDash: 10
   dashSpeed: 30
   damageAttack: 32
@@ -211,7 +211,7 @@ MonoBehaviour:
   endSecondAttack: 1.57
   endSecondAttackAnimation: 2.07
   stuckTime: 3
-  recoveryTime: 0.57
+  recoveryTime: 0.87
   enemyDead: {fileID: 5939210920728243218, guid: c24e932274fc38e44b111c46d90826e5,
     type: 3}
   playerLayer:
@@ -220,6 +220,18 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 256
+  walkSound:
+  - {fileID: 8300000, guid: 15264434b7c28304e9686abd5dc218ee, type: 3}
+  - {fileID: 8300000, guid: c0a4376762fa62040a4a99f2962e0915, type: 3}
+  attackSwordMissSound: {fileID: 8300000, guid: 45baf8e269d9b7d4995e0a62cab07fbd,
+    type: 3}
+  attackHammerMissSound: {fileID: 8300000, guid: a5b3186a7e111ea4ab62ffe457ab9bba,
+    type: 3}
+  dashSound: {fileID: 8300000, guid: 6d622ea016037be4bb4619b2198f2e31, type: 3}
+  stuckSound: {fileID: 8300000, guid: 315b192c92c89ec46bca61e178465ce7, type: 3}
+  whileStuckSound: {fileID: 8300000, guid: e445e91e1484d034383c9d827ee351f5, type: 3}
+  spinAttackSound: {fileID: 8300000, guid: d382e65c80fd0da46823d772a3a58ae5, type: 3}
+  hitAttackSound: {fileID: 8300000, guid: 0796a0b72a1185145bb6c8c59e78740d, type: 3}
 --- !u!61 &1172173107949940285
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -246,3 +258,100 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.4289393, y: 2.792121}
   m_EdgeRadius: 0
+--- !u!82 &2050511812253894315
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58831750892970649}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 6107391572620462792, guid: 93dc121050b494346b25f3dfb5bccdd3,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
