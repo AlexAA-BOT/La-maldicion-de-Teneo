@@ -138,6 +138,9 @@ public class Player_Attack : MonoBehaviour
                     case ("FalseBoss"):
                         enemy.GetComponent<False_Boss_AI>().GetDamage(playerDamage);
                         break;
+                    case ("TheRealBoss"):
+                        enemy.GetComponent<TheRealBoss_AI>().GetDamage(playerDamage);
+                        break;
                 }
             }
             m_audioSource.PlayOneShot(attackHit);

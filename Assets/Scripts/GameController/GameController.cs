@@ -10,6 +10,8 @@ public class GameController : MonoBehaviour
     private bool invincibility = false;
     [SerializeField] private float timeToRestart = 4.0f;
     private float timerRestart = 0.0f;
+    [SerializeField] private float timeToEndDemo = 4.0f;
+    private float timerEndDemo = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -67,6 +69,21 @@ public class GameController : MonoBehaviour
             {
                 timerRestart += Time.deltaTime;
             }
+        }
+    }
+
+    public void EndDemo()
+    {
+        if (timerEndDemo >= timeToEndDemo)
+        {
+            Data_Control.instance.RestartCoins_Z1();
+            Destroy(GameObject.FindGameObjectWithTag("Player"));
+            SceneManager.LoadScene("1-Room-1");
+            timerEndDemo = 0.0f;
+        }
+        else
+        {
+            timerEndDemo += Time.deltaTime;
         }
     }
 

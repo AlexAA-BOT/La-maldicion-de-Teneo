@@ -10,6 +10,7 @@ TagManager:
   - FlyingEnemy
   - Enemy
   - FalseBoss
+  - TheRealBoss
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - Door
   - Wall-Enemies
   - EnemyDead
-  - 
+  - TheRealBoss
   - 
   - 
   - 
