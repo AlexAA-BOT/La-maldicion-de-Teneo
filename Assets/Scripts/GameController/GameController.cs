@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     private GameObject player = null;
-    private bool exitGame = false;
+    private bool menuInGame = false;
     private bool invincibility = false;
     [SerializeField] private float timeToRestart = 4.0f;
     private float timerRestart = 0.0f;
     [SerializeField] private float timeToEndDemo = 4.0f;
     private float timerEndDemo = 0.0f;
+    [SerializeField] private GameObject menu_InGame = null;
 
     // Start is called before the first frame update
     void Start()
@@ -23,9 +24,21 @@ public class GameController : MonoBehaviour
     void Update()
     {
         inputs();
-        if(exitGame)
+        if(menuInGame && menu_InGame != null)
         {
-            Application.Quit();
+            if(menu_InGame.activeSelf)
+            {
+                Time.timeScale = 1.0f;
+                menuInGame = false;
+                menu_InGame.SetActive(false);
+            }
+            else
+            {
+                Time.timeScale = 0.0f;
+                menuInGame = false;
+                menu_InGame.SetActive(true);
+                
+            }
         }
 
         if(invincibility)
@@ -41,11 +54,47 @@ public class GameController : MonoBehaviour
 
     private void inputs()
     {
-        exitGame = Input.GetButton("ESC");
+        if(Input.GetButtonDown("ESC"))
+        {
+            menuInGame = true;
+        }
 
         if(Input.GetButtonDown("Invincibility"))
         {
             invincibility = true;
+        }
+
+        if(Input.GetKeyDown(KeyCode.F2))
+        {
+            SceneManager.LoadScene("1-RoomSecret-Shop");
+            player.transform.position = new Vector3(-23.0f, -2.3f, 0.0f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            player.GetComponent<Player_Inventory>().SetMoney(100);
+        }
+
+        if(Input.GetKeyDown(KeyCode.F5))
+        {
+            SceneManager.LoadScene("1-Room-Boss");
+            player.transform.position = new Vector3(-24.0f, 4.9f, 0.0f);
+        }
+
+        if(Input.GetKeyDown(KeyCode.F6))
+        {
+            if(GameObject.FindGameObjectWithTag("FalseBoss") != null)
+            {
+                GameObject.FindGameObjectWithTag("FalseBoss").GetComponent<False_Boss_AI>().SetHealth(75);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F7))
+        {
+            if (GameObject.FindGameObjectWithTag("FalseBoss") != null)
+            {
+                GameObject.FindGameObjectWithTag("FalseBoss").GetComponent<False_Boss_AI>().SetHealth(0);
+            }
         }
 
     }
@@ -78,7 +127,7 @@ public class GameController : MonoBehaviour
         {
             Data_Control.instance.RestartCoins_Z1();
             Destroy(GameObject.FindGameObjectWithTag("Player"));
-            SceneManager.LoadScene("1-Room-1");
+            SceneManager.LoadScene("End-Demo");
             timerEndDemo = 0.0f;
         }
         else

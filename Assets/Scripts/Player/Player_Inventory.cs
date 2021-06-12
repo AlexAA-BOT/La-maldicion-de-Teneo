@@ -93,6 +93,10 @@ public class Player_Inventory : MonoBehaviour
     {
         money -= moneyToRest;
     }
+    public void SetMoney(int quantity)
+    {
+        money += quantity;
+    }
 
     public int GetMaxQuantity(Items _item)
     {

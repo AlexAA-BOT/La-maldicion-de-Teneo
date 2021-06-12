@@ -1,17 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class ManageVolume : MonoBehaviour
+public class Menu_InGame : MonoBehaviour
 {
     [SerializeField] private AudioMixer masterVolume = null;
     private float value = 0.0f;
     [SerializeField] private Slider[] sliders = null;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         masterVolume.GetFloat("MasterVolume", out value);
         SetMasterVolume(value);
@@ -24,10 +24,17 @@ public class ManageVolume : MonoBehaviour
         sliders[2].value = value;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ReturnToMenu()
     {
-        
+        Time.timeScale = 1.0f;
+        Destroy(GameObject.FindGameObjectWithTag("Player"));
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void ReturnToGame()
+    {
+        Time.timeScale = 1.0f;
+        this.gameObject.SetActive(false);
     }
 
     public void SetMasterVolume(float sliderValue)
@@ -44,4 +51,5 @@ public class ManageVolume : MonoBehaviour
     {
         masterVolume.SetFloat("SoundEffectVolume", sliderValue);
     }
+
 }

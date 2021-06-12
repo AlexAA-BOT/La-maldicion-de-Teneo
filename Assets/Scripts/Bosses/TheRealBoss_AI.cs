@@ -115,6 +115,7 @@ public class TheRealBoss_AI : MonoBehaviour
     {
         //Evento de disminuir la barra de vida
         GameObject.Find("BossController").GetComponent<TheRealBoss_Event>().RestBossHealthBar();
+        Data_Control.instance.SetTheRealBossCount();
 
         //Respawnear prefab de enemigo muerto
         if (direction.x < 0)

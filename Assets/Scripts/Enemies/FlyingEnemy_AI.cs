@@ -391,7 +391,7 @@ public class FlyingEnemy_AI : MonoBehaviour
         if (enemyHealth <= 0)
         {
             int numRandom = Random.Range(1, 100);
-            if (numRandom <= 50 && dropMoney)
+            if (numRandom <= 65 && dropMoney)
             {
                 Instantiate(gameObjectMoney, this.transform);
             }

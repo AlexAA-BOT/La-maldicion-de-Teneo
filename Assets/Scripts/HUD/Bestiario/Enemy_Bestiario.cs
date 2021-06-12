@@ -35,6 +35,9 @@ public class Enemy_Bestiario : MonoBehaviour
                 case BossID.FALSEBOSS:
                     count = Data_Control.instance.GetFalseBossCount();
                     break;
+                case BossID.THEREALBOSS:
+                    count = Data_Control.instance.GetTheRealBossCount();
+                    break;
             }
         texts[2].text = "Count: " + count;
         UpdateImages();
