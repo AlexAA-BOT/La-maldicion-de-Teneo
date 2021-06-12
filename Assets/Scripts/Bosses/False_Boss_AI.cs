@@ -656,6 +656,11 @@ public class False_Boss_AI : MonoBehaviour
         m_audioSource.PlayOneShot(dashSound);
     }
 
+    public void SetHealth(int newHealth)
+    {
+        health = newHealth;
+    }
+
     void OnDrawGizmosSelected() //Dibuja el area de ataque del enemigo luego hay que eliminarlo para los tests
     {
         Gizmos.DrawWireSphere(Attack_Point.position, attackRange);

@@ -118,6 +118,10 @@ public class Data_Control : MonoBehaviour
 
     public void SetFalseBossCount() { falseBoss++; }
 
+    public int GetTheRealBossCount() { return theRealBoss; }
+
+    public void SetTheRealBossCount() { theRealBoss++; }
+
     public bool GetCoinsState(int zone, int room, int coinID)
     {
         switch(zone)

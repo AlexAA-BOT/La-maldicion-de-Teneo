@@ -242,7 +242,7 @@ MonoBehaviour:
   defendState: 0
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 66560
   attackMiss: {fileID: 8300000, guid: 977c8f9b3f27f3c40847c511cf6bb703, type: 3}
   attackHit: {fileID: 8300000, guid: 213a73eeb028c5a4789e2cee8d248a15, type: 3}
 --- !u!114 &3145431495325243858

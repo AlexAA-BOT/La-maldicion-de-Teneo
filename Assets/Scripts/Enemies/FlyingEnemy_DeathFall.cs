@@ -8,6 +8,7 @@ public class FlyingEnemy_DeathFall : MonoBehaviour
     private Animator m_animator = null;
     private Vector2 groundCol =  Vector2.zero;
     [SerializeField] private LayerMask platform = 0;
+    [SerializeField] private float distanceFromTheGround = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +20,7 @@ public class FlyingEnemy_DeathFall : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        RaycastHit2D hitPlatformDown = Physics2D.Raycast(this.gameObject.transform.position, groundCol, 0.5f, platform);
+        RaycastHit2D hitPlatformDown = Physics2D.Raycast(this.gameObject.transform.position, groundCol, distanceFromTheGround, platform);
         if (hitPlatformDown && hitPlatformDown.collider.gameObject.tag == "Ground")
         {
             m_animator.SetTrigger("HitFloor");
