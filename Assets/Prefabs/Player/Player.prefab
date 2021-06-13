@@ -237,7 +237,7 @@ MonoBehaviour:
   attackPoint: {fileID: 2666114758522683666}
   attackRange: 0.66
   playerDamage: 20
-  timeBetweenAttack: 0.58
+  timeBetweenAttack: 0.22
   energyForEachAttack: 25
   defendState: 0
   enemyLayers:
